@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Home"
+        android:icon="@drawable/home"
+        android:id="@+id/homeFragment"
+        />
+
+    <item
+        android:title="Category"
+        android:icon="@drawable/car2"
+        android:id="@+id/categoryFragment2"
+
+        />
+
+    <item android:title="Add"
+        android:icon="@drawable/plus"
+        android:id="@+id/addToFragment"
+        />
+
+    <item android:title="Mail"
+        android:icon="@drawable/paper"
+        android:id="@+id/sendToFragment"
+        />
+
+    <item android:title="Profile"
+        android:icon="@drawable/user"
+        android:id="@+id/profileFragment2"
+        />
+
+
+</menu>
