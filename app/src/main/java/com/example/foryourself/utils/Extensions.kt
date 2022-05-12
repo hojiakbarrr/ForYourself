@@ -1,50 +1,55 @@
 package com.example.kapriz.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.example.foryourself.data.retrofitResponse.ImageFirst
+import com.example.foryourself.data.retrofitResponse.ImageMain
+import com.example.foryourself.data.retrofitResponse.ImageThird
 import com.example.foryourself.data.types.Image
 import com.parse.ParseFile
+import java.io.ByteArrayOutputStream
 
 
-fun Fragment.toast(message: String){
-    Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
+fun Fragment.toast(message: String) {
+    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
 
-fun Context.toast(message: String){
-    Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
+fun Context.toast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
-fun ParseFile.toImage(): Image =
-    Image(name = name, type = "File", url = url)
+
+fun ParseFile.toImageFirst(): ImageFirst =
+    ImageFirst(name = name, __type = "File", url = url)
+
+fun ParseFile.toImageMain(): ImageMain =
+    ImageMain(name = name, __type = "File", url = url)
+
+fun ParseFile.toImageThird(): ImageThird =
+    ImageThird(name = name, __type = "File", url = url)
+
+fun Fragment.image(uri: Uri): ByteArray {
+    val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+    return stream.toByteArray()
+}
+
+fun Context.uploadImage(uri: Uri, imageView: ImageView) {
+    Glide.with(this)
+        .load(uri)
+        .into(imageView)
+}
+fun Context.uploadImage(uri: String, imageView: ImageView) {
+    Glide.with(this)
+        .load(uri)
+        .into(imageView)
+}
 
 
-//fun EditText.validateEmail(): Boolean {
-//    val email = this.text.toString()
-//    return email.contains("@") && email.contains(".") && email.length > 7
-//}
-//fun Activity.intentClearTask(activity: Activity) {
-//    val intent = Intent(this, activity::class.java)
-//    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//    startActivity(intent)
-//}
-//fun Fragment.intentClearTask(activity: Activity) {
-//    val intent = Intent(requireActivity(), activity::class.java)
-//    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//    startActivity(intent)
-//}
-//fun EditText.validatePassword(): Boolean {
-//    val password = this.text.toString()
-//    return password.length >= 8
-//}
-//fun EditText.validateName(): Boolean {
-//    val name = this.text.toString()
-//    return name.length >= 2
-//}
-//fun EditText.validateLastName(): Boolean {
-//    val lastName = this.text.toString()
-//    return lastName.length >= 2
-//}
-//fun EditText.validateEditPhone(): Boolean {
-//    val phone = this.text.toString()
-//    return phone.length == 13
-//}
+

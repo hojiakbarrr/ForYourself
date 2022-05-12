@@ -1,4 +1,4 @@
-package com.example.foryourself.data
+package com.example.foryourself.data.retrofitResponse
 
 data class ImageThird(
     val __type: String,

@@ -12,14 +12,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.foryourself.R
+import com.example.foryourself.data.retrofitResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
 import com.example.foryourself.viewmodels.AddToViewModel
-import com.example.kapriz.utils.toast
+import com.example.kapriz.utils.*
 import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.SaveCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
@@ -30,18 +37,18 @@ class AddToFragment : Fragment() {
 
     private val viewModel: AddToViewModel by viewModels()
 
-    var imageUri_First: Uri? = null
-    var selectedBitmap_First: Bitmap? = null
-    var imageFile_First: ParseFile? = null
+    private var imageUri_First: Uri? = null
+    private var selectedBitmap_First: Bitmap? = null
+    var imageFile_Main: ParseFile? = null
 
-    var imageUri_Second: Uri? = null
-    var selectedBitmap_Second: Bitmap? = null
-    var imageFileFirst_Second: ParseFile? = null
 
-    var imageUri_Third: Uri? = null
-    var selectedBitmap_Third: Bitmap? = null
-    var imageFileFirst_Third: ParseFile? = null
+    private var imageUri_Second: Uri? = null
+    private var selectedBitmap_Second: Bitmap? = null
+    var imageFile_Second: ParseFile? = null
 
+    private var imageUri_Third: Uri? = null
+    private var selectedBitmap_Third: Bitmap? = null
+    var imageFile_Third: ParseFile? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,50 +60,111 @@ class AddToFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         binding.getMainPhoto.setOnClickListener {
-            openGallery()
+            openGallery(IMAGE_MAIN_CODE)
         }
         binding.get2Photo.setOnClickListener {
-            openGallery()
+            openGallery(IMAGE_FIRST_CODE)
         }
         binding.get3Photo.setOnClickListener {
-            openGallery()
+            openGallery(IMAGE_THIRD_CODE)
         }
         binding.putOnServer.setOnClickListener {
-            creatPost()
+
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+
+                    imageFile_Main!!.saveInBackground(SaveCallback { e ->
+                        if (e == null) {
+                            imageFile_Third!!.saveInBackground(SaveCallback { e ->
+                                if (e == null) {
+                                    imageFile_Second!!.saveInBackground(SaveCallback { e ->
+                                        if (e == null) {
+                                            createPost()
+
+                                        }
+                                    })
+
+                                }
+                            })
+
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun createPost() {
+
+        viewModel.addToProduct(
+            Result_2(
+                description = binding.prodDescrip.text.toString().trim(),
+                eighthSize = binding.prodSizeEight.text.toString().trim(),
+                fifthSize = binding.prodSizeFive.text.toString().trim(),
+                firstSize = binding.prodSizeOne.text.toString().trim(),
+                image_first = imageFile_Second!!.toImageFirst(),
+                image_main = imageFile_Main!!.toImageMain(),
+                image_third = imageFile_Third!!.toImageThird(),
+                price = binding.prodPrice.text.toString().trim(),
+                secondSize = binding.prodSizeTwo.text.toString().trim(),
+                seventhSize = binding.prodSizeSeven.text.toString().trim(),
+                sixthSize = binding.prodSizeSix.text.toString().trim(),
+                thirdSize = binding.prodSizeThree.text.toString().trim(),
+                title = binding.prodName.text.toString().trim(),
+                youtubeTrailer = binding.prodTrailer.text.toString().trim(),
+                fourthSize = binding.prodSizeFour.text.toString().trim()
+            )
+        ).observe(viewLifecycleOwner) {
+            toast("URAAA")
         }
 
+        binding.apply {
+            prodName.text.clear()
+            prodDescrip.text.clear()
+            prodPrice.text.clear()
+            prodTrailer.text.clear()
+            prodSizeOne.text.clear()
+            prodSizeTwo.text.clear()
+            prodSizeThree.text.clear()
+            prodSizeFour.text.clear()
+            prodSizeFive.text.clear()
+            prodSizeSix.text.clear()
+            prodSizeSeven.text.clear()
+            prodSizeEight.text.clear()
 
+            putMainPhoto.setImageResource(R.drawable.picture)
+            put2Photo.setImageResource(R.drawable.picture)
+            put3Photo.setImageResource(R.drawable.picture)
+
+        }
     }
 
     private fun creatPost() {
 
         val stream = ByteArrayOutputStream()
-        selectedBitmap_First?.compress(Bitmap.CompressFormat.PNG,100,stream)
+        selectedBitmap_First?.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
-        val parseFile = ParseFile("postImage.png",byteArray)
-        parseFile.saveInBackground(SaveCallback {e->
-            if (e == null){
-                toast("Первое фото успешно загрузилось")
-            }
-        })
+        imageFile_Main = ParseFile("postImage.png", byteArray)
+
 
         val stream_2 = ByteArrayOutputStream()
-        selectedBitmap_Second?.compress(Bitmap.CompressFormat.PNG,100,stream_2)
+        selectedBitmap_Second?.compress(Bitmap.CompressFormat.PNG, 100, stream_2)
         val byteArray_2 = stream_2.toByteArray()
-        val parseFile_2 = ParseFile("postImage.png",byteArray_2)
-        parseFile_2.saveInBackground(SaveCallback {e->
-            if (e == null){
+        imageFile_Second = ParseFile("postImage.png", byteArray_2)
+        imageFile_Second!!.saveInBackground(SaveCallback { e ->
+            if (e == null) {
                 toast("Второе фото успешно загрузилось")
             }
         })
 
         val stream_3 = ByteArrayOutputStream()
-        selectedBitmap_Third?.compress(Bitmap.CompressFormat.PNG,100,stream_3)
+        selectedBitmap_Third?.compress(Bitmap.CompressFormat.PNG, 100, stream_3)
         val byteArray_3 = stream_3.toByteArray()
-        val parseFile_3 = ParseFile("postImage.png",byteArray_3)
-        parseFile_3.saveInBackground(SaveCallback {e->
-            if (e == null){
+        imageFile_Third = ParseFile("postImage.png", byteArray_3)
+        imageFile_Third!!.saveInBackground(SaveCallback { e ->
+            if (e == null) {
                 toast("Третье фото успешно загрузилось")
             }
         })
@@ -128,14 +196,14 @@ class AddToFragment : Fragment() {
 
         `object`.put("eighthSize", binding.prodSizeEight.text.toString().trim())
 
-        `object`.put("image_main", parseFile)
+        `object`.put("image_main", imageFile_Main!!)
 
-        `object`.put("image_first", parseFile_2)
+        `object`.put("image_first", imageFile_Second!!)
 
-        `object`.put("image_third", parseFile_3)
+        `object`.put("image_third", imageFile_Third!!)
 
-        `object`.saveInBackground {e ->
-            if (e == null){
+        `object`.saveInBackground { e ->
+            if (e == null) {
                 toast("Товар успешно был добавлен")
                 binding.apply {
                     prodName.text.clear()
@@ -156,7 +224,7 @@ class AddToFragment : Fragment() {
                     put3Photo.setImageResource(R.drawable.picture)
 
                 }
-            }else{
+            } else {
                 toast("Что то пошло не так, обратитесь к разработчику, или попробуйте снова")
                 Log.i("errorToAddPost", "" + e.message)
             }
@@ -165,76 +233,43 @@ class AddToFragment : Fragment() {
     }
 
 
-
-
-
-    private fun openGallery() {
+    private fun openGallery(code: Int) {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, 1)
+        startActivityForResult(intent, code)
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            if (imageUri_First == null){
-                imageUri_First = data.data
-                try {
-                    selectedBitmap_First = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri_First)
+        if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            if (requestCode == IMAGE_FIRST_CODE) {
+                imageFile_Second = ParseFile("image.png", image(data.data!!))
+                requireContext().uploadImage(data.data!!, binding.put2Photo)
+            }
+            if (requestCode == IMAGE_MAIN_CODE) {
+                imageFile_Main =
+                    ParseFile("image.png", image(data.data!!))
+                requireContext().uploadImage(data.data!!, binding.putMainPhoto)
 
-                    binding.apply {
-                        putMainPhoto.setImageBitmap(selectedBitmap_First)
-                    }
-                } catch (e: Exception) {
-                    Log.d("error", "" + e.message)
-                }
-
-            }else if (imageUri_Second == null){
-                imageUri_Second = data.data
-                try {
-                    selectedBitmap_Second = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri_Second)
-
-                    binding.apply {
-                        put2Photo.setImageBitmap(selectedBitmap_Second)
-                    }
-                } catch (e: Exception) {
-                    Log.d("error", "" + e.message)
-                }
-
-
-            }else{
-                imageUri_Third = data.data
-
-                try {
-                    selectedBitmap_Third = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri_Third)
-
-                    binding.apply {
-                        put3Photo.setImageBitmap(selectedBitmap_Third)
-                    }
-                } catch (e: Exception) {
-                    Log.d("error", "" + e.message)
-                }
+            }
+            if (requestCode == IMAGE_THIRD_CODE) {
+                imageFile_Third =
+                    ParseFile("image.png", image(data.data!!))
+                requireContext().uploadImage(data.data!!, binding.put3Photo)
 
             }
 
-//            uploadImage()
         }
     }
 
-
-    private fun uploadImage() {
-
-        val stream = ByteArrayOutputStream()
-        selectedBitmap_First?.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray = stream.toByteArray()
-        val parseFile = ParseFile("postImage.png", byteArray)
-        parseFile.saveInBackground(SaveCallback { e ->
-            if (e == null) {
-                toast("Фото сохранилось")
-                imageFile_First = parseFile
-            }
-        })
+    companion object {
+        const val IMAGE_FIRST_CODE = 1
+        const val IMAGE_MAIN_CODE = 2
+        const val IMAGE_THIRD_CODE = 3
     }
+
 
 }

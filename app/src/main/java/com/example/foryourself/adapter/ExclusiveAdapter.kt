@@ -1,14 +1,13 @@
 package com.example.foryourself.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.foryourself.data.Result
-import com.example.foryourself.data.TestResponse
-import com.example.foryourself.data.types.TypeProduct
+import com.example.foryourself.data.retrofitResponse.Result
 import com.example.foryourself.databinding.ItemProductBinding
 
 class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
@@ -42,7 +41,11 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
     override fun onBindViewHolder(holder: ExclusiveAdapterViewHolder, position: Int) {
         val product = diffor.currentList[position]
 
-        Glide.with(holder.itemView).load(product.image_main.url).into(holder.binding.productImg)
+        try {
+            Glide.with(holder.itemView).load(product.image_main.url).into(holder.binding.productImg)
+        } catch (e: Exception) {
+            Log.d("test", e.message.toString())
+        }
 
         holder.binding.productName.text = product.title
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/gradient_background"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
 
     tools:context=".ui.HomeFragment">
 
@@ -18,8 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"
-        >
+        tools:ignore="SpeakableTextPresentCheck">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,8 +28,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-
 
 
                 <androidx.cardview.widget.CardView
@@ -88,13 +84,14 @@
                     android:id="@+id/rec_exclusive"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_135sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_4sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView3"
-                     />
+                    app:reverseLayout="true"
+                    app:stackFromEnd="true" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -134,7 +131,6 @@
 
         </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView
-        >
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
