@@ -13,7 +13,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
+import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.viewmodels.HomeViewModel
+import com.example.kapriz.utils.toast
 import com.example.kapriz.utils.uploadImage2
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +27,9 @@ class HomeFragment : Fragment() {
     private lateinit var exclusiveAdapter: ExclusiveAdapter
     private val viewModel: HomeViewModel by viewModels()
 
+    private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
+        LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +56,22 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.allOrders().observe(viewLifecycleOwner) {
+//        viewModel.allOrders().observe(viewLifecycleOwner) {
+//            exclusiveAdapter.diffor.submitList(it)
+//        }
+        viewModel.getOrders()
+        viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
             exclusiveAdapter.diffor.submitList(it)
         }
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
+            if (status) loadingDialog.show()
+            else loadingDialog.dismiss()
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
+            toast(message)
+        }
 
-
-       requireContext().uploadImage2(R.drawable.info,binding.imgForAdvertising)
+        requireContext().uploadImage2(R.drawable.info, binding.imgForAdvertising)
 
 //        Glide.with(requireContext())
 //            .load(R.drawable.info)

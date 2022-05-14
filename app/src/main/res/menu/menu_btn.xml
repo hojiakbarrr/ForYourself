@@ -15,7 +15,7 @@
         />
 
     <item android:title="Add"
-        android:icon="@drawable/plus"
+        android:icon="@drawable/more"
         android:id="@+id/addToFragment"
         />
 

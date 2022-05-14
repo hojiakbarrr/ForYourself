@@ -1,6 +1,8 @@
 package com.example.kapriz.di
 
 import android.content.Context
+import com.example.foryourself.repository.OrderRepository
+import com.example.kapriz.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

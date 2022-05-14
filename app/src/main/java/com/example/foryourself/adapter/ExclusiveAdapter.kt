@@ -49,7 +49,7 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
         val product = diffor.currentList[position]
         try {
             Glide.with(holder.itemView)
-                .load(product.image_main.url)
+                .load(product.image_main?.url)
                 .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
                 .into(holder.binding.productImg)
         } catch (e: Exception) {

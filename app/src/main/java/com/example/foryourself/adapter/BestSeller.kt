@@ -22,7 +22,7 @@ class BestSeller : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun bind(product: TypeProduct) = with(binding){
             binding.apply {
-                productName.text = product.prod_name
+                productName.text = product.title
                 productPrice.text = product.prod_price
             }
         }

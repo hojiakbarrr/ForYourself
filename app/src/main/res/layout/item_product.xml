@@ -49,7 +49,7 @@
                />
 
             <View
-                android:layout_width="@dimen/_70sdp"
+                android:layout_width="@dimen/_60sdp"
                 android:layout_height="3dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="1dp"

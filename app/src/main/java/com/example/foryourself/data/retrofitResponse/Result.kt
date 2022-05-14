@@ -1,7 +1,13 @@
 package com.example.foryourself.data.retrofitResponse
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.io.Serializable
+
+
 data class Result(
-    val createdAt: String,
+
+    val createdAt: String ,
     val description: String,
     val eighthSize: String,
     val fifthSize: String,
@@ -19,4 +25,5 @@ data class Result(
     val title: String,
     val updatedAt: String,
     val youtubeTrailer: String
+
 )

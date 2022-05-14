@@ -1,8 +1,14 @@
 package com.example.foryourself.data.types
 
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.io.Serializable
+
 data class TypeProduct(
     var objectId: String? = null,
-    var prod_name: String? = null,
+
+    var title: String? = null,
     var prod_descrip: String? = null,
     var prod_price: String? = null,
     var prod_trailer: String? = null,
