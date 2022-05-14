@@ -1,20 +1,20 @@
 package com.example.foryourself.ui
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
-import com.example.foryourself.databinding.CategoryFragmentBinding
 import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.viewmodels.HomeViewModel
+import com.example.kapriz.utils.uploadImage2
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +23,7 @@ class HomeFragment : Fragment() {
         HomeFragmentBinding.inflate(layoutInflater)
     }
     private lateinit var exclusiveAdapter: ExclusiveAdapter
-    private  val viewModel: HomeViewModel by viewModels()
-
-
+    private val viewModel: HomeViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +36,7 @@ class HomeFragment : Fragment() {
 
     private fun exclusiveAdapters() {
         binding.recExclusive.apply {
-            layoutManager =  LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             binding.recExclusive.adapter = exclusiveAdapter
         }
     }
@@ -53,16 +51,19 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.allOrders().observe(viewLifecycleOwner){
+        viewModel.allOrders().observe(viewLifecycleOwner) {
             exclusiveAdapter.diffor.submitList(it)
         }
-//        observeExclusive()
+
+
+       requireContext().uploadImage2(R.drawable.info,binding.imgForAdvertising)
+
+//        Glide.with(requireContext())
+//            .load(R.drawable.info)
+////            .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
+//            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
+//            .into(binding.imgForAdvertising)
+
     }
 
-//    private fun observeExclusive() {
-//        viewModel.observeOrders().observe(requireActivity(), Observer { it ->
-//
-//            Log.d("Tryt", it.toString())
-//        })
-//    }
 }

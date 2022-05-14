@@ -1,5 +1,6 @@
 package com.example.kapriz.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -8,6 +9,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.data.retrofitResponse.ImageFirst
 import com.example.foryourself.data.retrofitResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.ImageThird
@@ -45,11 +48,12 @@ fun Context.uploadImage(uri: Uri, imageView: ImageView) {
         .load(uri)
         .into(imageView)
 }
-fun Context.uploadImage(uri: String, imageView: ImageView) {
+
+fun Context.uploadImage2(uri: Int, imageView: ImageView) {
     Glide.with(this)
         .load(uri)
+        .apply(RequestOptions.bitmapTransform(RoundedCorners(150)))
         .into(imageView)
 }
-
 
 
