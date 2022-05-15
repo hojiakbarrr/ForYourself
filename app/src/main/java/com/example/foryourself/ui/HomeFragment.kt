@@ -65,8 +65,11 @@ class HomeFragment : Fragment() {
             exclusiveAdapter.diffor.submitList(it)
         }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
-            if (status) loadingDialog.show()
-            else loadingDialog.dismiss()
+            try {
+                if (status) loadingDialog.show()
+                else loadingDialog.dismiss()
+            } catch (e: Exception) {
+            }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
             toast(message)

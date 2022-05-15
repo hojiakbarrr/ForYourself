@@ -1,6 +1,6 @@
 package com.example.kapriz.api
 
-import com.example.foryourself.data.DeleteResponse
+import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
 import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse

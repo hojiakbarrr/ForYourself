@@ -15,6 +15,7 @@ import com.example.foryourself.R
 import com.example.foryourself.adapter.SizeAdapter
 import com.example.foryourself.databinding.ActivityDetailBinding
 import com.example.foryourself.utils.Constants
+import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.viewmodels.Detail_viewmodel
 import com.example.kapriz.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +56,11 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
     var one: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
     private var sizeList: ArrayList<String> = ArrayList()
+    private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
+        LoadingDialog(context = this, "Идет подгрузка данных пождождите")
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +81,7 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
                 Log.d("ee", "Editor")
             }
             fab3DeleteProduct.setOnClickListener {
+                viewModel.deleteOrderBASE(productId)
                 viewModel.deleteOrder(productId)
             }
         }
@@ -84,9 +91,11 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
         if (!clicked) {
             binding.fab2Editor.visibility = View.VISIBLE
             binding.fab3DeleteProduct.visibility = View.VISIBLE
+            binding.fab3AddToFavProduct.visibility = View.VISIBLE
         } else {
             binding.fab2Editor.visibility = View.INVISIBLE
             binding.fab3DeleteProduct.visibility = View.INVISIBLE
+            binding.fab3AddToFavProduct.visibility = View.VISIBLE
         }
 
     }
@@ -96,9 +105,11 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
         if (!clicked) {
             binding.btnAllFab.startAnimation(rotateOpen)
             binding.fab2Editor.startAnimation(fromBottom)
+            binding.fab3AddToFavProduct.startAnimation(fromBottom)
             binding.fab3DeleteProduct.startAnimation(fromBottom)
         } else {
             binding.btnAllFab.startAnimation(rotateClose)
+            binding.fab3AddToFavProduct.startAnimation(toBottom)
             binding.fab2Editor.startAnimation(toBottom)
             binding.fab3DeleteProduct.startAnimation(toBottom)
         }

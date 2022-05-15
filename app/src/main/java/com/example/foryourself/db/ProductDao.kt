@@ -19,6 +19,11 @@ interface ProductDao {
     @Query("select * from products_table where objectId ==:ID")
     suspend fun getOneProductDetail(ID: String): ResultCache
 
+    @Delete
+    suspend fun deleteDATABASE(product: ResultCache)
+
+/////////////////////////////////////////////////////////////////////////////
+
 
     @Query("DELETE FROM products_table")
     suspend fun clearTable()
@@ -32,6 +37,6 @@ interface ProductDao {
     @Query("select * from products_table")
     fun getFromFav(): LiveData<ResultCache>?
 
-    @Query("select * from products_table where title ==:titleProduct")
-    suspend fun getOnegetFromFav(titleProduct: String): ResultCache
+    @Query("select * from products_table where objectId ==:ID")
+    suspend fun getOnegetFromFav(ID: String): ResultCache
 }

@@ -1,6 +1,6 @@
 package com.example.foryourself.repository
 
-import com.example.foryourself.data.DeleteResponse
+import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
 import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
@@ -28,7 +28,11 @@ class OrderRepository @Inject constructor(
     fun fetchOneOrder(id: String) = flow { val result = dao.getOneProductDetail(id)
         emit(Resource.success(cascheToResultMapper.map(result))) }
 
-    suspend fun deleteOrder(id: String) : Response<DeleteResponse> = apiService.deleteOrder(objectId = id)
+    suspend fun deleteOrderInServer(id: String) : Response<DeleteResponse> = apiService.deleteOrder(objectId = id)
+
+    suspend fun deleteOrderInBASE(id: String){
+        dao.deleteDATABASE(dao.getOneProductDetail(id))
+    }
 
     fun fetchOrders() = flow {
         emit(Resource.loading())
