@@ -1,21 +1,12 @@
 package com.example.foryourself.viewmodels
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.foryourself.R
-import com.example.foryourself.data.retrofitResponse.Result
+import androidx.lifecycle.*
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,6 +23,16 @@ class Detail_viewmodel  @Inject constructor(
     private var _orderLiveData = MutableLiveData<Result>()
     var orderLiveData: LiveData<Result> = _orderLiveData
 
+    private var _orderDeleteLiveData = MutableLiveData<String>()
+
+
+
+    fun deleteOrder(id : String) = viewModelScope.launch {
+        val response = repository.deleteOrder(id)
+        if (response.isSuccessful){
+            _orderDeleteLiveData.value = "Товар был успешно удален"
+        }
+    }
 
     fun getOneOrder(id : String) = viewModelScope.launch {
         repository.fetchOneOrder(id).collectLatest { resource ->
@@ -41,6 +42,10 @@ class Detail_viewmodel  @Inject constructor(
                 }
             }
         }
+    }
+
+    fun observeDeleteOrder(): LiveData<String> {
+        return _orderDeleteLiveData
     }
 
 }

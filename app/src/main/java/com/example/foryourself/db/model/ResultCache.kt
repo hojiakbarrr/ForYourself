@@ -3,9 +3,6 @@ package com.example.foryourself.db.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.foryourself.data.retrofitResponse.ImageFirst
-import com.example.foryourself.data.retrofitResponse.ImageMain
-import com.example.foryourself.data.retrofitResponse.ImageThird
 import java.io.Serializable
 
 @Entity(tableName = "products_table")

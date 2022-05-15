@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.foryourself.R
-import com.example.foryourself.data.retrofitResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
 import com.example.foryourself.viewmodels.AddToViewModel
 import com.example.kapriz.utils.*

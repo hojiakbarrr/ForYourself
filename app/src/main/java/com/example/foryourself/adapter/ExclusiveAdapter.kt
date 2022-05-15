@@ -3,20 +3,14 @@ package com.example.foryourself.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideContext
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import com.example.foryourself.data.retrofitResponse.Result
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.ItemProductBinding
-import com.example.foryourself.db.model.ResultCache
-import com.example.kapriz.utils.uploadImage2
 
 class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
 

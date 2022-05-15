@@ -1,9 +1,9 @@
 package com.example.foryourself.mappers
 
-import com.example.foryourself.data.retrofitResponse.ImageFirst
-import com.example.foryourself.data.retrofitResponse.ImageMain
-import com.example.foryourself.data.retrofitResponse.ImageThird
-import com.example.foryourself.data.retrofitResponse.Result
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.Mapper
 

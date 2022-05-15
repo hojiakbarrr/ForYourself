@@ -1,14 +1,11 @@
 package com.example.kapriz.api
 
-import com.example.foryourself.data.retrofitResponse.PostResponseAnswer
-import com.example.foryourself.data.retrofitResponse.Result
-import com.example.foryourself.data.retrofitResponse.Result_2
-import com.example.foryourself.data.retrofitResponse.TestResponse
-import retrofit2.Call
+import com.example.foryourself.data.DeleteResponse
+import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
+import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -18,5 +15,9 @@ interface ApiService {
     @POST("classes/Orders")
     suspend fun createPost(@Body post: Result_2): Response<PostResponseAnswer>
 
+    @DELETE("/classes/Orders/{objectId}")
+    suspend fun deleteOrder(
+        @Path("objectId") objectId: String,
+    ):Response<DeleteResponse>
 
 }

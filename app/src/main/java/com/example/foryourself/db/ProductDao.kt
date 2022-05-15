@@ -2,7 +2,6 @@ package com.example.foryourself.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.foryourself.data.retrofitResponse.Result
 import com.example.foryourself.db.model.ResultCache
 
 @Dao

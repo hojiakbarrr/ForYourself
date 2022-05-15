@@ -1,4 +1,4 @@
-package com.example.foryourself.data.retrofitResponse
+package com.example.foryourself.data.retrofitResponse.getResponse
 
 import com.google.gson.annotations.SerializedName
 

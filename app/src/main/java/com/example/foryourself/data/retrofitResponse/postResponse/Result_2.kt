@@ -1,13 +1,10 @@
-package com.example.foryourself.data.retrofitResponse
+package com.example.foryourself.data.retrofitResponse.postResponse
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.io.Serializable
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 
-
-data class Result(
-
-    val createdAt: String ,
+data class Result_2(
     val description: String,
     val eighthSize: String,
     val fifthSize: String,
@@ -16,14 +13,11 @@ data class Result(
     val image_first: ImageFirst,
     val image_main: ImageMain,
     val image_third: ImageThird,
-    val objectId: String,
     val price: String,
     val secondSize: String,
     val seventhSize: String,
     val sixthSize: String,
     val thirdSize: String,
     val title: String,
-    val updatedAt: String,
     val youtubeTrailer: String
-
 )

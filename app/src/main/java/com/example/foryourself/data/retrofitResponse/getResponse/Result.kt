@@ -1,6 +1,9 @@
-package com.example.foryourself.data.retrofitResponse
+package com.example.foryourself.data.retrofitResponse.getResponse
 
-data class Result_2(
+
+data class Result(
+
+    val createdAt: String,
     val description: String,
     val eighthSize: String,
     val fifthSize: String,
@@ -9,11 +12,14 @@ data class Result_2(
     val image_first: ImageFirst,
     val image_main: ImageMain,
     val image_third: ImageThird,
+    val objectId: String,
     val price: String,
     val secondSize: String,
     val seventhSize: String,
     val sixthSize: String,
     val thirdSize: String,
     val title: String,
+    val updatedAt: String,
     val youtubeTrailer: String
+
 )

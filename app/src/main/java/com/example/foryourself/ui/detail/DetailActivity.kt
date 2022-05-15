@@ -1,5 +1,6 @@
 package com.example.foryourself.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.foryourself.MainActivity
 import com.example.foryourself.R
 import com.example.foryourself.adapter.SizeAdapter
 import com.example.foryourself.databinding.ActivityDetailBinding
@@ -73,9 +75,7 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
                 Log.d("ee", "Editor")
             }
             fab3DeleteProduct.setOnClickListener {
-                toast("delete")
-                Log.d("ee", "delete")
-
+                viewModel.deleteOrder(productId)
             }
         }
     }
@@ -164,7 +164,12 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
 
                 sizeAdapter.productList = sizeList
 
+
             }
+        }
+        viewModel.observeDeleteOrder().observe(this){
+            toast(it)
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 

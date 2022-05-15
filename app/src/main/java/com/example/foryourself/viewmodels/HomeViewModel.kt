@@ -1,7 +1,7 @@
 package com.example.foryourself.viewmodels
 
 import androidx.lifecycle.*
-import com.example.foryourself.data.retrofitResponse.Result
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel

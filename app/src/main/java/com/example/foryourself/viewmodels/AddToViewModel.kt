@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.example.foryourself.data.retrofitResponse.*
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.repository.OrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ class AddToViewModel @Inject constructor(
 
     private var orderLiveData = MutableLiveData<Result>()
 
-    fun addToProduct(result:Result_2) = liveData(context = viewModelScope.coroutineContext+ Dispatchers.IO){
+    fun addToProduct(result: Result_2) = liveData(context = viewModelScope.coroutineContext+ Dispatchers.IO){
 
         val response = repository.postOrders(result = result)
         if (response.isSuccessful){

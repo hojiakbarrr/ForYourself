@@ -1,6 +1,10 @@
 package com.example.foryourself.repository
 
-import com.example.foryourself.data.retrofitResponse.*
+import com.example.foryourself.data.DeleteResponse
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
+import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
+import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.Mapper
@@ -19,20 +23,14 @@ class OrderRepository @Inject constructor(
 
     suspend fun getOrders(): Response<TestResponse> = apiService.getOrders()
 
-    suspend fun postOrders(result: Result_2):
-            Response<PostResponseAnswer> =
-        apiService.createPost(post = result)
+    suspend fun postOrders(result: Result_2): Response<PostResponseAnswer> = apiService.createPost(post = result)
 
-    fun fetchOneOrder(id: String) = flow {
+    fun fetchOneOrder(id: String) = flow { val result = dao.getOneProductDetail(id)
+        emit(Resource.success(cascheToResultMapper.map(result))) }
 
-        val result = dao.getOneProductDetail(id)
-
-        emit(Resource.success(cascheToResultMapper.map(result)))
-    }
-
+    suspend fun deleteOrder(id: String) : Response<DeleteResponse> = apiService.deleteOrder(objectId = id)
 
     fun fetchOrders() = flow {
-
         emit(Resource.loading())
 
 //        try {
