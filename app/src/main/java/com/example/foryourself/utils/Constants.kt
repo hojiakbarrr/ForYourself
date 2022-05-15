@@ -1,4 +1,5 @@
-package com.example.kapriz.utils
+package com.example.foryourself.utils
+
 
 object Constants {
     const val APPLICATION_ID: String = "9TvPKN6kO8NZVihoWKkE3lc9YjWrgxyNDjadED2O"
@@ -6,5 +7,8 @@ object Constants {
     const val REST_API_KEY: String = "HvsbgFcXJoZSqrFJXHYYPqxtb3ZeCJ02glXYKSW1"
     const val BASE_URL: String = "https://parseapi.back4app.com/"
     const val CONTENT_TYPE: String = "application/json"
+
+    const val ID_PRODUCT = "com.example"
+
 
 }

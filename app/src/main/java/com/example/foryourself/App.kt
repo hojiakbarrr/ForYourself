@@ -2,7 +2,7 @@ package com.example.foryourself
 
 import android.app.Application
 import com.example.foryourself.db.ProductDao
-import com.example.kapriz.utils.Constants
+import com.example.foryourself.utils.Constants
 import com.parse.Parse
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope

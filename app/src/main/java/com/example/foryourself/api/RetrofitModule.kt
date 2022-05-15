@@ -1,7 +1,7 @@
 package com.example.foryourself.api
 
 import com.example.kapriz.api.ApiService
-import com.example.kapriz.utils.Constants
+import com.example.foryourself.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,9 +26,9 @@ object RetrofitModule {
         val request = chain.request()
             .newBuilder()
             .cacheControl(CacheControl.Builder().maxAge(0, TimeUnit.SECONDS).build())
-            .addHeader("X-Parse-Application-Id",Constants.APPLICATION_ID)
-            .addHeader("X-Parse-Rest-API-Key",Constants.REST_API_KEY)
-            .addHeader("Content-Type",Constants.CONTENT_TYPE)
+            .addHeader("X-Parse-Application-Id", Constants.APPLICATION_ID)
+            .addHeader("X-Parse-Rest-API-Key", Constants.REST_API_KEY)
+            .addHeader("Content-Type", Constants.CONTENT_TYPE)
             .build()
 
         return@Interceptor chain.proceed(request)

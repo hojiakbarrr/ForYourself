@@ -17,8 +17,8 @@ interface ProductDao {
     @Query("select * from products_table")
     suspend fun getProductsFromDATABASE(): MutableList<ResultCache>
 
-    @Query("select * from products_table where title ==:titleProduct")
-    suspend fun getOneProductFromRepository(titleProduct: String): ResultCache
+    @Query("select * from products_table where objectId ==:ID")
+    suspend fun getOneProductDetail(ID: String): ResultCache
 
 
     @Query("DELETE FROM products_table")

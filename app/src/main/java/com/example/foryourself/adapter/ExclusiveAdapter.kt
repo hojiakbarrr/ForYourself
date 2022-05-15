@@ -15,10 +15,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.data.retrofitResponse.Result
 import com.example.foryourself.databinding.ItemProductBinding
+import com.example.foryourself.db.model.ResultCache
 import com.example.kapriz.utils.uploadImage2
 
 class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
 
+    var onItemClick:((Result) -> Unit) ? = null
 
     inner class ExclusiveAdapterViewHolder(val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -57,8 +59,10 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
         }
 
         holder.binding.productName.text = product.title
-
         holder.binding.productPrice.text = product.price
+        holder.itemView.setOnClickListener {it ->
+            onItemClick!!.invoke(product)
+        }
 
     }
 

@@ -29,6 +29,6 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideBookDao(db: ProductDataBase): ProductDao =
+    fun provideProductDao(db: ProductDataBase): ProductDao =
         db.get()
 }

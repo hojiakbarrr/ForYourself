@@ -28,13 +28,10 @@ class HomeViewModel @Inject constructor(
 
 
 //    fun allOrders() = liveData(context = viewModelScope.coroutineContext+Dispatchers.IO){
-//
 //        val response = repository.getOrders()
 //        if (response.isSuccessful){
 //               emit(response.body()!!.results)
-//
-//            Log.d("retryуву", response.body().toString())
-//
+//            Log.d("retryуву", response.body().toString()
 //        }
 //    }
 

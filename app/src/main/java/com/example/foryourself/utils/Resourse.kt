@@ -22,6 +22,9 @@ data class Resource<T>(
         fun <T> error(message: String?): Resource<T> =
             Resource(status = Status.ERROR, data = null, message = message, exception = null)
 
+        fun <T> errorInet(message: String?,data: T ): Resource<T> =
+            Resource(status = Status.ERROR, data = data, message = message, exception = null)
+
         fun <T> empty(): Resource<T> =
             Resource(status = Status.EMPTY, data = null, exception = null, message = null)
 

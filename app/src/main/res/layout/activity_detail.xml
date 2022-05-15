@@ -17,10 +17,11 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/accent"
+            app:contentScrim="#4BBFF3"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="Название продукта"
-
+            app:expandedTitleTextColor="@color/white"
+            app:collapsedTitleTextColor="@color/white"
             >
 
             <ImageView
@@ -41,29 +42,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_to_fav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_favorite"
-        android:backgroundTint="@color/primary_light"
-        app:tint="@android:color/holo_red_light"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|end"
-        android:layout_marginEnd="@dimen/_10sdp"
-        />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit_to_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_editor_24"
-        android:backgroundTint="@color/primary_light"
-        app:tint="@android:color/holo_red_light"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|start"
-        android:layout_marginStart="@dimen/_10sdp"
-        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -73,6 +51,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
 
             <LinearLayout
                 android:id="@+id/linear_layout"
@@ -112,7 +92,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_by_size"
                 android:layout_width="399dp"
-                android:layout_height="47dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="@+id/rec_by_size"
                 app:layout_constraintTop_toBottomOf="@+id/rec_by_size">
@@ -145,6 +128,7 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="10dp"
+                    android:layout_gravity="center"
                     app:cardMaxElevation="@dimen/_6sdp">
 
                     <TextView
@@ -175,9 +159,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="horizontal"
-                android:layout_marginEnd="@dimen/_5sdp"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
                 app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
                 <com.google.android.material.card.MaterialCardView
@@ -201,29 +186,18 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout">
-
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="10dp"
+                    android:layout_gravity="bottom"
                     app:cardMaxElevation="@dimen/_6sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:text="KGZ"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_25sdp">
@@ -240,10 +214,11 @@
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:src="@drawable/img_description"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_instructions"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toTopOf="@+id/tv_instructions"/>
+                app:layout_constraintTop_toTopOf="@+id/tv_instructions" />
 
 
             <TextView
@@ -256,7 +231,7 @@
                 android:gravity="center"
                 android:text="Описание товара"
                 android:textColor="@color/q_black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"
                 android:layout_marginStart="@dimen/_4sdp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -271,14 +246,67 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@id/tv_instructions" />
+
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:orientation="vertical"
+        >
+
+
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab2_editor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/purple_200"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="invisible"
+
+            android:src="@drawable/ic_editor_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab3_delete_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/grey"
+            android:clickable="true"
+            android:visibility="invisible"
+
+            android:focusable="true"
+            android:src="@drawable/ic_delete"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_all_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:backgroundTint="@color/primary"
+            android:paddingBottom="23dp"
+
+            app:srcCompat="@drawable/ic_finger" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/img_youtube"
@@ -287,6 +315,7 @@
         android:layout_gravity="center|bottom"
         android:src="@drawable/youtube"
         android:layout_marginBottom="@dimen/_10sdp"/>
+
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progress_bar"
@@ -300,6 +329,8 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom"
         tools:visibility="visible" />
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

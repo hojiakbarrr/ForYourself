@@ -1,5 +1,6 @@
 package com.example.foryourself.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
+import com.example.foryourself.ui.detail.DetailActivity
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.viewmodels.HomeViewModel
+import com.example.foryourself.utils.Constants
 import com.example.kapriz.utils.toast
 import com.example.kapriz.utils.uploadImage2
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,6 +59,7 @@ class HomeFragment : Fragment() {
 //        viewModel.allOrders().observe(viewLifecycleOwner) {
 //            exclusiveAdapter.diffor.submitList(it)
 //        }
+
         viewModel.getOrders()
         viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
             exclusiveAdapter.diffor.submitList(it)
@@ -72,13 +73,23 @@ class HomeFragment : Fragment() {
         }
 
         requireContext().uploadImage2(R.drawable.info, binding.imgForAdvertising)
+        onClickItem()
 
-//        Glide.with(requireContext())
+
+//       Glide.with(requireContext())
 //            .load(R.drawable.info)
 ////            .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
 //            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
 //            .into(binding.imgForAdvertising)
 
+    }
+
+    private fun onClickItem() {
+        exclusiveAdapter.onItemClick = { t->
+            val intent = Intent(activity, DetailActivity::class.java )
+            intent.putExtra(Constants.ID_PRODUCT, t.objectId)
+            startActivity(intent)
+        }
     }
 
 }

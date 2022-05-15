@@ -23,11 +23,19 @@ class OrderRepository @Inject constructor(
             Response<PostResponseAnswer> =
         apiService.createPost(post = result)
 
+    fun fetchOneOrder(id: String) = flow {
+
+        val result = dao.getOneProductDetail(id)
+
+        emit(Resource.success(cascheToResultMapper.map(result)))
+    }
+
 
     fun fetchOrders() = flow {
 
         emit(Resource.loading())
 
+//        try {
         if (dao.getProductsFromDATABASE().isEmpty()) {
             val response = apiService.getOrders()
             if (response.isSuccessful) {
@@ -36,7 +44,7 @@ class OrderRepository @Inject constructor(
                     dao.addProductsFromRepository(resultToCascheMapper.map(product))
                 }
 
-                if (resultList!!.isEmpty())emit(Resource.empty())
+                if (resultList!!.isEmpty()) emit(Resource.empty())
                 else emit(Resource.success(data = resultList))
 
             } else emit(Resource.error(response.message()))
@@ -51,6 +59,9 @@ class OrderRepository @Inject constructor(
             else emit(Resource.success(data = resultList))
 
         }
+//        } catch (e: Exception) {
+//            emit(Resource.error())
+//        }
 
     }
 

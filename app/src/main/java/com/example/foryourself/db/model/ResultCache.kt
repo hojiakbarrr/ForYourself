@@ -37,18 +37,18 @@ data class ResultCache(
 data class ImageFirstCache(
     val __type: String,
     val name: String,
-    val url: String
+    val url: String ? =null
 )
 
 
 data class ImageMainCache(
     val __type: String,
     val name: String,
-    val url: String
+    val url: String? =null
 )
 
 data class ImageThirdCache(
     val __type: String,
     val name: String,
-    val url: String
+    val url: String? =null
 )
