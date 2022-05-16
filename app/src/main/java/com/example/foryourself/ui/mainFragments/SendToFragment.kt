@@ -1,16 +1,13 @@
-package com.example.foryourself.ui
+package com.example.foryourself.ui.mainFragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.foryourself.R
-import com.example.foryourself.databinding.ProfileFragmentBinding
 import com.example.foryourself.databinding.SendToFragmentBinding
-import com.example.foryourself.viewmodels.SendToViewModel
+import com.example.foryourself.viewmodels.main.SendToViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

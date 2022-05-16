@@ -19,10 +19,13 @@
         android:theme="@style/Theme.ForYourself"
         tools:node="merge">
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name=".ui.activity.EditorActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

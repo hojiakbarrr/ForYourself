@@ -1,5 +1,6 @@
-package com.example.foryourself.ui
+package com.example.foryourself.ui.mainFragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
-import com.example.foryourself.ui.detail.DetailActivity
+import com.example.foryourself.ui.activity.DetailActivity
 import com.example.foryourself.utils.LoadingDialog
-import com.example.foryourself.viewmodels.HomeViewModel
+import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.example.foryourself.utils.Constants
 import com.example.kapriz.utils.toast
 import com.example.kapriz.utils.uploadImage2
@@ -36,6 +37,7 @@ class HomeFragment : Fragment() {
         exclusiveAdapter = ExclusiveAdapter()
         exclusiveAdapters()
 
+
     }
 
 
@@ -54,6 +56,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("CommitPrefEdits")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        viewModel.allOrders().observe(viewLifecycleOwner) {
@@ -78,7 +81,6 @@ class HomeFragment : Fragment() {
         requireContext().uploadImage2(R.drawable.info, binding.imgForAdvertising)
         onClickItem()
 
-
 //       Glide.with(requireContext())
 //            .load(R.drawable.info)
 ////            .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
@@ -88,11 +90,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClickItem() {
-        exclusiveAdapter.onItemClick = { t->
-            val intent = Intent(activity, DetailActivity::class.java )
+        exclusiveAdapter.onItemClick = { t ->
+            val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(Constants.ID_PRODUCT, t.objectId)
             startActivity(intent)
         }
     }
-
 }

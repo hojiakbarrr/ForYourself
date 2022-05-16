@@ -1,4 +1,4 @@
-package com.example.foryourself.ui.detail
+package com.example.foryourself.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,13 +10,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.foryourself.MainActivity
 import com.example.foryourself.R
 import com.example.foryourself.adapter.SizeAdapter
 import com.example.foryourself.databinding.ActivityDetailBinding
 import com.example.foryourself.utils.Constants
 import com.example.foryourself.utils.LoadingDialog
-import com.example.foryourself.viewmodels.Detail_viewmodel
+import com.example.foryourself.viewmodels.detail.Detail_viewmodel
 import com.example.kapriz.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 

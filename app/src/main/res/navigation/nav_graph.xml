@@ -7,27 +7,31 @@
 
     <fragment
         android:id="@+id/addToFragment"
-        android:name="com.example.foryourself.ui.AddToFragment"
+        android:name="com.example.foryourself.ui.mainFragments.AddToFragment"
         android:label="add_to_fragment"
         tools:layout="@layout/add_to_fragment" />
     <fragment
         android:id="@+id/categoryFragment2"
-        android:name="com.example.foryourself.ui.CategoryFragment"
+        android:name="com.example.foryourself.ui.mainFragments.CategoryFragment"
         android:label="category_fragment"
         tools:layout="@layout/category_fragment" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.foryourself.ui.HomeFragment"
+        android:name="com.example.foryourself.ui.mainFragments.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/from_homeFragment_to_addToFragment"
+            app:destination="@id/addToFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.example.foryourself.ui.ProfileFragment"
+        android:name="com.example.foryourself.ui.mainFragments.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
     <fragment
         android:id="@+id/sendToFragment"
-        android:name="com.example.foryourself.ui.SendToFragment"
+        android:name="com.example.foryourself.ui.mainFragments.SendToFragment"
         android:label="send_to_fragment"
         tools:layout="@layout/send_to_fragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.foryourself.viewmodels
+package com.example.foryourself.viewmodels.main
 
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result

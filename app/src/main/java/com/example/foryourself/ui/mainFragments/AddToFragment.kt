@@ -1,4 +1,4 @@
-package com.example.foryourself.ui
+package com.example.foryourself.ui.mainFragments
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.foryourself.R
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
-import com.example.foryourself.viewmodels.AddToViewModel
+import com.example.foryourself.viewmodels.main.AddToViewModel
 import com.example.kapriz.utils.*
 import com.parse.ParseFile
 import com.parse.ParseObject
@@ -33,7 +33,6 @@ class AddToFragment : Fragment() {
     }
 
     private val viewModel: AddToViewModel by viewModels()
-
     private var imageUri_First: Uri? = null
     private var selectedBitmap_First: Bitmap? = null
     var imageFile_Main: ParseFile? = null
@@ -47,17 +46,19 @@ class AddToFragment : Fragment() {
     private var selectedBitmap_Third: Bitmap? = null
     var imageFile_Third: ParseFile? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.getMainPhoto.setOnClickListener {
             openGallery(IMAGE_MAIN_CODE)
         }
@@ -82,10 +83,8 @@ class AddToFragment : Fragment() {
 
                                         }
                                     })
-
                                 }
                             })
-
                         }
                     })
                 }
@@ -114,7 +113,7 @@ class AddToFragment : Fragment() {
                 fourthSize = binding.prodSizeFour.text.toString().trim()
             )
         ).observe(viewLifecycleOwner) {
-            toast("URAAA")
+            toast("Товар Успешно был добавлен для продажи")
         }
 
         binding.apply {

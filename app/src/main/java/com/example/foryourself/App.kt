@@ -1,6 +1,8 @@
 package com.example.foryourself
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.utils.Constants
 import com.parse.Parse
@@ -15,7 +17,6 @@ import javax.inject.Inject
 class App: Application(){
 
 
-
     @Inject
     lateinit var dao : ProductDao
 
@@ -24,6 +25,7 @@ class App: Application(){
 
     override fun onCreate() {
         super.onCreate()
+
 
         Parse.initialize(
             Parse.Configuration.Builder(this)
