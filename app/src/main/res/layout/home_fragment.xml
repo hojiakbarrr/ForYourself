@@ -7,6 +7,21 @@
 
     tools:context=".ui.mainFragments.HomeFragment">
 
+    <com.example.loadinganimation.LoadingAnimation
+        android:id="@+id/loadingAnim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:barType="@drawable/clock"
+        app:boldText="false"
+        app:enlarge="3"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textColor="@color/black"
+        app:textSize="8sp" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"

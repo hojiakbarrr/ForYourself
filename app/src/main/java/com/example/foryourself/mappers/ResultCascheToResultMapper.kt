@@ -19,17 +19,17 @@ class ResultCascheToResultMapper: Mapper<ResultCache, Result>() {
             image_first = ImageFirst(
                 __type = image_first.__type,
                 name = image_first.name,
-                url = image_first.url!!
+                url = image_first.url
             ),
             image_main = ImageMain(
                 __type = image_main.__type,
                 name = image_main.name,
-                url = image_main.url!!
+                url = image_main.url
             ),
             image_third = ImageThird(
                 __type = image_third.__type,
                 name = image_third.name,
-                url = image_third.url!!
+                url = image_third.url
             ),
             objectId = objectId,
             price = price,

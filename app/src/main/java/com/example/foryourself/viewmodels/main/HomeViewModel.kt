@@ -1,8 +1,12 @@
 package com.example.foryourself.viewmodels.main
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.db.ProductDao
+import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
+import com.example.foryourself.utils.Mapper
 import com.example.foryourself.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -11,8 +15,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-
-    private val repository: OrderRepository
+    private val dao : ProductDao,
+    private val repository: OrderRepository,
+    private val resultToCascheMapper: Mapper<Result, ResultCache>,
+    private val cascheToResultMapper: Mapper<ResultCache, Result>
 
 ) : ViewModel() {
     // TODO: Implement the ViewModel
@@ -41,15 +47,22 @@ class HomeViewModel @Inject constructor(
                 Status.SUCCESS -> {
                     _orderLiveData.value = resourse.data!!
                     _loadingLiveData.value = false
+
+                    resourse.data!!.forEach {product ->
+                        dao.addProductsFromRepository(resultToCascheMapper.map(product))
+                    }
+
                 }
                 Status.LOADING -> {
+                    Log.i("Status.LOADING", "Status.LOADING")
                     _loadingLiveData.value = true
                 }
                 Status.ERROR -> {
                     _loadingLiveData.value = false
                     _errorLiveData.value = resourse.message!!
                 }
-                Status.EMPTY ->{
+                Status.EMPTY -> {
+                    _loadingLiveData.value = false
 
                 }
             }

@@ -69,6 +69,7 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
         prepareAdapter()
         getInfo()
         count()
+        dd()
         binding.apply {
             btnAllFab.setOnClickListener {
                 setAnimation(clicked)
@@ -76,6 +77,7 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
                 clicked = !clicked
             }
             fab2Editor.setOnClickListener {
+
                 toast("editor")
                 Log.d("ee", "Editor")
             }
@@ -84,6 +86,10 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
                 viewModel.deleteOrder(productId)
             }
         }
+    }
+
+    private  fun dd() {
+
     }
 
     private fun setVisibility(clicked: Boolean) {

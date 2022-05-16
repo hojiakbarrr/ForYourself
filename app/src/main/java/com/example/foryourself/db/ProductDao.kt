@@ -2,6 +2,7 @@ package com.example.foryourself.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.model.ResultCache
 
 @Dao
@@ -17,11 +18,13 @@ interface ProductDao {
     suspend fun getProductsFromDATABASE(): MutableList<ResultCache>
 
     @Query("select * from products_table where objectId ==:ID")
-    suspend fun getOneProductDetail(ID: String): ResultCache
+    suspend fun getOneProductDetail(ID: String): ResultCache?
 
-    @Delete
-    suspend fun deleteDATABASE(product: ResultCache)
+//    @Delete
+//    suspend fun deleteDATABASEPROD(product: ResultCache)
 
+    @Query("DELETE FROM products_table WHERE objectId = :id")
+    fun deleteDATABASE(id: String)
 /////////////////////////////////////////////////////////////////////////////
 
 

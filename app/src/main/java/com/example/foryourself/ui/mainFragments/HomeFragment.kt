@@ -3,6 +3,7 @@ package com.example.foryourself.ui.mainFragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +63,8 @@ class HomeFragment : Fragment() {
 //        viewModel.allOrders().observe(viewLifecycleOwner) {
 //            exclusiveAdapter.diffor.submitList(it)
 //        }
+
+        Log.i("getOrders.getOrders", "getOrders.getOrders")
 
         viewModel.getOrders()
         viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->

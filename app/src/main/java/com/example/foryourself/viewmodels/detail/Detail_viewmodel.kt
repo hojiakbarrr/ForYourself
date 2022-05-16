@@ -1,5 +1,6 @@
 package com.example.foryourself.viewmodels.detail
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
@@ -36,6 +37,8 @@ class Detail_viewmodel  @Inject constructor(
             _orderDeleteLiveData.value = "Товар был успешно удален"
         }
     }
+
+
 
     fun getOneOrder(id : String) = viewModelScope.launch {
         repository.fetchOneOrder(id).collectLatest { resource ->

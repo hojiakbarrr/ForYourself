@@ -17,15 +17,14 @@ import javax.inject.Inject
 class App: Application(){
 
 
+
     @Inject
     lateinit var dao : ProductDao
 
-    private val applicationScope =
-        CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onCreate() {
         super.onCreate()
-
 
         Parse.initialize(
             Parse.Configuration.Builder(this)
@@ -38,8 +37,6 @@ class App: Application(){
             dao.clearTable()
         }
 
-
     }
-
 
 }
