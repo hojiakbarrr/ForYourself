@@ -1,6 +1,7 @@
 package com.example.foryourself.repository
 
 import android.util.Log
+import com.example.foryourself.data.retrofitResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
@@ -38,45 +39,54 @@ class OrderRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteOrderInServer(id: String): Response<DeleteResponse> = apiService.deleteOrder(objectId = id)
+    suspend fun deleteOrderInServer(id: String): Response<DeleteResponse> =
+        apiService.deleteOrder(objectId = id)
 
-    suspend fun deleteOrderInBASE(id: String) { dao.deleteDATABASE(id) }
-
-    fun fetchOrders() = flow {
-        try {
-
-            emit(Resource.loading())
-            val resultList = dao.getProductsFromDATABASE().map {
-                cascheToResultMapper.map(it)
-            }
-
-            if (resultList.isEmpty()) {
-                val response = apiService.getOrders()
-                if (response.isSuccessful) {
-                    val resultDATAList = response.body()?.results
-//                    resultDATAList?.forEach { product ->
-//                        dao.addProductsFromRepository(resultToCascheMapper.map(product))
-//                    }
-                    if (resultDATAList!!.isEmpty()) emit(Resource.empty())
-                    else emit(Resource.success(data = resultDATAList))
-
-                } else emit(Resource.error(response.message()))
-
-            } else {
-
-
-                Log.i("resultList", dao.getProductsFromDATABASE().size.toString())
-
-
-                if (resultList.isEmpty()) emit(Resource.empty())
-                else emit(Resource.success(data = resultList))
-
-            }
-        } catch (e: Exception) {
-            emit(Resource.error(resourceProvider.errorType(e)))
-        }
-
+    suspend fun deleteOrderInBASE(id: String) {
+        dao.deleteDATABASE(id)
     }
+
+    suspend fun updateOrder(id: String,result: Result_2) : Response<UpdateResponse> = apiService.upDateOrder(objectId = id, post = result)
+
+    suspend fun updateinBASE(product: ResultCache) = dao.updateDATABASE(product = product)
+
+    //startRegion
+//    fun fetchOrders() = flow {
+//        try {
+//
+//            emit(Resource.loading())
+//            val resultList = dao.getProductsFromDATABASE().map {
+//                cascheToResultMapper.map(it)
+//            }
+//
+////            if (resultList.isEmpty()) {
+//            val response = apiService.getOrders()
+//            if (response.isSuccessful) {
+//                val resultDATAList = response.body()?.results
+////                    resultDATAList?.forEach { product ->
+////                        dao.addProductsFromRepository(resultToCascheMapper.map(product))
+////                    }
+//                if (resultDATAList!!.isEmpty()) emit(Resource.empty())
+//                else emit(Resource.success(data = resultDATAList))
+//
+//            } else emit(Resource.error(response.message()))
+//
+////            } else {
+//
+//
+//            Log.i("resultList", dao.getProductsFromDATABASE().size.toString())
+//
+//
+//            if (resultList.isEmpty()) emit(Resource.empty())
+//            else emit(Resource.success(data = resultList))
+//
+////            }
+//        } catch (e: Exception) {
+//            emit(Resource.error(resourceProvider.errorType(e)))
+//        }
+//
+//    }
+    //endRegion
 
 
 }

@@ -16,7 +16,7 @@ import com.example.foryourself.databinding.ActivityDetailBinding
 import com.example.foryourself.utils.Constants
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.viewmodels.detail.Detail_viewmodel
-import com.example.kapriz.utils.toast
+import com.example.foryourself.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -69,7 +69,6 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
         prepareAdapter()
         getInfo()
         count()
-        dd()
         binding.apply {
             btnAllFab.setOnClickListener {
                 setAnimation(clicked)
@@ -77,20 +76,18 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
                 clicked = !clicked
             }
             fab2Editor.setOnClickListener {
-
-                toast("editor")
-                Log.d("ee", "Editor")
+                val intent = Intent(this@DetailActivity, EditorActivity::class.java)
+                intent.putExtra(Constants.ID_PRODUCT_EDIT, productId)
+                startActivity(intent)
             }
             fab3DeleteProduct.setOnClickListener {
                 viewModel.deleteOrderBASE(productId)
                 viewModel.deleteOrder(productId)
+                startActivity(Intent(this@DetailActivity,MainActivity::class.java))
             }
         }
     }
 
-    private  fun dd() {
-
-    }
 
     private fun setVisibility(clicked: Boolean) {
         if (!clicked) {

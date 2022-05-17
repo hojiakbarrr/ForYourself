@@ -9,10 +9,10 @@ import com.example.foryourself.db.model.ResultCache
 interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addProductsFromRepository(product: ResultCache)
+    suspend fun addProductsFromService(product: ResultCache)
 
     @Update
-    suspend fun updateProductsFromRepository(product: ResultCache)
+    suspend fun updateDATABASE(product: ResultCache)
 
     @Query("select * from products_table")
     suspend fun getProductsFromDATABASE(): MutableList<ResultCache>

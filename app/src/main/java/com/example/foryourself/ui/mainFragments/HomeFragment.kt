@@ -17,8 +17,8 @@ import com.example.foryourself.ui.activity.DetailActivity
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.example.foryourself.utils.Constants
-import com.example.kapriz.utils.toast
-import com.example.kapriz.utils.uploadImage2
+import com.example.foryourself.utils.toast
+import com.example.foryourself.utils.uploadImage2
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,15 +60,10 @@ class HomeFragment : Fragment() {
     @SuppressLint("CommitPrefEdits")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewModel.allOrders().observe(viewLifecycleOwner) {
-//            exclusiveAdapter.diffor.submitList(it)
-//        }
 
-        Log.i("getOrders.getOrders", "getOrders.getOrders")
-
-        viewModel.getOrders()
-        viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
+        viewModel.allOrders().observe(viewLifecycleOwner) {
             exclusiveAdapter.diffor.submitList(it)
+
         }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
             try {
@@ -77,9 +72,29 @@ class HomeFragment : Fragment() {
             } catch (e: Exception) {
             }
         }
+
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
             toast(message)
         }
+
+
+
+        Log.i("getOrders.getOrders", "getOrders.getOrders")
+
+//        viewModel.getOrders()
+//        viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
+//            exclusiveAdapter.diffor.submitList(it)
+//        }
+//        viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
+//            try {
+//                if (status) loadingDialog.show()
+//                else loadingDialog.dismiss()
+//            } catch (e: Exception) {
+//            }
+//        }
+//        viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
+//            toast(message)
+//        }
 
         requireContext().uploadImage2(R.drawable.info, binding.imgForAdvertising)
         onClickItem()

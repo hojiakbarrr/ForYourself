@@ -15,8 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.foryourself.R
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
+import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.main.AddToViewModel
-import com.example.kapriz.utils.*
 import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.SaveCallback
@@ -80,7 +80,6 @@ class AddToFragment : Fragment() {
                                     imageFile_Second!!.saveInBackground(SaveCallback { e ->
                                         if (e == null) {
                                             createPost()
-
                                         }
                                     })
                                 }
@@ -243,18 +242,18 @@ class AddToFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             if (requestCode == IMAGE_FIRST_CODE) {
                 imageFile_Second = ParseFile("image.png", image(data.data!!))
-                requireContext().uploadImage(data.data!!, binding.put2Photo)
+                requireContext().uploadImage(data.data!!.toString(), binding.put2Photo)
             }
             if (requestCode == IMAGE_MAIN_CODE) {
                 imageFile_Main =
                     ParseFile("image.png", image(data.data!!))
-                requireContext().uploadImage(data.data!!, binding.putMainPhoto)
+                requireContext().uploadImage(data.data!!.toString(), binding.putMainPhoto)
 
             }
             if (requestCode == IMAGE_THIRD_CODE) {
                 imageFile_Third =
                     ParseFile("image.png", image(data.data!!))
-                requireContext().uploadImage(data.data!!, binding.put3Photo)
+                requireContext().uploadImage(data.data!!.toString(), binding.put3Photo)
 
             }
 

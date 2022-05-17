@@ -1,4 +1,4 @@
-package com.example.kapriz.utils
+package com.example.foryourself.utils
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -41,7 +41,14 @@ fun Fragment.image(uri: Uri): ByteArray {
     return stream.toByteArray()
 }
 
-fun Context.uploadImage(uri: Uri, imageView: ImageView) {
+fun Context.image(uri: Uri): ByteArray {
+    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+    val stream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+    return stream.toByteArray()
+}
+
+fun Context.uploadImage(uri: String, imageView: ImageView) {
     Glide.with(this)
         .load(uri)
         .into(imageView)

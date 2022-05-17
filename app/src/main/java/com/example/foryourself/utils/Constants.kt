@@ -9,7 +9,7 @@ object Constants {
     const val CONTENT_TYPE: String = "application/json"
 
     const val ID_PRODUCT = "com.example"
-    const val PEREHOD = ""
+    const val ID_PRODUCT_EDIT = "com.example_2"
 
 
 }
