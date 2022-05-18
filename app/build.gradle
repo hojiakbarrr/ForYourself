@@ -157,6 +157,9 @@ dependencies {
     // Loading-Animation
     implementation 'com.github.Marvel999:Android-Loading-Animation:1.0.0'
 
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
 
 
 }

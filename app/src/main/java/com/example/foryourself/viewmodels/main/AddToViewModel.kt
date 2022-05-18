@@ -10,6 +10,7 @@ import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.repository.OrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +30,11 @@ class AddToViewModel @Inject constructor(
         else{
             Log.d("retryуву", response.message().toString())
         }
-
     }
+
+    fun ss() = viewModelScope.launch {
+        val ss = repository.getOrders()
+    }
+
 
 }

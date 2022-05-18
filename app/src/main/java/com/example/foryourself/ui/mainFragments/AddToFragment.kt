@@ -114,7 +114,7 @@ class AddToFragment : Fragment() {
         ).observe(viewLifecycleOwner) {
             toast("Товар Успешно был добавлен для продажи")
         }
-
+        viewModel.ss()
         binding.apply {
             prodName.text.clear()
             prodDescrip.text.clear()
@@ -134,6 +134,7 @@ class AddToFragment : Fragment() {
             put3Photo.setImageResource(R.drawable.picture)
 
         }
+
     }
 
     private fun creatPost() {

@@ -57,7 +57,7 @@ fun Context.uploadImage(uri: String, imageView: ImageView) {
 fun Context.uploadImage2(uri: Int, imageView: ImageView) {
     Glide.with(this)
         .load(uri)
-        .apply(RequestOptions.bitmapTransform(RoundedCorners(150)))
+        .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
         .into(imageView)
 }
 

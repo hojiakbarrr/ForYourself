@@ -7,7 +7,7 @@
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/ic_category.xml" value="0.129" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/ic_favorite.xml" value="0.129" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/shape.xml" value="0.1" />
-        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_detail.xml" value="0.25" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_editor.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_main.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/add_to_fragment.xml" value="0.33" />
@@ -15,7 +15,7 @@
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/detail_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/editor_fragment.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/fragment_detail_viewmodel.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/home_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/home_fragment.xml" value="0.22" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/ic_favorite.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/item_product.xml" value="0.45" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/minus_item.xml" value="0.36666666666666664" />
