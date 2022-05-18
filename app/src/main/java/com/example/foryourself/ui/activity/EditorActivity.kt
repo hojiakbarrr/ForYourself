@@ -4,16 +4,18 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.foryourself.R
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.ActivityEditorBinding
 import com.example.foryourself.ui.mainFragments.AddToFragment
@@ -25,6 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+
 
 @AndroidEntryPoint
 class EditorActivity : AppCompatActivity() {
@@ -45,20 +49,20 @@ class EditorActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
     }
 
+    private lateinit var imageMain: ImageMain
+    private lateinit var firstMain: ImageFirst
+    private lateinit var thirdMain: ImageThird
+
+    private var imageFile_Main: ParseFile? = null
+    private var imageFile_Second: ParseFile? = null
+    private var imageFile_Third: ParseFile? = null
+
     private var imageUri_First: Uri? = null
-    private var selectedBitmap_First: Bitmap? = null
-    var imageFile_Main: ParseFile? = null
-    var ee: ImageMain? = null
-
-
-    private var imageUri_Second: Uri? = null
-    private var selectedBitmap_Second: Bitmap? = null
-    var imageFile_Second: ParseFile? = null
-
+    private var selectedBitmap_MAIN: Bitmap? = null
     private var imageUri_Third: Uri? = null
     private var selectedBitmap_Third: Bitmap? = null
-    var imageFile_Third: ParseFile? = null
-
+    private var imageUri_Second: Uri? = null
+    private var selectedBitmap_Second: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +108,7 @@ class EditorActivity : AppCompatActivity() {
                     prodSizeSixEdit.setText(it.sixthSize)
                     prodSizeSevenEdit.setText(it.seventhSize)
                     prodSizeEightEdit.setText(it.eighthSize)
+
                     if (it.image_main != null) {
                         Glide.with(this@EditorActivity)
                             .load(it.image_main.url)
@@ -114,7 +119,7 @@ class EditorActivity : AppCompatActivity() {
                             .into(putMainPhotoEdit)
                     }
 
-                    ee = it.image_main
+                    imageMain = it.image_main
 
                     if (it.image_first != null) {
                         Glide.with(this@EditorActivity)
@@ -125,6 +130,10 @@ class EditorActivity : AppCompatActivity() {
                             .load(R.drawable.picture)
                             .into(put2PhotoEdit)
                     }
+
+                    firstMain = it.image_first
+
+
                     if (it.image_third != null) {
                         Glide.with(this@EditorActivity)
                             .load(it.image_third.url)
@@ -134,6 +143,8 @@ class EditorActivity : AppCompatActivity() {
                             .load(R.drawable.picture)
                             .into(put3PhotoEdit)
                     }
+
+                    thirdMain = it.image_third
 
                 } catch (e: Exception) {
                     toast(e.message.toString())
@@ -151,7 +162,7 @@ class EditorActivity : AppCompatActivity() {
                             toast("Главное фото загрузилось на сервер")
                         }
                     })
-                }else {
+                } else {
                     Handler(Looper.getMainLooper()).post {
                         toast("Главное фото Осталось без изменений")
                     }
@@ -162,10 +173,12 @@ class EditorActivity : AppCompatActivity() {
                             toast("Второе дополнительное фото загрузилось на сервер")
                         }
                     })
-                }else{
+                } else {
                     Handler(Looper.getMainLooper()).post {
                         toast("Второе фото Осталось без изменений")
                     }
+
+
                 }
                 if (imageFile_Second != null) {
                     imageFile_Second!!.saveInBackground(SaveCallback { e ->
@@ -173,31 +186,35 @@ class EditorActivity : AppCompatActivity() {
                             toast("Третие дополнительное фото загрузилось на сервер")
                         }
                     })
-                }else{
+                } else {
                     Handler(Looper.getMainLooper()).post {
                         toast("Третие фото Осталось без изменений")
                     }
+
                 }
-                updatePost(imageFile_Second)
+                updatePost()
             }
         }
     }
 
-    private fun updatePost(imageFile_Second: ParseFile?) {
-        if (this.imageFile_Second != null){
+    private fun updatePost(
+    ) {
 
-        }
+        val imageMainFinal = if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
+        val imageFirstFinal = if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
+        val imageThirdFinal = if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
+
+
         viewModel.updateOrder(
             productIdd,
-
             Result_2(
                 description = binding.prodDescripEdit.text.toString().trim(),
                 eighthSize = binding.prodSizeEightEdit.text.toString().trim(),
                 fifthSize = binding.prodSizeFiveEdit.text.toString().trim(),
                 firstSize = binding.prodSizeOneEdit.text.toString().trim(),
-                image_first = this.imageFile_Second!!.toImageFirst(),
-                image_main = ee!!,
-                image_third = imageFile_Third!!.toImageThird(),
+                image_first = imageFirstFinal,
+                image_main = imageMainFinal,
+                image_third = imageThirdFinal,
                 price = binding.prodPriceEdit.text.toString().trim(),
                 secondSize = binding.prodSizeTwoEdit.text.toString().trim(),
                 seventhSize = binding.prodSizeSevenEdit.text.toString().trim(),
@@ -208,11 +225,34 @@ class EditorActivity : AppCompatActivity() {
                 fourthSize = binding.prodSizeFourEdit.text.toString().trim()
             )
         )
+
         viewModel.ss()
-        clearALL()
-        viewModel.observeUpdateOrder().observe(this) { it ->
-            toast(it)
+
+
+//
+        lifecycleScope.launch(Dispatchers.Main) {
+
+            viewModel.orderDeleteLiveData.observe(this@EditorActivity) { it ->
+
+                toast(it)
+                val intent = Intent(this@EditorActivity, MainActivity::class.java)
+                startActivity(intent)
+                clearALL()
+            }
         }
+
+//        lifecycleScope.launch {
+//            withContext(Dispatchers.Main) {
+//                viewModel.orderDeleteLiveData.observe(this@EditorActivity) { it ->
+//
+//                    toast(it)
+//                    val intent = Intent(this@EditorActivity,MainActivity::class.java)
+//                    startActivity(intent)
+//
+//                }
+//                // Do something
+//            }
+//        }
 
 
     }

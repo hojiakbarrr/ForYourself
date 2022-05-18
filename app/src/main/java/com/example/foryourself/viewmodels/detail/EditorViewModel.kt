@@ -12,8 +12,10 @@ import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
 import com.example.foryourself.utils.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -27,7 +29,9 @@ class EditorViewModel @Inject constructor(
     ) : ViewModel() {
     private var _orderLiveData = MutableLiveData<Result>()
     var orderLiveData: LiveData<Result> = _orderLiveData
+
     private var _orderDeleteLiveData = MutableLiveData<String>()
+     var orderDeleteLiveData: LiveData<String> = _orderDeleteLiveData
 
 
     fun getOneOrder(id: String) = viewModelScope.launch {
@@ -44,19 +48,20 @@ class EditorViewModel @Inject constructor(
         val ss = repository.getOrders()
     }
 
-    fun updateOrder(id: String, result: Result_2) = viewModelScope.launch {
+    fun updateOrder(id: String, result: Result_2) = viewModelScope.launch(Dispatchers.IO) {
         val response = repository.updateOrder(id = id, result = result)
         if (response.isSuccessful) {
-            _orderDeleteLiveData.value = "Товар был успешно обновлен"
-        } else _orderDeleteLiveData.value = "Неполучилось обновить товар"
+            withContext(Dispatchers.Main) {
+                _orderDeleteLiveData.value = "Товар был успешно обновлен"
+            }
+
+        } else withContext(Dispatchers.Main) {
+            _orderDeleteLiveData.value = "Неполучилось обновить товар"
+        }
     }
 
     fun updateDATABASE(product: Result) = viewModelScope.launch {
         val dao = repository.updateinBASE(product = resultToCascheMapper.map(product))
 
-    }
-
-    fun observeUpdateOrder(): LiveData<String> {
-        return _orderDeleteLiveData
     }
 }

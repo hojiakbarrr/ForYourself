@@ -59,6 +59,10 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
         LoadingDialog(context = this, "Идет подгрузка данных пождождите")
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
