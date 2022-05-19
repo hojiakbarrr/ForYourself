@@ -35,12 +35,14 @@ class HomeViewModel @Inject constructor(
         _loadingLiveData.postValue(false)
         val response = repository.getOrders()
         if (response.isSuccessful) {
-            emit(response.body()!!.results)
-            response.body()!!.results.forEach { product ->
-                dao.addProductsFromService(resultToCascheMapper.map(product))
+            response.body()!!.results?.forEach { product ->
+                    dao.addProductsFromService(resultToCascheMapper.map(product))
             }
+
+                val resuk = dao.getProductsFromDATABASE()
+                emit(resuk)
+
             _loadingLiveData.postValue(false)
-            Log.d("retryуву", response.body().toString())
         }else _errorLiveData.value = response.message()
     }
 
@@ -52,7 +54,7 @@ class HomeViewModel @Inject constructor(
 //                    _loadingLiveData.value = false
 //
 //                    resourse.data!!.forEach {product ->
-//                        dao.addProductsFromRepository(resultToCascheMapper.map(product))
+//                        dao.addProductsFromRepository(resultToCacheMapper.map(product))
 //                    }
 //
 //                }

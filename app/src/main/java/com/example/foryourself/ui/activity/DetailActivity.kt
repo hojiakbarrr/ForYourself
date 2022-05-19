@@ -48,9 +48,9 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
             R.anim.from_botton_anim
         )
     }
+    private lateinit var productId: String
     private var clicked: Boolean = false
     private val viewModel: Detail_viewmodel by viewModels()
-    private lateinit var productId: String
     private lateinit var youtubeHTTPS: String
     var one: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
@@ -157,27 +157,27 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
     private fun getInfo() {
         val intent = intent
         productId = intent.getStringExtra(Constants.ID_PRODUCT)!!
-        Log.d("TAG", productId)
+        Log.i("TAGe", productId)
         viewModel.getOneOrder(productId)
         viewModel.orderLiveData.observe(this) {
-            Log.d("TAG", it.toString())
+            Log.d("TAGe", productId)
             binding.apply {
                 collapsingToolbar.title = it.title
                 Glide.with(this@DetailActivity)
-                    .load(it.image_first.url)
+                    .load(it.image_first?.url)
                     .into(imgProductDetail)
                 txtPrice.setText(it.price)
                 txtDescription.setText(it.description)
-                youtubeHTTPS = it.youtubeTrailer
+                youtubeHTTPS = it.youtubeTrailer!!
 
-                sizeList.add(it.firstSize)
-                sizeList.add(it.secondSize)
-                sizeList.add(it.thirdSize)
-                sizeList.add(it.fourthSize)
-                sizeList.add(it.fifthSize)
-                sizeList.add(it.sixthSize)
-                sizeList.add(it.seventhSize)
-                sizeList.add(it.eighthSize)
+                sizeList.add(it.firstSize!!)
+                sizeList.add(it.secondSize!!)
+                sizeList.add(it.thirdSize!!)
+                sizeList.add(it.fourthSize!!)
+                sizeList.add(it.fifthSize!!)
+                sizeList.add(it.sixthSize!!)
+                sizeList.add(it.seventhSize!!)
+                sizeList.add(it.eighthSize!!)
 
                 sizeAdapter.productList = sizeList
 

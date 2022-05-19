@@ -11,21 +11,22 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.ItemProductBinding
+import com.example.foryourself.db.model.ResultCache
 
 class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
 
-    var onItemClick:((Result) -> Unit) ? = null
+    var onItemClick:((ResultCache) -> Unit) ? = null
 
     inner class ExclusiveAdapterViewHolder(val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root)
 
 
-    private val diffUtil = object : DiffUtil.ItemCallback<Result>() {
-        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<ResultCache>() {
+        override fun areItemsTheSame(oldItem: ResultCache, newItem: ResultCache): Boolean {
             return oldItem.objectId == newItem.objectId
         }
 
-        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+        override fun areContentsTheSame(oldItem: ResultCache, newItem: ResultCache): Boolean {
             return oldItem == newItem
         }
 

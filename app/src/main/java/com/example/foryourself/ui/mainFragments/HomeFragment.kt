@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
@@ -77,8 +79,6 @@ class HomeFragment : Fragment() {
             toast(message)
         }
 
-
-
         Log.i("getOrders.getOrders", "getOrders.getOrders")
 
 //        viewModel.getOrders()
@@ -96,7 +96,28 @@ class HomeFragment : Fragment() {
 //            toast(message)
 //        }
 
-        requireContext().uploadImage2(R.drawable.info, binding.imgForAdvertising)
+        val imageList = ArrayList<SlideModel>() // Create image list
+//        imageList.add(SlideModel("String Url" or R.drawable)
+//        imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
+        imageList.add(
+            SlideModel(
+                R.drawable.reklama3,
+//                "The animal population decreased by 58 percent in 42 years.",
+                scaleType = ScaleTypes.FIT
+            )
+        )
+        imageList.add(
+            SlideModel(
+                R.drawable.reklama2,
+//                "Elephants and tigers may become extinct.",
+                scaleType = ScaleTypes.FIT
+            )
+        )
+        imageList.add(SlideModel(R.drawable.reklama1, scaleType = ScaleTypes.FIT))
+
+        binding.imageSlider.setImageList(imageList)
+
+//        requireContext().uploadImage2(R.drawable.reklama1, binding.imgForAdvertising)
         onClickItem()
 
 //       Glide.with(requireContext())
@@ -111,6 +132,7 @@ class HomeFragment : Fragment() {
         exclusiveAdapter.onItemClick = { t ->
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(Constants.ID_PRODUCT, t.objectId)
+            Log.d("TAGe", t.objectId.toString())
             startActivity(intent)
         }
     }

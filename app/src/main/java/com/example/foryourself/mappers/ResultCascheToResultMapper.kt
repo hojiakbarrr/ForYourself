@@ -7,7 +7,7 @@ import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.Mapper
 
-class ResultCascheToResultMapper: Mapper<ResultCache, Result>() {
+class ResultCascheToResultMapper : Mapper<ResultCache, Result>() {
     override fun map(from: ResultCache): Result = from.run {
         Result(
             createdAt = createdAt,
@@ -17,19 +17,19 @@ class ResultCascheToResultMapper: Mapper<ResultCache, Result>() {
             fourthSize = fourthSize,
             firstSize = firstSize,
             image_first = ImageFirst(
-                __type = image_first.__type,
-                name = image_first.name,
-                url = image_first.url
+                __type = image_first?.__type,
+                name = image_first?.name,
+                url = image_first?.url
             ),
             image_main = ImageMain(
-                __type = image_main.__type,
-                name = image_main.name,
-                url = image_main.url
+                __type = image_main?.__type,
+                name = image_main?.name,
+                url = image_main?.url
             ),
             image_third = ImageThird(
-                __type = image_third.__type,
-                name = image_third.name,
-                url = image_third.url
+                __type = image_third?.__type,
+                name = image_third?.name,
+                url = image_third?.url
             ),
             objectId = objectId,
             price = price,
@@ -39,7 +39,14 @@ class ResultCascheToResultMapper: Mapper<ResultCache, Result>() {
             thirdSize = thirdSize,
             title = title,
             updatedAt = updatedAt,
-            youtubeTrailer = youtubeTrailer
+            youtubeTrailer = youtubeTrailer,
+            putID = putID,
+            colors = colors,
+            season = season,
+            colors1 = colors1,
+            colors2 = colors2,
+            colors3 = colors3,
+            tipy = tipy,
         )
     }
 }

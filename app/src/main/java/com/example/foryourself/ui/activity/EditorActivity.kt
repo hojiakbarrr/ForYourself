@@ -119,7 +119,7 @@ class EditorActivity : AppCompatActivity() {
                             .into(putMainPhotoEdit)
                     }
 
-                    imageMain = it.image_main
+                    imageMain = it.image_main!!
 
                     if (it.image_first != null) {
                         Glide.with(this@EditorActivity)
@@ -131,7 +131,7 @@ class EditorActivity : AppCompatActivity() {
                             .into(put2PhotoEdit)
                     }
 
-                    firstMain = it.image_first
+                    firstMain = it.image_first!!
 
 
                     if (it.image_third != null) {
@@ -144,7 +144,7 @@ class EditorActivity : AppCompatActivity() {
                             .into(put3PhotoEdit)
                     }
 
-                    thirdMain = it.image_third
+                    thirdMain = it.image_third!!
 
                 } catch (e: Exception) {
                     toast(e.message.toString())
@@ -222,7 +222,8 @@ class EditorActivity : AppCompatActivity() {
                 thirdSize = binding.prodSizeThreeEdit.text.toString().trim(),
                 title = binding.prodNameEdit.text.toString().trim(),
                 youtubeTrailer = binding.prodTrailerEdit.text.toString().trim(),
-                fourthSize = binding.prodSizeFourEdit.text.toString().trim()
+                fourthSize = binding.prodSizeFourEdit.text.toString().trim(),
+
             )
         )
 

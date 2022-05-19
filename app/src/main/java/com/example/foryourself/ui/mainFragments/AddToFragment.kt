@@ -109,7 +109,7 @@ class AddToFragment : Fragment() {
                 thirdSize = binding.prodSizeThree.text.toString().trim(),
                 title = binding.prodName.text.toString().trim(),
                 youtubeTrailer = binding.prodTrailer.text.toString().trim(),
-                fourthSize = binding.prodSizeFour.text.toString().trim()
+                fourthSize = binding.prodSizeFour.text.toString().trim(),
             )
         ).observe(viewLifecycleOwner) {
             toast("Товар Успешно был добавлен для продажи")

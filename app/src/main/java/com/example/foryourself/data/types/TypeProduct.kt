@@ -6,23 +6,31 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 data class TypeProduct(
-    var objectId: String? = null,
+    var objectId: String?,
 
-    var title: String? = null,
-    var prod_descrip: String? = null,
-    var prod_price: String? = null,
-    var prod_trailer: String? = null,
-    var prod_size_one: String? = null,
-    var prod_size_two: String? = null,
-    var prod_size_three: String? = null,
-    var prod_size_four: String? = null,
-    var prod_size_five: String? = null,
-    var prod_size_six: String? = null,
-    var prod_size_seven: String? = null,
-    var prod_size_eight: String? = null,
+    var title: String?,
+    var prod_descrip: String?,
+    var prod_price: String?,
+    var prod_trailer: String?,
+    var prod_size_one: String?,
+    var prod_size_two: String?,
+    var prod_size_three: String?,
+    var prod_size_four: String?,
+    var prod_size_five: String?,
+    var prod_size_six: String?,
+    var prod_size_seven: String?,
+    var prod_size_eight: String?,
 
-    var put_main_photo: Image? = null,
-    var put_2_photo: Image? = null,
-    var put_3_photo: Image? = null,
+    var put_main_photo: Image?,
+    var put_2_photo: Image?,
+    var put_3_photo: Image?,
+    val putID: String?,
+    val colors: String?,
+    val season: String?,
+    val colors1: String?,
+    val colors2: String?,
+    val colors3: String?,
+    val tipy: String?,
+
 
     )

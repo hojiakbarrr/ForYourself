@@ -1,7 +1,7 @@
 package com.example.foryourself.repository
 
 import android.util.Log
-import com.example.foryourself.data.retrofitResponse.UpdateResponse
+import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
@@ -32,10 +32,11 @@ class OrderRepository @Inject constructor(
 
     fun fetchOneOrder(id: String) = flow {
         val result = dao.getOneProductDetail(id)
-        Log.i("adddState", result.toString())
         if (result != null) {
-            Log.i("adddState", "2223")
-            emit(Resource.success(cascheToResultMapper.map(result)))
+            try {
+                emit(Resource.success(cascheToResultMapper.map(result)))
+            } catch (e: Exception) {
+            }
         }
     }
 
@@ -64,7 +65,7 @@ class OrderRepository @Inject constructor(
 //            if (response.isSuccessful) {
 //                val resultDATAList = response.body()?.results
 ////                    resultDATAList?.forEach { product ->
-////                        dao.addProductsFromRepository(resultToCascheMapper.map(product))
+////                        dao.addProductsFromRepository(resultToCacheMapper.map(product))
 ////                    }
 //                if (resultDATAList!!.isEmpty()) emit(Resource.empty())
 //                else emit(Resource.success(data = resultDATAList))

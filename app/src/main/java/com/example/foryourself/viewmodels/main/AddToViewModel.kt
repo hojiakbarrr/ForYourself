@@ -25,7 +25,7 @@ class AddToViewModel @Inject constructor(
         val response = repository.postOrders(result = result)
         if (response.isSuccessful){
             emit(response.body())
-            Log.d("retryуву", response.body()!!.createdAt)
+            Log.d("retryуву", response.body()!!.createdAt!!)
         }
         else{
             Log.d("retryуву", response.message().toString())
