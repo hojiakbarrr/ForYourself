@@ -1,44 +1,48 @@
-package com.example.foryourself.ui.mainFragments
+package com.example.foryourself.ui.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
+import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.ui.activity.DetailActivity
-import com.example.foryourself.utils.LoadingDialog
-import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.example.foryourself.utils.Constants
+import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
-import com.example.foryourself.utils.uploadImage2
+import com.example.foryourself.viewmodels.detail.Detail_viewmodel
+import com.example.foryourself.viewmodels.main.HomeViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private val binding: HomeFragmentBinding by lazy {
-        HomeFragmentBinding.inflate(layoutInflater)
-    }
+class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
+    private lateinit var binding: HomeFragmentBinding
+
     private lateinit var exclusiveAdapter: ExclusiveAdapter
     private val viewModel: HomeViewModel by viewModels()
 
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
     }
+    private val viewModel_detail: Detail_viewmodel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exclusiveAdapter = ExclusiveAdapter()
-        exclusiveAdapters()
+
 
 
     }
@@ -52,10 +56,33 @@ class HomeFragment : Fragment() {
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.allOrders().observe(viewLifecycleOwner) {
+            exclusiveAdapter.diffor.submitList(it)
+
+        }
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
+            try {
+                if (status) loadingDialog.show()
+                else loadingDialog.dismiss()
+            } catch (e: Exception) {
+            }
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
+            toast(message)
+        }
+        Log.d("rtr", "sfsdf")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = HomeFragmentBinding.inflate(layoutInflater, container, false)
+        exclusiveAdapter = ExclusiveAdapter(this)
+        exclusiveAdapters()
         return binding.root
     }
 
@@ -97,19 +124,16 @@ class HomeFragment : Fragment() {
 //        }
 
         val imageList = ArrayList<SlideModel>() // Create image list
-//        imageList.add(SlideModel("String Url" or R.drawable)
 //        imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
         imageList.add(
             SlideModel(
                 R.drawable.reklama3,
-//                "The animal population decreased by 58 percent in 42 years.",
                 scaleType = ScaleTypes.FIT
             )
         )
         imageList.add(
             SlideModel(
                 R.drawable.reklama2,
-//                "Elephants and tigers may become extinct.",
                 scaleType = ScaleTypes.FIT
             )
         )
@@ -126,14 +150,56 @@ class HomeFragment : Fragment() {
 //            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
 //            .into(binding.imgForAdvertising)
 
+//        binding.textView3.setOnClickListener {
+//            Navigation.findNavController(requireView()).navigate(R.id.from_homeFragment_to_deatilFragment)
+//        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 
     private fun onClickItem() {
         exclusiveAdapter.onItemClick = { t ->
+            viewModel_detail.message.postValue(t.objectId)
+            Log.i("TAGsse", t.objectId)
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(Constants.ID_PRODUCT, t.objectId)
-            Log.d("TAGe", t.objectId.toString())
             startActivity(intent)
+            Log.d("TAGe", t.objectId.toString())
+//        requireFragmentManager().beginTransaction().replace(R.id.nav_graph, fragment).commit()
+//            requireView().findNavController().navigate(R.id.from_homeFragment_to_detaillFragment)
+
+//            requireView().findNavController().navigate(R.id.from_homeFragment_to_deatilFragment)
+
+
+//            startActivity(intent)
         }
+    }
+
+    override fun itemClick(position: ResultCache) {
+//        viewModel_detail.getOneOrder(position)
+//        val transaction = this.fragmentManager?.beginTransaction()
+//
+//        val bundle = Bundle()
+//        bundle.putString("data", position)
+//        val fragment = HomeFragment()
+//        fragment.arguments = bundle
+//        this.fragmentManager?.beginTransaction()?.replace(R.id.nav_graph,fragment)
+//
+//        transaction?.replace(R.id.nav_graph, fragment)
+
+//        viewModel_detail.message.postValue(position.objectId)
+//        Log.i("TAGsse", position.objectId)
+//
+//        requireFragmentManager().beginTransaction().replace(R.id.nav_graph, fragment).commit()
+//        requireView().findNavController().navigate(R.id.from_homeFragment_to_detaillFragment)
+
+
+//            val intent = Intent(activity, DetailActivity::class.java)
+//            intent.putExtra(Constants.ID_PRODUCT, t.objectId)
     }
 }

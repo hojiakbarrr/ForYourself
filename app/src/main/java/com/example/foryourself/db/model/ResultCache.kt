@@ -1,11 +1,16 @@
 package com.example.foryourself.db.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
+
+@Parcelize
 @Entity(tableName = "products_table")
 data class ResultCache(
     @ColumnInfo(name = "createdAt")
@@ -36,25 +41,27 @@ data class ResultCache(
     val colors2: String ?,
     val colors3: String ?,
     val tipy: String? ,
+    val category: String?
 
-) : Serializable
+) : Parcelable
 
 
+@Parcelize
 data class ImageFirstCache(
     val __type: String ?,
     val name: String?  ,
     val url: String?
-)
+): Parcelable
 
-
+@Parcelize
 data class ImageMainCache(
     val __type: String? ,
     val name: String?,
     val url: String?
-)
-
+): Parcelable
+@Parcelize
 data class ImageThirdCache(
     val __type: String? ,
     val name: String? ,
     val url: String?
-)
+): Parcelable

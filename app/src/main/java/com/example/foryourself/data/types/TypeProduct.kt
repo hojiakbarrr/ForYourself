@@ -31,6 +31,7 @@ data class TypeProduct(
     val colors2: String?,
     val colors3: String?,
     val tipy: String?,
+    val category: String?
 
 
     )

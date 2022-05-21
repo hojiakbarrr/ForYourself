@@ -27,5 +27,6 @@ data class Result_2(
     val colors2: String? = null,
     val colors3: String? = null,
     val tipy: String? = null,
+    val category: String? = null,
 
     )

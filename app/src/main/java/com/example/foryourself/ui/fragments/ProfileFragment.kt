@@ -1,17 +1,19 @@
-package com.example.foryourself.ui.mainFragments
+package com.example.foryourself.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import com.example.foryourself.R
 import com.example.foryourself.databinding.ProfileFragmentBinding
+import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.main.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -31,7 +33,16 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val imageList = ArrayList<SlideModel>() // Create image list
+        val type = ArrayList<String>() // Create image list
+        val country = arrayOf("Ничего не выбрано","India", "Mumbai", "Faridabad", "Indonesia", "Africa")
+        var aa: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
+
+        binding.filledExposed.setAdapter(aa)
+
+        binding.filledExposed.setOnItemClickListener { adapterView, view, i, l ->
+            toast(binding.filledExposed.text.toString())
+        }
+
 
 // imageList.add(SlideModel("String Url" or R.drawable)
 // imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title

@@ -45,7 +45,8 @@ class EditorViewModel @Inject constructor(
     }
 
     fun ss() = viewModelScope.launch {
-        val ss = repository.getOrders()
+        dao.clearTable()
+        repository.getOrders()
     }
 
     fun updateOrder(id: String, result: Result_2) = viewModelScope.launch(Dispatchers.IO) {

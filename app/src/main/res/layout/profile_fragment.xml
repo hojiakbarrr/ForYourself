@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
 
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.mainFragments.ProfileFragment">
+    tools:context=".ui.fragments.ProfileFragment">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_80sdp"
+        android:hint="Type">
+
+
+        <AutoCompleteTextView
+            android:textSize="@dimen/_20ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filled_exposed"
+            android:inputType="none">
+
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

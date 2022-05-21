@@ -27,6 +27,7 @@ data class Result(
     val colors1: String?,
     val colors2: String?,
     val colors3: String?,
-    val tipy: String?
+    val tipy: String?,
+    val category: String?
 
 )

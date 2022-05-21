@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -18,16 +19,13 @@ import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.ActivityEditorBinding
-import com.example.foryourself.ui.mainFragments.AddToFragment
+import com.example.foryourself.ui.fragments.AddToFragment
 import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.detail.EditorViewModel
 import com.parse.ParseFile
 import com.parse.SaveCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
+import kotlinx.coroutines.*
 
 
 @AndroidEntryPoint
@@ -49,6 +47,8 @@ class EditorActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
     }
 
+
+
     private lateinit var imageMain: ImageMain
     private lateinit var firstMain: ImageFirst
     private lateinit var thirdMain: ImageThird
@@ -63,6 +63,15 @@ class EditorActivity : AppCompatActivity() {
     private var selectedBitmap_Third: Bitmap? = null
     private var imageUri_Second: Uri? = null
     private var selectedBitmap_Second: Bitmap? = null
+
+
+    private var type: String? = null
+    private var type2: String? = null
+
+    private var category: String? = null
+    private var category2: String? = null
+
+    private var seasonn: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,17 +94,19 @@ class EditorActivity : AppCompatActivity() {
                 openGallery(IMAGE_THIRD_CODE)
             }
         }
-
+        typeProduct()
+        categoryy()
+        season()
     }
 
     private fun getInfo() {
         val intent = intent
         productIdd = intent.getStringExtra(Constants.ID_PRODUCT_EDIT)!!
-        Log.d("TAssG", productIdd)
         viewModel.getOneOrder(productIdd)
         viewModel.orderLiveData.observe(this) { it ->
             binding.apply {
                 try {
+                    Log.d("TAssG", it.toString())
                     prodNameEdit.setText(it.title)
                     prodDescripEdit.setText(it.description)
                     prodPriceEdit.setText(it.price)
@@ -177,8 +188,6 @@ class EditorActivity : AppCompatActivity() {
                     Handler(Looper.getMainLooper()).post {
                         toast("Второе фото Осталось без изменений")
                     }
-
-
                 }
                 if (imageFile_Second != null) {
                     imageFile_Second!!.saveInBackground(SaveCallback { e ->
@@ -192,17 +201,31 @@ class EditorActivity : AppCompatActivity() {
                     }
 
                 }
-                updatePost()
+
+
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(6000)
+                    val imageMainFinal = if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
+                    val imageFirstFinal = if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
+                    val imageThirdFinal = if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
+
+
+
+                    updatePost(imageMainFinal,imageFirstFinal,imageThirdFinal)
+                }
             }
         }
     }
 
-    private fun updatePost(
-    ) {
 
-        val imageMainFinal = if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
-        val imageFirstFinal = if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
-        val imageThirdFinal = if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
+    private fun updatePost(
+        imageMainFinal: ImageMain,
+        imageFirstFinal: ImageFirst,
+        imageThirdFinal: ImageThird
+    ) {
+        var typpe = if (type == "Ничего не выбрано") type2 else type
+        var categorryy = if (category == "Ничего не выбрано") category2 else category
 
 
         viewModel.updateOrder(
@@ -223,14 +246,18 @@ class EditorActivity : AppCompatActivity() {
                 title = binding.prodNameEdit.text.toString().trim(),
                 youtubeTrailer = binding.prodTrailerEdit.text.toString().trim(),
                 fourthSize = binding.prodSizeFourEdit.text.toString().trim(),
-
+                tipy = typpe,
+                season = seasonn,
+                colors = binding.prodOlor1Edit.text.toString().trim(),
+                colors1 = binding.prodOlor2Edit.text.toString().trim(),
+                colors2 = binding.prodOlor3Edit.text.toString().trim(),
+                colors3 = binding.prodOlor4Edit.text.toString().trim(),
+                category = categorryy
             )
         )
 
         viewModel.ss()
 
-
-//
         lifecycleScope.launch(Dispatchers.Main) {
 
             viewModel.orderDeleteLiveData.observe(this@EditorActivity) { it ->
@@ -258,6 +285,44 @@ class EditorActivity : AppCompatActivity() {
 
     }
 
+    private fun season() {
+        val country = arrayOf("Лето", "Осень", "Зима", "Весна")
+        var cc: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, R.layout.drop_down_item, country)
+
+        binding.filledSeasonEdit .setAdapter(cc)
+
+        binding.filledSeasonEdit.setOnItemClickListener { adapterView, view, i, l ->
+            seasonn = binding.filledSeasonEdit.text.toString()
+        }
+    }
+
+    private fun categoryy() {
+        val country = arrayOf("Ничего не выбрано", "Юбки", "Кофты", "Платья")
+        var bb: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, R.layout.drop_down_item, country)
+
+        binding.filledCategoryEdit.setAdapter(bb)
+
+        binding.filledCategoryEdit.setOnItemClickListener { adapterView, view, i, l ->
+            category = binding.filledCategoryEdit.text.toString()
+        }
+    }
+
+    private fun typeProduct() {
+        val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Экслюзивное")
+        var aa: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, R.layout.drop_down_item, country)
+
+        binding.filledTypeEdit.setAdapter(aa)
+
+        binding.filledTypeEdit.setOnItemClickListener { adapterView, view, i, l ->
+            type = binding.filledTypeEdit.text.toString()
+        }
+    }
+
+
+
     private fun clearALL() {
         binding.apply {
             prodNameEdit.text.clear()
@@ -272,6 +337,15 @@ class EditorActivity : AppCompatActivity() {
             prodSizeSixEdit.text.clear()
             prodSizeSevenEdit.text.clear()
             prodSizeEightEdit.text.clear()
+
+            binding.prodOlor1Edit.text.clear()
+            binding.prodOlor2Edit.text.clear()
+            binding.prodOlor3Edit.text.clear()
+            binding.prodOlor4Edit.text.clear()
+            binding.filledTypeEdit.clearListSelection()
+            binding.filledCategoryEdit.clearListSelection()
+            binding.filledSeasonEdit.clearListSelection()
+
 
             putMainPhotoEdit.setImageResource(R.drawable.picture)
             put2PhotoEdit.setImageResource(R.drawable.picture)

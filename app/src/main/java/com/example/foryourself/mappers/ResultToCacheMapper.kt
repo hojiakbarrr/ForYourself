@@ -47,6 +47,7 @@ class ResultToCacheMapper : Mapper<Result, ResultCache>() {
             colors2 = colors2,
             colors3 = colors3,
             tipy = tipy,
+            category = category
         )
     }
 

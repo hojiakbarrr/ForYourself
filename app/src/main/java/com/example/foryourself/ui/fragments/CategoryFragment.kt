@@ -1,4 +1,4 @@
-package com.example.foryourself.ui.mainFragments
+package com.example.foryourself.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
 import com.example.foryourself.adapter.SliderAdapter
 import com.example.foryourself.databinding.CategoryFragmentBinding
@@ -39,22 +35,5 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var sliderView: SliderView
-        val images = intArrayOf(
-            R.drawable.reklama1,
-            R.drawable.reklama2,
-            R.drawable.reklama3,
-        )
-
-        val sliderAdapter = SliderAdapter(images)
-
-        binding.imageSlider.apply {
-            setSliderAdapter(sliderAdapter)
-            setIndicatorAnimation(IndicatorAnimationType.WORM)
-            setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION)
-            startAutoCycle()
-        }
-
-
     }
 }

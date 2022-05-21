@@ -1,4 +1,4 @@
-package com.example.foryourself.ui.mainFragments
+package com.example.foryourself.ui.fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.example.foryourself.R
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
@@ -46,12 +48,19 @@ class AddToFragment : Fragment() {
     private var selectedBitmap_Third: Bitmap? = null
     var imageFile_Third: ParseFile? = null
 
+    private var type: String? = null
+    private var type2: String? = null
+
+    private var category: String? = null
+    private var category2: String? = null
+
+    private var season: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
 
         return binding.root
@@ -89,9 +98,54 @@ class AddToFragment : Fragment() {
                 }
             }
         }
+        typeProduct()
+        categoryy()
+        season()
+    }
+
+    private fun season() {
+        val country = arrayOf("Лето", "Осень", "Зима", "Весна")
+        var cc: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
+
+        binding.filledSeason.setAdapter(cc)
+
+        binding.filledSeason.setOnItemClickListener { adapterView, view, i, l ->
+//            toast(binding.filledType.text.toString())
+            season = binding.filledSeason.text.toString()
+        }
+    }
+
+    private fun categoryy() {
+        val country = arrayOf("Ничего не выбрано", "Юбки", "Кофты", "Платья")
+        var bb: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
+
+        binding.filledCategory.setAdapter(bb)
+
+        binding.filledCategory.setOnItemClickListener { adapterView, view, i, l ->
+//            toast(binding.filledType.text.toString())
+            category = binding.filledCategory.text.toString()
+        }
+    }
+
+    private fun typeProduct() {
+        val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Экслюзивное")
+        var aa: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
+
+        binding.filledType.setAdapter(aa)
+
+        binding.filledType.setOnItemClickListener { adapterView, view, i, l ->
+//            toast(binding.filledType.text.toString())
+            type = binding.filledType.text.toString()
+        }
     }
 
     private fun createPost() {
+        var typpe = if (type == "Ничего не выбрано") type2 else type
+        var categorryy = if (category == "Ничего не выбрано") category2 else category
+
 
         viewModel.addToProduct(
             Result_2(
@@ -110,6 +164,13 @@ class AddToFragment : Fragment() {
                 title = binding.prodName.text.toString().trim(),
                 youtubeTrailer = binding.prodTrailer.text.toString().trim(),
                 fourthSize = binding.prodSizeFour.text.toString().trim(),
+                tipy = typpe,
+                season = season,
+                colors = binding.prodOlor1.text.toString().trim(),
+                colors1 = binding.prodOlor2.text.toString().trim(),
+                colors2 = binding.prodOlor3.text.toString().trim(),
+                colors3 = binding.prodOlor4.text.toString().trim(),
+                category = categorryy
             )
         ).observe(viewLifecycleOwner) {
             toast("Товар Успешно был добавлен для продажи")
@@ -129,12 +190,23 @@ class AddToFragment : Fragment() {
             prodSizeSeven.text.clear()
             prodSizeEight.text.clear()
 
+            binding.prodOlor1.text.clear()
+            binding.prodOlor2.text.clear()
+            binding.prodOlor3.text.clear()
+            binding.prodOlor4.text.clear()
+
+            binding.filledType.clearListSelection()
+            binding.filledCategory.clearListSelection()
+            binding.filledSeason.clearListSelection()
+
+
             putMainPhoto.setImageResource(R.drawable.picture)
             put2Photo.setImageResource(R.drawable.picture)
             put3Photo.setImageResource(R.drawable.picture)
 
         }
 
+        Navigation.findNavController(requireView()).navigate(R.id.from_addToFragment_to_homeFragment)
     }
 
     private fun creatPost() {
@@ -257,7 +329,6 @@ class AddToFragment : Fragment() {
                 requireContext().uploadImage(data.data!!.toString(), binding.put3Photo)
 
             }
-
         }
     }
 

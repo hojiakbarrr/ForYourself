@@ -1,141 +1,106 @@
-package com.example.foryourself.ui.activity
+package com.example.foryourself
 
 import android.content.Intent
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.foryourself.R
+import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.adapter.SizeAdapter
-import com.example.foryourself.adapter.SliderAdapter
 import com.example.foryourself.databinding.ActivityDetailBinding
+import com.example.foryourself.databinding.DetaillFragmentBinding
+import com.example.foryourself.databinding.HomeFragmentBinding
+import com.example.foryourself.ui.activity.MainActivity
 import com.example.foryourself.utils.Constants
 import com.example.foryourself.utils.LoadingDialog
-import com.example.foryourself.viewmodels.detail.Detail_viewmodel
 import com.example.foryourself.utils.toast
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
+import com.example.foryourself.viewmodels.detail.Detail_viewmodel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
+
+
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
-    private val binding: ActivityDetailBinding by lazy {
-        ActivityDetailBinding.inflate(layoutInflater)
-    }
+class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
+    private lateinit var binding: DetaillFragmentBinding
+    private val args by navArgs<DetaillFragmentArgs>()
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
-            this,
+            requireContext(),
             R.anim.rotate_open_anim
         )
     }
     private val rotateClose: Animation by lazy {
         AnimationUtils.loadAnimation(
-            this,
+            requireContext(),
             R.anim.rotate_close_anim
         )
     }
     private val toBottom: Animation by lazy {
         AnimationUtils.loadAnimation(
-            this,
+            requireContext(),
             R.anim.to_botton_anim
         )
     }
     private val fromBottom: Animation by lazy {
         AnimationUtils.loadAnimation(
-            this,
+            requireContext(),
             R.anim.from_botton_anim
         )
     }
     private lateinit var productId: String
     private var clicked: Boolean = false
-    private val viewModel: Detail_viewmodel by viewModels()
     private lateinit var youtubeHTTPS: String
     var one: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
     private var sizeList: ArrayList<String> = ArrayList()
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
-        LoadingDialog(context = this, "Идет подгрузка данных пождождите")
+        LoadingDialog(context = requireContext(), "Идет подгрузка данных пождождите")
     }
+    private val viewModel: Detail_viewmodel by viewModels()
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this, MainActivity::class.java))
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DetaillFragmentBinding.inflate(layoutInflater,container,false)
 
         sizeAdapter = SizeAdapter(this)
         prepareAdapter()
         getInfo()
         count()
-        binding.apply {
-            btnAllFab.setOnClickListener {
-                setAnimation(clicked)
-                setVisibility(clicked)
-                clicked = !clicked
-            }
-            fab2Editor.setOnClickListener {
-                val intent = Intent(this@DetailActivity, EditorActivity::class.java)
-                intent.putExtra(Constants.ID_PRODUCT_EDIT, productId)
-                Log.i("TAGeуу", productId)
-                startActivity(intent)
-            }
-            fab3DeleteProduct.setOnClickListener {
-                viewModel.deleteOrderBASE(productId)
-                viewModel.deleteOrder(productId)
-                startActivity(Intent(this@DetailActivity,MainActivity::class.java))
-            }
-        }
+        return binding.root
     }
 
 
-    private fun setVisibility(clicked: Boolean) {
-        if (!clicked) {
-            binding.fab2Editor.visibility = View.VISIBLE
-            binding.fab3DeleteProduct.visibility = View.VISIBLE
-            binding.fab3AddToFavProduct.visibility = View.VISIBLE
-        } else {
-            binding.fab2Editor.visibility = View.INVISIBLE
-            binding.fab3DeleteProduct.visibility = View.INVISIBLE
-            binding.fab3AddToFavProduct.visibility = View.VISIBLE
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
     }
-
-
-    private fun setAnimation(clicked: Boolean) {
-        if (!clicked) {
-            binding.btnAllFab.startAnimation(rotateOpen)
-            binding.fab2Editor.startAnimation(fromBottom)
-            binding.fab3AddToFavProduct.startAnimation(fromBottom)
-            binding.fab3DeleteProduct.startAnimation(fromBottom)
-        } else {
-            binding.btnAllFab.startAnimation(rotateClose)
-            binding.fab3AddToFavProduct.startAnimation(toBottom)
-            binding.fab2Editor.startAnimation(toBottom)
-            binding.fab3DeleteProduct.startAnimation(toBottom)
-        }
-
-    }
-
 
     private fun prepareAdapter() {
         binding.recBySize.apply {
             layoutManager =
-                LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             binding.recBySize.adapter = sizeAdapter
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.INVISIBLE
     }
 
     private fun count() {
@@ -162,12 +127,10 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
     }
 
     private fun getInfo() {
-        val intent = intent
-        productId = intent.getStringExtra(Constants.ID_PRODUCT)!!
-        Log.i("TAGe", productId)
-        viewModel.getOneOrder(productId)
-        viewModel.orderLiveData.observe(this) {
-            Log.d("TAGe", productId)
+        Log.i("werwer", args.toString())
+
+        viewModel.getOneOrder(args.product.objectId)
+        viewModel.orderLiveData.observe(viewLifecycleOwner) {
             binding.apply {
                 collapsingToolbar.title = it.title
 //                Glide.with(this@DetailActivity)
@@ -195,18 +158,21 @@ class DetailActivity : AppCompatActivity(), SizeAdapter.ItemClickListener {
                 sizeList.add(it.eighthSize!!)
 
                 sizeAdapter.productList = sizeList
+                Log.d("TAGsse", it.toString())
+
 
 
             }
         }
-        viewModel.observeDeleteOrder().observe(this){
+        viewModel.observeDeleteOrder().observe(viewLifecycleOwner){
             toast(it)
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(requireContext(), MainActivity::class.java))
         }
     }
 
     override fun ItemClick(position: CharSequence) {
         toast(position.toString())
     }
+
 
 }

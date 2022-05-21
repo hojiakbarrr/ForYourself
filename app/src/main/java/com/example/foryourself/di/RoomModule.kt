@@ -25,7 +25,7 @@ object RoomModule {
         app,
         ProductDataBase::class.java,
         "products_table"
-    ).build()
+    ).allowMainThreadQueries().build()
 
     @Provides
     @Singleton

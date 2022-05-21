@@ -32,18 +32,23 @@ class HomeViewModel @Inject constructor(
 
 
     fun allOrders() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-        _loadingLiveData.postValue(false)
-        val response = repository.getOrders()
-        if (response.isSuccessful) {
-            response.body()!!.results?.forEach { product ->
+        _loadingLiveData.postValue(true)
+
+        if (dao.getProductsFromDATABASE().isEmpty()) {
+            val response = repository.getOrders()
+            if (response.isSuccessful) {
+                response.body()!!.results?.forEach { product ->
                     dao.addProductsFromService(resultToCascheMapper.map(product))
+                }
             }
-
-                val resuk = dao.getProductsFromDATABASE()
-                emit(resuk)
-
+            val resuk = dao.getProductsFromDATABASE()
+            emit(resuk)
             _loadingLiveData.postValue(false)
-        }else _errorLiveData.value = response.message()
+        } else {
+            val resuk = dao.getProductsFromDATABASE()
+            emit(resuk)
+            _loadingLiveData.postValue(false)
+        }
     }
 
 //    fun getOrders() = viewModelScope.launch {

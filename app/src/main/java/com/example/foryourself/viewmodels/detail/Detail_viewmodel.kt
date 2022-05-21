@@ -54,4 +54,8 @@ class Detail_viewmodel  @Inject constructor(
         return _orderDeleteLiveData
     }
 
+    val message: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
 }

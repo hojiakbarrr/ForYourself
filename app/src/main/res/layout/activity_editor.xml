@@ -191,6 +191,127 @@ tools:context=".ui.activity.EditorActivity">
         app:layout_constraintStart_toStartOf="parent"
         />
 
+    <EditText
+        android:id="@+id/prod_сolor_1_edit"
+        android:layout_width="355dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Цвет товара"
+        android:textSize="@dimen/_18sdp"
+        android:inputType="textPersonName"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/prod_сolor_2_edit"
+        android:layout_width="355dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Цвет товара 2"
+        android:textSize="@dimen/_18sdp"
+        android:inputType="textPersonName"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/prod_сolor_3_edit"
+        android:layout_width="355dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Цвет товара 3"
+        android:textSize="@dimen/_18sdp"
+        android:inputType="textPersonName"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/prod_сolor_4_edit"
+        android:layout_width="355dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Цвет товара 4"
+        android:textSize="@dimen/_18sdp"
+        android:inputType="textPersonName"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:hint="Выберите тип продукта">
+
+
+        <AutoCompleteTextView
+            android:textSize="@dimen/_20ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filled_type_edit"
+            android:inputType="none">
+
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:hint="Выберите категорию товара">
+
+
+        <AutoCompleteTextView
+            android:textSize="@dimen/_20ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filled_category_edit"
+            android:inputType="none">
+
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:hint="Выберите сезонность товара">
+
+
+        <AutoCompleteTextView
+            android:textSize="@dimen/_20ssp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filled_season_edit"
+            android:inputType="none">
+
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <Button
         android:id="@+id/get_main_photo_edit"
         android:layout_width="365dp"

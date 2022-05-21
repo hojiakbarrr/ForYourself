@@ -7,31 +7,50 @@
 
     <fragment
         android:id="@+id/addToFragment"
-        android:name="com.example.foryourself.ui.mainFragments.AddToFragment"
+        android:name="com.example.foryourself.ui.fragments.AddToFragment"
         android:label="add_to_fragment"
-        tools:layout="@layout/add_to_fragment" />
+        tools:layout="@layout/add_to_fragment" >
+        <action
+            android:id="@+id/from_addToFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/categoryFragment2"
-        android:name="com.example.foryourself.ui.mainFragments.CategoryFragment"
+        android:name="com.example.foryourself.ui.fragments.CategoryFragment"
         android:label="category_fragment"
         tools:layout="@layout/category_fragment" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.foryourself.ui.mainFragments.HomeFragment"
+        android:name="com.example.foryourself.ui.fragments.HomeFragment"
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" >
         <action
             android:id="@+id/from_homeFragment_to_addToFragment"
             app:destination="@id/addToFragment" />
+        <action
+            android:id="@+id/from_homeFragment_to_detaillFragment"
+            app:destination="@id/detaillFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.example.foryourself.ui.mainFragments.ProfileFragment"
+        android:name="com.example.foryourself.ui.fragments.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
     <fragment
         android:id="@+id/sendToFragment"
-        android:name="com.example.foryourself.ui.mainFragments.SendToFragment"
+        android:name="com.example.foryourself.ui.fragments.SendToFragment"
         android:label="send_to_fragment"
         tools:layout="@layout/send_to_fragment" />
+    <fragment
+        android:id="@+id/detaillFragment"
+        android:name="com.example.foryourself.DetaillFragment"
+        android:label="detaill_fragment"
+        tools:layout="@layout/detaill_fragment" >
+        <action
+            android:id="@+id/from_detaillFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.example.foryourself.db.model.ResultCache" />
+    </fragment>
 </navigation>
