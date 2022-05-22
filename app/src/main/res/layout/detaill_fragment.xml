@@ -345,20 +345,17 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:src="@drawable/youtube" />
 
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:progressTint="@color/primary"
-        android:visibility="visible"
-        app:indicatorColor="@color/primary"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom"
-        app:trackColor="@color/primary"
-        tools:visibility="visible" />
-
-
+<!--    <com.google.android.material.progressindicator.LinearProgressIndicator-->
+<!--        android:id="@+id/progress_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:indeterminate="true"-->
+<!--        android:progressTint="#E8050D"-->
+<!--        android:visibility="visible"-->
+<!--        app:indicatorColor="#E8050D"-->
+<!--        app:layout_anchor="@id/appbar"-->
+<!--        app:layout_anchorGravity="bottom"-->
+<!--        app:trackColor="#E8050D"-->
+<!--        tools:visibility="visible" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

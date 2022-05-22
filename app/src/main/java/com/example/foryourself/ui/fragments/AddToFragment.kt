@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +17,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.foryourself.R
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
+import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
 import com.example.foryourself.utils.*
@@ -23,9 +28,7 @@ import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.SaveCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
@@ -35,18 +38,21 @@ class AddToFragment : Fragment() {
     }
 
     private val viewModel: AddToViewModel by viewModels()
+
+    private lateinit var imageMain: ImageMain
+    private lateinit var firstMain: ImageFirst
+    private lateinit var thirdMain: ImageThird
+
+    private var imageFile_Main: ParseFile? = null
+    private var imageFile_Second: ParseFile? = null
+    private var imageFile_Third: ParseFile? = null
+
     private var imageUri_First: Uri? = null
-    private var selectedBitmap_First: Bitmap? = null
-    var imageFile_Main: ParseFile? = null
-
-
-    private var imageUri_Second: Uri? = null
-    private var selectedBitmap_Second: Bitmap? = null
-    var imageFile_Second: ParseFile? = null
-
+    private var selectedBitmap_MAIN: Bitmap? = null
     private var imageUri_Third: Uri? = null
     private var selectedBitmap_Third: Bitmap? = null
-    var imageFile_Third: ParseFile? = null
+    private var imageUri_Second: Uri? = null
+    private var selectedBitmap_Second: Bitmap? = null
 
     private var type: String? = null
     private var type2: String? = null
@@ -56,6 +62,9 @@ class AddToFragment : Fragment() {
 
     private var season: String? = null
 
+    private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
+        LoadingDialog(context = requireContext(), "Новый товар добавляется подождите !!!")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,35 +75,107 @@ class AddToFragment : Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.getMainPhoto.setOnClickListener {
-            openGallery(IMAGE_MAIN_CODE)
+            getImage(IMAGE_MAIN_CODE)
         }
         binding.get2Photo.setOnClickListener {
-            openGallery(IMAGE_FIRST_CODE)
+            getImage(IMAGE_FIRST_CODE)
         }
         binding.get3Photo.setOnClickListener {
-            openGallery(IMAGE_THIRD_CODE)
+            getImage(IMAGE_THIRD_CODE)
         }
         binding.putOnServer.setOnClickListener {
+//            lifecycleScope.launch {
+//                withContext(Dispatchers.IO) {
+//
+//                    imageFile_Main!!.saveInBackground(SaveCallback { e ->
+//                        if (e == null) {
+//                            imageFile_Third!!.saveInBackground(SaveCallback { e ->
+//                                if (e == null) {
+//                                    imageFile_Second!!.saveInBackground(SaveCallback { e ->
+//                                        if (e == null) {
+//                                            createPost()
+//                                        }
+//                                    })
+//                                }
+//                            })
+//                        }
+//                    })
+//                }
+//            }
+
 
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
+                    if (imageFile_Main != null) {
+                        imageFile_Main!!.saveInBackground(SaveCallback { e ->
+                            if (e == null) {
+                                toast("Главное фото загрузилось на сервер")
+                            }
+                        })
+                    } else {
+                        Log.d("SaveImage", "error")
+                    }
+                    if (imageFile_Third != null) {
+                        imageFile_Third!!.saveInBackground(SaveCallback { e ->
+                            if (e == null) {
+                                toast("Третие дополнительное фото загрузилось на сервер")
+                            }
+                        })
+                    } else {
+                        Log.d("SaveImage", "error")
+                    }
+                    if (imageFile_Second != null) {
+                        imageFile_Second!!.saveInBackground(SaveCallback { e ->
+                            if (e == null) {
+                                toast("Второе дополнительное фото загрузилось на сервер")
+                            }
+                        })
+                    } else {
+                        Log.d("SaveImage", "error")
+                    }
 
-                    imageFile_Main!!.saveInBackground(SaveCallback { e ->
-                        if (e == null) {
-                            imageFile_Third!!.saveInBackground(SaveCallback { e ->
-                                if (e == null) {
-                                    imageFile_Second!!.saveInBackground(SaveCallback { e ->
-                                        if (e == null) {
-                                            createPost()
-                                        }
-                                    })
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(7000)
+
+                        if (imageFile_Main != null) {
+                            if (imageFile_Second != null) {
+                                if (imageFile_Third != null) {
+                                    createPost()
+                                    loadingDialog.show()
+                                } else {
+                                    Handler(Looper.getMainLooper()).post {
+                                        toast("Вы не выбрали третие фото")
+                                    }
                                 }
-                            })
+                            } else {
+                                Handler(Looper.getMainLooper()).post {
+                                    toast("Вы не выбрали второе фото")
+                                }
+                            }
+                        } else {
+                            Handler(Looper.getMainLooper()).post {
+                                toast("Вы не выбрали основное фото")
+                            }
                         }
-                    })
+
+                    }
+
+
+//                    CoroutineScope(Dispatchers.Main).launch {
+//                        delay(6000)
+//                        val imageMainFinal =
+//                            if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
+//                        val imageFirstFinal =
+//                            if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
+//                        val imageThirdFinal =
+//                            if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
+//                        loadingDialog.dismiss()
+//                        createPost(imageMainFinal, imageFirstFinal, imageThirdFinal)
+//                    }
                 }
             }
         }
@@ -107,11 +188,8 @@ class AddToFragment : Fragment() {
         val country = arrayOf("Лето", "Осень", "Зима", "Весна")
         var cc: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-
         binding.filledSeason.setAdapter(cc)
-
         binding.filledSeason.setOnItemClickListener { adapterView, view, i, l ->
-//            toast(binding.filledType.text.toString())
             season = binding.filledSeason.text.toString()
         }
     }
@@ -120,11 +198,8 @@ class AddToFragment : Fragment() {
         val country = arrayOf("Ничего не выбрано", "Юбки", "Кофты", "Платья")
         var bb: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-
         binding.filledCategory.setAdapter(bb)
-
         binding.filledCategory.setOnItemClickListener { adapterView, view, i, l ->
-//            toast(binding.filledType.text.toString())
             category = binding.filledCategory.text.toString()
         }
     }
@@ -133,16 +208,14 @@ class AddToFragment : Fragment() {
         val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Экслюзивное")
         var aa: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-
         binding.filledType.setAdapter(aa)
-
         binding.filledType.setOnItemClickListener { adapterView, view, i, l ->
-//            toast(binding.filledType.text.toString())
             type = binding.filledType.text.toString()
         }
     }
 
     private fun createPost() {
+
         var typpe = if (type == "Ничего не выбрано") type2 else type
         var categorryy = if (category == "Ничего не выбрано") category2 else category
 
@@ -153,9 +226,9 @@ class AddToFragment : Fragment() {
                 eighthSize = binding.prodSizeEight.text.toString().trim(),
                 fifthSize = binding.prodSizeFive.text.toString().trim(),
                 firstSize = binding.prodSizeOne.text.toString().trim(),
-                image_first = imageFile_Second!!.toImageFirst(),
-                image_main = imageFile_Main!!.toImageMain(),
-                image_third = imageFile_Third!!.toImageThird(),
+                image_first = imageFile_Second?.toImageFirst(),
+                image_main = imageFile_Main?.toImageMain(),
+                image_third = imageFile_Third?.toImageThird(),
                 price = binding.prodPrice.text.toString().trim(),
                 secondSize = binding.prodSizeTwo.text.toString().trim(),
                 seventhSize = binding.prodSizeSeven.text.toString().trim(),
@@ -176,6 +249,16 @@ class AddToFragment : Fragment() {
             toast("Товар Успешно был добавлен для продажи")
         }
         viewModel.ss()
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
+                loadingDialog.dismiss()
+                Navigation.findNavController(requireView()).navigate(R.id.from_addToFragment_to_homeFragment)
+                clearALL()
+            }
+        }
+    }
+
+    private fun clearALL() {
         binding.apply {
             prodName.text.clear()
             prodDescrip.text.clear()
@@ -205,17 +288,19 @@ class AddToFragment : Fragment() {
             put3Photo.setImageResource(R.drawable.picture)
 
         }
-
-        Navigation.findNavController(requireView()).navigate(R.id.from_addToFragment_to_homeFragment)
     }
 
     private fun creatPost() {
 
         val stream = ByteArrayOutputStream()
-        selectedBitmap_First?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        selectedBitmap_MAIN?.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
         imageFile_Main = ParseFile("postImage.png", byteArray)
-
+        imageFile_Main!!.saveInBackground(SaveCallback { e ->
+            if (e == null) {
+                toast("Основное фото успешно загрузилось")
+            }
+        })
 
         val stream_2 = ByteArrayOutputStream()
         selectedBitmap_Second?.compress(Bitmap.CompressFormat.PNG, 100, stream_2)
@@ -301,14 +386,12 @@ class AddToFragment : Fragment() {
     }
 
 
-    private fun openGallery(code: Int) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, code)
-
-
-    }
+//    private fun openGallery(code: Int) {
+//        val intent = Intent()
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        startActivityForResult(intent, code)
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

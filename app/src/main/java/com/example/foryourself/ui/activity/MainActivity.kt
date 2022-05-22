@@ -43,14 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         applicationScope.launch {
-//            dao.clearTable()
-            Log.d("rtr", dao.getProductsFromDATABASE().toString())
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        applicationScope.launch {
+            dao.clearTable()
             Log.d("rtr", dao.getProductsFromDATABASE().toString())
         }
     }

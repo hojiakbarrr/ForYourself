@@ -71,8 +71,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_exclusive"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_124sdp"
-                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -151,7 +152,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_bests"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_124sdp"
+                    android:layout_height="@dimen/_130sdp"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="parent"

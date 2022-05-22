@@ -1,6 +1,7 @@
 package com.example.foryourself.utils
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
@@ -60,5 +61,8 @@ fun Context.uploadImage2(uri: Int, imageView: ImageView) {
         .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
         .into(imageView)
 }
-
+fun Fragment.getImage(code:Int) {
+    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    startActivityForResult(intent, code)
+}
 

@@ -1,10 +1,7 @@
 package com.example.foryourself.viewmodels.main
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.db.ProductDao
@@ -22,12 +19,16 @@ class AddToViewModel @Inject constructor(
 
     private var orderLiveData = MutableLiveData<Result>()
 
+    private var _loadingLiveData = MutableLiveData<Boolean>()
+    var loadingLiveData: LiveData<Boolean> = _loadingLiveData
+
     fun addToProduct(result: Result_2) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
 
             val response = repository.postOrders(result = result)
             if (response.isSuccessful) {
                 emit(response.body())
+                _loadingLiveData.postValue(false)
                 Log.d("retryуву", response.body()!!.createdAt!!)
             } else {
                 Log.d("retryуву", response.message().toString())

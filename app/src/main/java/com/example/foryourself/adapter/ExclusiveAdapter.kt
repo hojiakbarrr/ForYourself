@@ -54,10 +54,9 @@ class ExclusiveAdapter(val clickListener:ItemClickListener) : RecyclerView.Adapt
         holder.binding.productName.text = product.title
         holder.binding.productPrice.text = product.price
         holder.itemView.setOnClickListener {it ->
-            onItemClick!!.invoke(product)
-//            clickListener.itemClick(product)
-//            val action = HomeFragmentDirections.fromHomeFragmentToDetaillFragment(product)
-//            Navigation.findNavController(it).navigate(action)
+//            onItemClick!!.invoke(product)
+            val action = HomeFragmentDirections.fromHomeFragmentToDetaillFragment(product)
+            Navigation.findNavController(it).navigate(action)
         }
 
     }

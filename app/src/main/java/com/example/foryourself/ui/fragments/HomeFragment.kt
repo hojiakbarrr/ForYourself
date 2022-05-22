@@ -37,17 +37,6 @@ class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
     }
-    private val viewModel_detail: Detail_viewmodel by viewModels()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-    }
-
-
     private fun exclusiveAdapters() {
         binding.recExclusive.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -73,7 +62,6 @@ class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
             toast(message)
         }
-        Log.d("rtr", "sfsdf")
     }
 
     override fun onCreateView(
@@ -106,25 +94,8 @@ class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
             toast(message)
         }
 
-        Log.i("getOrders.getOrders", "getOrders.getOrders")
-
-//        viewModel.getOrders()
-//        viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
-//            exclusiveAdapter.diffor.submitList(it)
-//        }
-//        viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
-//            try {
-//                if (status) loadingDialog.show()
-//                else loadingDialog.dismiss()
-//            } catch (e: Exception) {
-//            }
-//        }
-//        viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->
-//            toast(message)
-//        }
 
         val imageList = ArrayList<SlideModel>() // Create image list
-//        imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
         imageList.add(
             SlideModel(
                 R.drawable.reklama3,
@@ -150,10 +121,6 @@ class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
 //            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
 //            .into(binding.imgForAdvertising)
 
-//        binding.textView3.setOnClickListener {
-//            Navigation.findNavController(requireView()).navigate(R.id.from_homeFragment_to_deatilFragment)
-//        }
-
     }
 
     override fun onResume() {
@@ -164,42 +131,15 @@ class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
 
     private fun onClickItem() {
         exclusiveAdapter.onItemClick = { t ->
-            viewModel_detail.message.postValue(t.objectId)
-            Log.i("TAGsse", t.objectId)
-            val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(Constants.ID_PRODUCT, t.objectId)
-            startActivity(intent)
-            Log.d("TAGe", t.objectId.toString())
-//        requireFragmentManager().beginTransaction().replace(R.id.nav_graph, fragment).commit()
-//            requireView().findNavController().navigate(R.id.from_homeFragment_to_detaillFragment)
-
-//            requireView().findNavController().navigate(R.id.from_homeFragment_to_deatilFragment)
-
-
-//            startActivity(intent)
         }
     }
 
     override fun itemClick(position: ResultCache) {
-//        viewModel_detail.getOneOrder(position)
-//        val transaction = this.fragmentManager?.beginTransaction()
-//
 //        val bundle = Bundle()
 //        bundle.putString("data", position)
 //        val fragment = HomeFragment()
 //        fragment.arguments = bundle
 //        this.fragmentManager?.beginTransaction()?.replace(R.id.nav_graph,fragment)
-//
 //        transaction?.replace(R.id.nav_graph, fragment)
-
-//        viewModel_detail.message.postValue(position.objectId)
-//        Log.i("TAGsse", position.objectId)
-//
-//        requireFragmentManager().beginTransaction().replace(R.id.nav_graph, fragment).commit()
-//        requireView().findNavController().navigate(R.id.from_homeFragment_to_detaillFragment)
-
-
-//            val intent = Intent(activity, DetailActivity::class.java)
-//            intent.putExtra(Constants.ID_PRODUCT, t.objectId)
     }
 }

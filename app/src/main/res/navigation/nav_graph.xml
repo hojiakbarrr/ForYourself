@@ -25,9 +25,6 @@
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" >
         <action
-            android:id="@+id/from_homeFragment_to_addToFragment"
-            app:destination="@id/addToFragment" />
-        <action
             android:id="@+id/from_homeFragment_to_detaillFragment"
             app:destination="@id/detaillFragment" />
     </fragment>
@@ -52,5 +49,20 @@
         <argument
             android:name="product"
             app:argType="com.example.foryourself.db.model.ResultCache" />
+        <action
+            android:id="@+id/from_detaillFragment_to_editorrFragment"
+            app:destination="@id/editorrFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editorrFragment"
+        android:name="com.example.foryourself.EditorrFragment"
+        android:label="editorr_fragment"
+        tools:layout="@layout/editorr_fragment" >
+        <argument
+            android:name="product"
+            app:argType="com.example.foryourself.db.model.ResultCache" />
+        <action
+            android:id="@+id/from_editorrFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
