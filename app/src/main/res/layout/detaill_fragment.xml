@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DetaillFragment">
+    tools:context=".ui.fragmentsAdd.DetaillFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,21 +88,115 @@
                     android:layout_gravity="center"
                     android:drawableTint="@color/q_black"
                     android:gravity="center"
+                    android:layout_marginStart="@dimen/_3sdp"
                     android:text="Наличие размеров"
                     android:textColor="@color/q_black"
                     android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold" />
+         />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rec_by_size">
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/colour">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableTint="@color/q_black"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:text="Наличие цветов"
+                    android:textColor="@color/q_black"
+                    android:textSize="@dimen/_15sdp"
+                   />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rec_by_color">
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/season">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:drawableTint="@color/q_black"
+                    android:gravity="center"
+                    android:text="Сезонность товара : "
+                    android:textColor="@color/q_black"
+                    android:textSize="@dimen/_15sdp"
+                    />
 
             </LinearLayout>
 
 
+            <TextView
+                android:id="@+id/prod_season"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_by_color"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5ssp"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/linear_layout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                tools:listitem="@layout/size_item">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_by_size"
                 android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_height="32dp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_10ssp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/linear_layout"
                 app:layout_constraintTop_toBottomOf="@+id/linear_layout"
@@ -114,10 +208,10 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="@+id/linear_layout"
-                app:layout_constraintTop_toBottomOf="@+id/rec_by_size">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
                 <ImageView
                     android:id="@+id/minus_btn"
@@ -165,10 +259,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
+                app:layout_constraintEnd_toEndOf="@+id/rec_by_color"
                 app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
                 <com.google.android.material.card.MaterialCardView
@@ -239,7 +333,6 @@
                 android:text="Описание товара"
                 android:textColor="@color/q_black"
                 android:textSize="@dimen/_16sdp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -251,8 +344,10 @@
                 android:text="The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 270 Max Air unit for unrivaled comfort and a striking visual experience."
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_13sdp"
-                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="@+id/rec_by_color"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@id/tv_instructions" />
 

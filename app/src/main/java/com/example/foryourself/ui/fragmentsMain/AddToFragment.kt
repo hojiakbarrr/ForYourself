@@ -1,4 +1,4 @@
-package com.example.foryourself.ui.fragments
+package com.example.foryourself.ui.fragmentsMain
 
 import android.app.Activity
 import android.content.Intent

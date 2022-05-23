@@ -1,27 +1,22 @@
-package com.example.foryourself.ui.fragments
+package com.example.foryourself.ui.fragmentsMain
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.db.model.ResultCache
-import com.example.foryourself.ui.activity.DetailActivity
-import com.example.foryourself.utils.Constants
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
-import com.example.foryourself.viewmodels.detail.Detail_viewmodel
 import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -111,6 +106,12 @@ class HomeFragment : Fragment(), ExclusiveAdapter.ItemClickListener {
         imageList.add(SlideModel(R.drawable.reklama1, scaleType = ScaleTypes.FIT))
 
         binding.imageSlider.setImageList(imageList)
+        binding.imageSlider.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
+                toast(position.toString())
+            }
+
+        })
 
 //        requireContext().uploadImage2(R.drawable.reklama1, binding.imgForAdvertising)
         onClickItem()

@@ -96,7 +96,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rec_by_size"
+                android:id="@+id/rec_by_color"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -116,7 +116,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="@+id/linear_layout"
-                app:layout_constraintTop_toBottomOf="@+id/rec_by_size">
+                app:layout_constraintTop_toBottomOf="@+id/rec_by_color">
 
                 <ImageView
                     android:id="@+id/minus_btn"
@@ -167,7 +167,7 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
+                app:layout_constraintEnd_toEndOf="@+id/rec_by_color"
                 app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
                 <com.google.android.material.card.MaterialCardView
@@ -251,7 +251,7 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
-                app:layout_constraintEnd_toEndOf="@+id/rec_by_size"
+                app:layout_constraintEnd_toEndOf="@+id/rec_by_color"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@id/tv_instructions" />
 

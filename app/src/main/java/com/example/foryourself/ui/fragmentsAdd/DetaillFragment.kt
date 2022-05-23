@@ -1,7 +1,5 @@
-package com.example.foryourself
+package com.example.foryourself.ui.fragmentsAdd
 
-import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,23 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.foryourself.adapter.ExclusiveAdapter
+import com.example.foryourself.R
+import com.example.foryourself.adapter.ColorAdapter
 import com.example.foryourself.adapter.SizeAdapter
-import com.example.foryourself.databinding.ActivityDetailBinding
 import com.example.foryourself.databinding.DetaillFragmentBinding
-import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.db.model.ResultCache
-import com.example.foryourself.ui.activity.EditorActivity
-import com.example.foryourself.ui.activity.MainActivity
-import com.example.foryourself.ui.fragments.HomeFragmentDirections
-import com.example.foryourself.utils.Constants
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.detail.Detail_viewmodel
@@ -35,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
+class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.ItemColorClickListener {
     private lateinit var binding: DetaillFragmentBinding
     private val args by navArgs<DetaillFragmentArgs>()
     private val rotateOpen: Animation by lazy {
@@ -67,7 +59,9 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
     private lateinit var youtubeHTTPS: String
     var one: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
+    private lateinit var colorAdapter: ColorAdapter
     private var sizeList: ArrayList<String> = ArrayList()
+    private var colorList: ArrayList<String> = ArrayList()
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), "Идет загрузка данных пождождите")
     }
@@ -84,6 +78,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
             View.GONE
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -92,7 +87,9 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
         loadingDialog.show()
 
         sizeAdapter = SizeAdapter(this)
+        colorAdapter = ColorAdapter(this)
         prepareAdapter()
+        prepareColorAdapter()
         getInfo()
         count()
         binding.apply {
@@ -103,14 +100,18 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
             }
             fab2Editor.setOnClickListener {
                 casche = args.product
-                val action = DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(casche)
+                val action =
+                    DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(
+                        casche
+                    )
                 Navigation.findNavController(it).navigate(action)
             }
             fab3DeleteProduct.setOnClickListener {
                 loadingDialogdelete.show()
                 viewModel.deleteOrderBASE(args.product.objectId)
                 viewModel.deleteOrder(args.product.objectId)
-                val action = DetaillFragmentDirections.fromDetaillFragmentToHomeFragment()
+                val action =
+                   DetaillFragmentDirections.fromDetaillFragmentToHomeFragment()
                 Navigation.findNavController(it).navigate(action)
                 loadingDialogdelete.dismiss()
             }
@@ -156,6 +157,14 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
         }
     }
 
+    private fun prepareColorAdapter() {
+        binding.recByColor.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.recByColor.adapter = colorAdapter
+        }
+    }
+
 
     private fun count() {
 
@@ -198,18 +207,25 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
                 txtDescription.setText(it.description)
                 youtubeHTTPS = it.youtubeTrailer!!
 
-                sizeList.add(it.firstSize!!)
-                sizeList.add(it.secondSize!!)
-                sizeList.add(it.thirdSize!!)
-                sizeList.add(it.fourthSize!!)
-                sizeList.add(it.fifthSize!!)
-                sizeList.add(it.sixthSize!!)
-                sizeList.add(it.seventhSize!!)
-                sizeList.add(it.eighthSize!!)
+                it.firstSize?.let { it1 -> sizeList.add(it1) }
+                it.secondSize?.let { it1 -> sizeList.add(it1) }
+                it.thirdSize?.let { it1 -> sizeList.add(it1) }
+                it.fourthSize?.let { it1 -> sizeList.add(it1) }
+                it.fifthSize?.let { it1 -> sizeList.add(it1) }
+                it.sixthSize?.let { it1 -> sizeList.add(it1) }
+                it.seventhSize?.let { it1 -> sizeList.add(it1) }
+                it.eighthSize?.let { it1 -> sizeList.add(it1) }
 
                 sizeAdapter.productList = sizeList
 
+                it.colors?.let { it1 -> colorList.add(it1) }
+                it.colors1?.let { it1 -> colorList.add(it1) }
+                it.colors2?.let { it1 -> colorList.add(it1) }
+                it.colors3?.let { it1 -> colorList.add(it1) }
 
+                colorAdapter.colortList = colorList
+
+                prodSeason.text = it.season
             }
         }
         viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
@@ -219,6 +235,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener {
     }
 
     override fun ItemClick(position: CharSequence) {
+        toast(position.toString())
+    }
+
+    override fun ItemColorClick(position: CharSequence) {
         toast(position.toString())
     }
 

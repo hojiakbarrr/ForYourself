@@ -9,10 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
-import com.example.foryourself.DetaillFragmentDirections
 import com.example.foryourself.databinding.ItemProductBinding
 import com.example.foryourself.db.model.ResultCache
-import com.example.foryourself.ui.fragments.HomeFragmentDirections
+import com.example.foryourself.ui.fragmentsMain.HomeFragmentDirections
 
 class ExclusiveAdapter(val clickListener:ItemClickListener) : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
 

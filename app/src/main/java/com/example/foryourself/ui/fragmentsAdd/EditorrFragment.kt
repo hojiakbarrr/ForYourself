@@ -1,4 +1,4 @@
-package com.example.foryourself.ui.activity
+package com.example.foryourself.ui.fragmentsAdd
 
 import android.app.Activity
 import android.content.Intent
@@ -8,20 +8,26 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.foryourself.R
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
-import com.example.foryourself.databinding.ActivityEditorBinding
-import com.example.foryourself.ui.fragments.AddToFragment
+import com.example.foryourself.databinding.EditorrFragmentBinding
+import com.example.foryourself.ui.fragmentsMain.AddToFragment
 import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.detail.EditorViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.ParseFile
 import com.parse.SaveCallback
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,9 +35,10 @@ import kotlinx.coroutines.*
 
 
 @AndroidEntryPoint
-class EditorActivity : AppCompatActivity() {
-    private val binding: ActivityEditorBinding by lazy {
-        ActivityEditorBinding.inflate(layoutInflater)
+class EditorrFragment : Fragment() {
+    private val args by navArgs<EditorrFragmentArgs>()
+    private val binding: EditorrFragmentBinding by lazy {
+        EditorrFragmentBinding.inflate(layoutInflater)
     }
     private val viewModel: EditorViewModel by viewModels()
     private lateinit var productIdd: String
@@ -41,13 +48,6 @@ class EditorActivity : AppCompatActivity() {
         const val IMAGE_MAIN_CODE = 2
         const val IMAGE_THIRD_CODE = 3
     }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this, MainActivity::class.java))
-    }
-
-
 
     private lateinit var imageMain: ImageMain
     private lateinit var firstMain: ImageFirst
@@ -73,9 +73,15 @@ class EditorActivity : AppCompatActivity() {
 
     private var seasonn: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+
+    private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
+        LoadingDialog(context = requireContext(), "Товар обновляется подождите!!!")
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
 
         getInfo()
 
@@ -85,25 +91,26 @@ class EditorActivity : AppCompatActivity() {
                 putServer()
             }
             getMainPhotoEdit.setOnClickListener {
-                openGallery(IMAGE_MAIN_CODE)
+                getImage(IMAGE_MAIN_CODE)
             }
             get2PhotoEdit.setOnClickListener {
-                openGallery(IMAGE_FIRST_CODE)
+                getImage(IMAGE_FIRST_CODE)
             }
             get3PhotoEdit.setOnClickListener {
-                openGallery(IMAGE_THIRD_CODE)
+                getImage(IMAGE_THIRD_CODE)
             }
         }
         typeProduct()
         categoryy()
         season()
+
+        return binding.root
     }
 
     private fun getInfo() {
-        val intent = intent
-        productIdd = intent.getStringExtra(Constants.ID_PRODUCT_EDIT)!!
-        viewModel.getOneOrder(productIdd)
-        viewModel.orderLiveData.observe(this) { it ->
+
+        viewModel.getOneOrder(args.product.objectId)
+        viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
             binding.apply {
                 try {
                     Log.d("TAssG", it.toString())
@@ -121,11 +128,11 @@ class EditorActivity : AppCompatActivity() {
                     prodSizeEightEdit.setText(it.eighthSize)
 
                     if (it.image_main != null) {
-                        Glide.with(this@EditorActivity)
+                        Glide.with(requireContext())
                             .load(it.image_main.url)
                             .into(putMainPhotoEdit)
                     } else {
-                        Glide.with(this@EditorActivity)
+                        Glide.with(requireContext())
                             .load(R.drawable.picture)
                             .into(putMainPhotoEdit)
                     }
@@ -133,11 +140,11 @@ class EditorActivity : AppCompatActivity() {
                     imageMain = it.image_main!!
 
                     if (it.image_first != null) {
-                        Glide.with(this@EditorActivity)
+                        Glide.with(requireContext())
                             .load(it.image_first.url)
                             .into(put2PhotoEdit)
                     } else {
-                        Glide.with(this@EditorActivity)
+                        Glide.with(requireContext())
                             .load(R.drawable.picture)
                             .into(put2PhotoEdit)
                     }
@@ -146,11 +153,11 @@ class EditorActivity : AppCompatActivity() {
 
 
                     if (it.image_third != null) {
-                        Glide.with(this@EditorActivity)
+                        Glide.with(requireContext())
                             .load(it.image_third.url)
                             .into(put3PhotoEdit)
                     } else {
-                        Glide.with(this@EditorActivity)
+                        Glide.with(requireContext())
                             .load(R.drawable.picture)
                             .into(put3PhotoEdit)
                     }
@@ -205,14 +212,14 @@ class EditorActivity : AppCompatActivity() {
 
 
                 CoroutineScope(Dispatchers.Main).launch {
+                    loadingDialog.show()
                     delay(6000)
                     val imageMainFinal = if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
                     val imageFirstFinal = if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
                     val imageThirdFinal = if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
-
-
-
+                    loadingDialog.dismiss()
                     updatePost(imageMainFinal,imageFirstFinal,imageThirdFinal)
+
                 }
             }
         }
@@ -224,12 +231,14 @@ class EditorActivity : AppCompatActivity() {
         imageFirstFinal: ImageFirst,
         imageThirdFinal: ImageThird
     ) {
+        loadingDialog.show()
         var typpe = if (type == "Ничего не выбрано") type2 else type
         var categorryy = if (category == "Ничего не выбрано") category2 else category
 
 
+
         viewModel.updateOrder(
-            productIdd,
+            args.product.objectId,
             Result_2(
                 description = binding.prodDescripEdit.text.toString().trim(),
                 eighthSize = binding.prodSizeEightEdit.text.toString().trim(),
@@ -256,15 +265,15 @@ class EditorActivity : AppCompatActivity() {
             )
         )
 
+
+
         viewModel.ss()
 
         lifecycleScope.launch(Dispatchers.Main) {
-
-            viewModel.orderDeleteLiveData.observe(this@EditorActivity) { it ->
-
+            viewModel.orderDeleteLiveData.observe(viewLifecycleOwner) { it ->
+                loadingDialog.dismiss()
                 toast(it)
-                val intent = Intent(this@EditorActivity, MainActivity::class.java)
-                startActivity(intent)
+                Navigation.findNavController(requireView()).navigate(R.id.from_editorrFragment_to_homeFragment)
                 clearALL()
             }
         }
@@ -272,26 +281,28 @@ class EditorActivity : AppCompatActivity() {
 //        lifecycleScope.launch {
 //            withContext(Dispatchers.Main) {
 //                viewModel.orderDeleteLiveData.observe(this@EditorActivity) { it ->
-//
 //                    toast(it)
 //                    val intent = Intent(this@EditorActivity,MainActivity::class.java)
 //                    startActivity(intent)
-//
 //                }
-//                // Do something
 //            }
 //        }
 
 
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
+    }
+
     private fun season() {
         val country = arrayOf("Лето", "Осень", "Зима", "Весна")
         var cc: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, R.layout.drop_down_item, country)
-
+            ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledSeasonEdit .setAdapter(cc)
-
         binding.filledSeasonEdit.setOnItemClickListener { adapterView, view, i, l ->
             seasonn = binding.filledSeasonEdit.text.toString()
         }
@@ -300,10 +311,8 @@ class EditorActivity : AppCompatActivity() {
     private fun categoryy() {
         val country = arrayOf("Ничего не выбрано", "Юбки", "Кофты", "Платья")
         var bb: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, R.layout.drop_down_item, country)
-
+            ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledCategoryEdit.setAdapter(bb)
-
         binding.filledCategoryEdit.setOnItemClickListener { adapterView, view, i, l ->
             category = binding.filledCategoryEdit.text.toString()
         }
@@ -312,10 +321,8 @@ class EditorActivity : AppCompatActivity() {
     private fun typeProduct() {
         val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Экслюзивное")
         var aa: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, R.layout.drop_down_item, country)
-
+            ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledTypeEdit.setAdapter(aa)
-
         binding.filledTypeEdit.setOnItemClickListener { adapterView, view, i, l ->
             type = binding.filledTypeEdit.text.toString()
         }
@@ -368,18 +375,20 @@ class EditorActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             if (requestCode == AddToFragment.IMAGE_FIRST_CODE) {
                 imageFile_Second = ParseFile("image.png", image(data.data!!))
-                this.uploadImage(data.data!!.toString(), binding.put2PhotoEdit)
+                requireContext().uploadImage(data.data!!.toString(), binding.put2PhotoEdit)
             }
             if (requestCode == AddToFragment.IMAGE_MAIN_CODE) {
                 imageFile_Main = ParseFile("image.png", image(data.data!!))
-                this.uploadImage(data.data!!.toString(), binding.putMainPhotoEdit)
+                requireContext().uploadImage(data.data!!.toString(), binding.putMainPhotoEdit)
 
             }
             if (requestCode == AddToFragment.IMAGE_THIRD_CODE) {
                 imageFile_Third = ParseFile("image.png", image(data.data!!))
-                this.uploadImage(data.data!!.toString(), binding.put3PhotoEdit)
+                requireContext().uploadImage(data.data!!.toString(), binding.put3PhotoEdit)
 
             }
         }
     }
+
+
 }

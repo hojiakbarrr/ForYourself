@@ -11,7 +11,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/animeCard"
-        android:backgroundTint="#A4DDD9D9"
+        android:backgroundTint="#63C3B5B5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
