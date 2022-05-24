@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -17,15 +18,16 @@ import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 
 @AndroidEntryPoint
-class TypeFragment : Fragment() {
+class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
     private val args by navArgs<TypeFragmentArgs>()
     private val binding: TypeFragmentBinding by lazy {
         TypeFragmentBinding.inflate(layoutInflater)
     }
-    private  val viewModel: TypeViewModel by viewModels()
+    private val viewModel: TypeViewModel by viewModels()
     private lateinit var typeAdapter: TypeAdapter
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
@@ -36,6 +38,7 @@ class TypeFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
             View.GONE
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,21 +54,21 @@ class TypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Res", args.toString())
-        viewModel.allOrders(args.product).observe(viewLifecycleOwner){
+        viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
             typeAdapter.diffor.submitList(it)
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
-            try {
-                if (status) loadingDialog.show()
-                else loadingDialog.dismiss()
+            try { if (status) loadingDialog.show() else loadingDialog.dismiss()
             } catch (e: Exception) {
             }
         }
+        binding.search.setOnQueryTextListener(this)
+
     }
 
     private fun exclusiveAdapters() {
-        binding.rvCategories .apply {
+        binding.rvCategories.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             binding.rvCategories.adapter = typeAdapter
         }
@@ -73,9 +76,35 @@ class TypeFragment : Fragment() {
 
 
     private fun onClickItem() {
-        typeAdapter.onItemClick_cate  = { t ->
+        typeAdapter.onItemClick_cate = { t ->
             toast(t.title.toString())
         }
     }
+
+    override fun onQueryTextSubmit(searchText: String?): Boolean {
+        if (searchText != null){
+            viewModel.searchProduct(searchText = searchText,args.product)
+            viewModel.searchLiveData.observe(viewLifecycleOwner) {
+                typeAdapter.diffor.submitList(it)
+            }
+
+        }
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText != null) {
+            val searchText = newText.lowercase()
+            viewModel.searchProduct(searchText = searchText,args.product).observe(viewLifecycleOwner){
+                typeAdapter.diffor.submitList(it)
+            }
+        } else {
+            viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
+                typeAdapter.diffor.submitList(it)
+            }
+        }
+        return false
+    }
+
 
 }

@@ -56,7 +56,7 @@ class TypeAdapter : RecyclerView.Adapter<TypeAdapter.ExclusiveAdapterViewHolder>
         val product = diffor.currentList[position]
         Glide.with(holder.itemView)
             .load(product.image_main?.url)
-            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
+            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 50f, 50f))
             .into(holder.binding.productImgCat)
 
 
