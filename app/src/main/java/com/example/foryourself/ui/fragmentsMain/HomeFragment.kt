@@ -111,14 +111,14 @@ class HomeFragment : Fragment() {
 //            val bottomNavigation = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
 //            bottomNavigation.selectedItemId = R.id.profileFragment2
 //            val manager: FragmentManager = requireActivity().supportFragmentManager
-//            manager.beginTransaction().replace(R.id.homeFragment, ProfileFragment())
-//                .addToBackStack(null).commit()
-                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment(exclusiveTxt.text.toString())
+//            manager.beginTransaction().replace(R.id.homeFragment, ProfileFragment()) .addToBackStack(null).commit()
+
+                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment("Эксклюзив")
                 Navigation.findNavController(it).navigate(action)
             }
 
             bestsellerTxt.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment(bestsellerTxt.text.toString())
+                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment("Бестселлер")
                 Navigation.findNavController(it).navigate(action)
             }
 
