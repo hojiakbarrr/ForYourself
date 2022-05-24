@@ -52,6 +52,10 @@ class TypeViewModel @Inject constructor(
                     cascheToResultMapper.map(it)
                 })
 
+                val resukr = dao.getcategory(word)
+                emit(resukr?.map {
+                    cascheToResultMapper.map(it)
+                })
 
 
                 _loadingLiveData.postValue(false)
@@ -60,7 +64,10 @@ class TypeViewModel @Inject constructor(
                 emit(resuk?.map {
                     cascheToResultMapper.map(it)
                 })
-
+                val resukr = dao.getcategory(word)
+                emit(resukr?.map {
+                    cascheToResultMapper.map(it)
+                })
 
                 _loadingLiveData.postValue(false)
             }
@@ -70,15 +77,23 @@ class TypeViewModel @Inject constructor(
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
 
             val resuk = dao.getTipy(type)
+            val result = dao.getcategory(type)
 
             val searchProducts = mutableListOf<Result>()
-
 
             resuk?.forEach {
                 if (it.title!!.lowercase().contains(searchText.lowercase())) {
                     searchProducts.add(cascheToResultMapper.map(it))
                 }
             }
+
+            result?.forEach {
+                if (it.title!!.lowercase().contains(searchText.lowercase())) {
+                    searchProducts.add(cascheToResultMapper.map(it))
+                }
+            }
+
+
             emit(searchProducts)
         }
 
