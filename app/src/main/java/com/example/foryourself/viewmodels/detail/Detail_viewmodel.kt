@@ -14,11 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class Detail_viewmodel  @Inject constructor(
-
     private val repository: OrderRepository,
-    private val dao: ProductDao,
-
-
     ) : ViewModel() {
 
     private var _orderLiveData = MutableLiveData<Result>()

@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foryourself.R
 import com.example.foryourself.databinding.SizeItemBinding
 
-class ColorAdapter(val clickListener:ItemColorClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ColorAdapter(val clickListener: ItemColorClickListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var colortList: List<String> = emptyList()
         set(newValue) {
@@ -16,9 +17,9 @@ class ColorAdapter(val clickListener:ItemColorClickListener) : RecyclerView.Adap
         }
 
 
-    inner class ViewHolder(var binding: SizeItemBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(var binding: SizeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(size: String) = with(binding){
+        fun bind(size: String) = with(binding) {
             binding.apply {
                 txtSize.text = size
             }
@@ -27,7 +28,8 @@ class ColorAdapter(val clickListener:ItemColorClickListener) : RecyclerView.Adap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.size_item, parent, false)
+        val inflater =
+            LayoutInflater.from(parent.context).inflate(R.layout.size_item, parent, false)
         val binding = SizeItemBinding.bind(inflater)
         return ViewHolder(binding)
     }
@@ -44,7 +46,7 @@ class ColorAdapter(val clickListener:ItemColorClickListener) : RecyclerView.Adap
     override fun getItemCount() = colortList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(listColor: List<String>){
+    fun setList(listColor: List<String>) {
         colortList = listColor
         notifyDataSetChanged()
     }

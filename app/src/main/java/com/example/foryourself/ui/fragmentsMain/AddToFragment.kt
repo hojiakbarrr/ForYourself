@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -22,8 +23,10 @@ import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.databinding.AddToFragmentBinding
+import com.example.foryourself.ui.activity.MainActivity
 import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.main.AddToViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.SaveCallback
@@ -205,7 +208,7 @@ class AddToFragment : Fragment() {
     }
 
     private fun typeProduct() {
-        val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Экслюзивное")
+        val country = arrayOf("Ничего не выбрано", "Бестселлер", "Эксклюзив")
         var aa: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledType.setAdapter(aa)
@@ -252,7 +255,9 @@ class AddToFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
                 loadingDialog.dismiss()
-                Navigation.findNavController(requireView()).navigate(R.id.from_addToFragment_to_homeFragment)
+
+                startActivity(Intent(requireActivity(),MainActivity::class.java))
+
                 clearALL()
             }
         }

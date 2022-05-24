@@ -4,14 +4,14 @@
 
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_marginStart="8dp"
+    android:layout_marginStart="0dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/animeCard"
-        android:backgroundTint="#63C3B5B5"
+        android:backgroundTint="#63FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

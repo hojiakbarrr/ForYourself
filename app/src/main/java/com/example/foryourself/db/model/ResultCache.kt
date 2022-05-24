@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import org.jetbrains.annotations.NotNull
 import java.io.Serializable
 
 
@@ -40,7 +41,8 @@ data class ResultCache(
     val colors1: String ?,
     val colors2: String ?,
     val colors3: String ?,
-    val tipy: String? ,
+    @NonNull
+    val tipy: String ,
     val category: String?
 
 ) : Parcelable

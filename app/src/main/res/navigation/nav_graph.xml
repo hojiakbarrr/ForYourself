@@ -18,21 +18,40 @@
         android:id="@+id/categoryFragment2"
         android:name="com.example.foryourself.ui.fragmentsMain.CategoryFragment"
         android:label="category_fragment"
-        tools:layout="@layout/category_fragment" />
+        tools:layout="@layout/category_fragment" >
+        <action
+            android:id="@+id/action_categoryFragment2_to_typeFragment"
+            app:destination="@id/typeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.foryourself.ui.fragmentsMain.HomeFragment"
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" >
+        <argument
+            android:name="product_type"
+            app:argType="string" />
         <action
             android:id="@+id/from_homeFragment_to_detaillFragment"
             app:destination="@id/detaillFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_typeFragment"
+            app:destination="@id/typeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
+
+
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
         android:name="com.example.foryourself.ui.fragmentsMain.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/sendToFragment"
         android:name="com.example.foryourself.ui.fragmentsMain.SendToFragment"
@@ -46,12 +65,13 @@
         <action
             android:id="@+id/from_detaillFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-        <argument
-            android:name="product"
-            app:argType="com.example.foryourself.db.model.ResultCache" />
+
         <action
             android:id="@+id/from_detaillFragment_to_editorrFragment"
             app:destination="@id/editorrFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.example.foryourself.data.retrofitResponse.getResponse.Result" />
     </fragment>
     <fragment
         android:id="@+id/editorrFragment"
@@ -60,9 +80,27 @@
         tools:layout="@layout/editorr_fragment" >
         <argument
             android:name="product"
-            app:argType="com.example.foryourself.db.model.ResultCache" />
+            app:argType="com.example.foryourself.data.retrofitResponse.getResponse.Result" />
         <action
             android:id="@+id/from_editorrFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/typeFragment"
+        android:name="com.example.foryourself.ui.fragmentsAdd.TypeFragment"
+        android:label="type_fragment"
+        tools:layout="@layout/type_fragment" >
+        <action
+            android:id="@+id/action_typeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_typeFragment_to_categoryFragment2"
+            app:destination="@id/categoryFragment2" />
+        <argument
+            android:name="product"
+            app:argType= "string" />
+        <action
+            android:id="@+id/action_typeFragment_to_detaillFragment"
+            app:destination="@id/detaillFragment" />
     </fragment>
 </navigation>

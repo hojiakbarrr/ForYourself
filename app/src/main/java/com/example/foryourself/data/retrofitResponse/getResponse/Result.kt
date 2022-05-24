@@ -1,6 +1,10 @@
 package com.example.foryourself.data.retrofitResponse.getResponse
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Result(
 
     val createdAt: String?,
@@ -30,4 +34,4 @@ data class Result(
     val tipy: String?,
     val category: String?
 
-)
+): Parcelable

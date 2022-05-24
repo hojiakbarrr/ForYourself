@@ -35,7 +35,7 @@ class SizeAdapter( val clickListener:ItemClickListener) : RecyclerView.Adapter<R
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var holder = holder as ViewHolder
         holder.bind(productList[position])
-        holder.binding.txtSize.text = productList[position]
+        if (productList[position] != null)  holder.binding.txtSize.text =  productList[position]
         holder.itemView.setOnClickListener {
             clickListener.ItemClick(holder.binding.txtSize.text)
         }

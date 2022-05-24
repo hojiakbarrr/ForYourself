@@ -10,10 +10,7 @@ import com.example.foryourself.databinding.ActivityMainBinding
 import com.example.foryourself.db.ProductDao
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -23,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+//    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     @Inject
     lateinit var dao : ProductDao
@@ -37,14 +34,21 @@ class MainActivity : AppCompatActivity() {
         val navController = Navigation.findNavController(this, R.id.host_fragment)
         NavigationUI.setupWithNavController(bottomNavigation, navController)
 
-
     }
 
     override fun onStop() {
         super.onStop()
-        applicationScope.launch {
-            dao.clearTable()
-            Log.d("rtr", dao.getProductsFromDATABASE().toString())
-        }
+//        GlobalScope.launch {
+//            dao.clearTable()
+//            Log.d("rtr", dao.getProductsFromDATABASE().toString())
+//        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        GlobalScope.launch {
+//            dao.clearTable()
+//            Log.d("rtr", dao.getProductsFromDATABASE().toString())
+//        }
     }
 }

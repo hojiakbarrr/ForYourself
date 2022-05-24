@@ -15,9 +15,6 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class App: Application(){
-
-
-
     @Inject
     lateinit var dao : ProductDao
 
@@ -33,9 +30,9 @@ class App: Application(){
                 .server(Constants.BASE_URL)
                 .build())
 
-//        applicationScope.launch {
-//            dao.clearTable()
-//        }
+        applicationScope.launch {
+            dao.clearTable()
+        }
 
     }
 

@@ -109,7 +109,7 @@ class EditorrFragment : Fragment() {
 
     private fun getInfo() {
 
-        viewModel.getOneOrder(args.product.objectId)
+        viewModel.getOneOrder(args.product.objectId!!)
         viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
             binding.apply {
                 try {
@@ -238,7 +238,7 @@ class EditorrFragment : Fragment() {
 
 
         viewModel.updateOrder(
-            args.product.objectId,
+            args.product.objectId!!,
             Result_2(
                 description = binding.prodDescripEdit.text.toString().trim(),
                 eighthSize = binding.prodSizeEightEdit.text.toString().trim(),
@@ -319,7 +319,7 @@ class EditorrFragment : Fragment() {
     }
 
     private fun typeProduct() {
-        val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Экслюзивное")
+        val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Эксклюзив")
         var aa: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledTypeEdit.setAdapter(aa)

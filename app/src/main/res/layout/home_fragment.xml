@@ -44,12 +44,12 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/exclusiveTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15sp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Эксклюзивное предложение"
+                    android:text="Эксклюзив"
                     android:textColor="#D7000000"
                     android:textSize="@dimen/_16sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -63,9 +63,9 @@
                     android:text="увидеть все"
                     android:textColor="#63000000"
                     android:textSize="@dimen/_14sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintBottom_toBottomOf="@+id/exclusiveTxt"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+                    app:layout_constraintTop_toTopOf="@+id/exclusiveTxt" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -73,12 +73,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_130sdp"
                     android:layout_marginStart="@dimen/_1sdp"
-                    android:layout_marginEnd="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    app:layout_constraintTop_toBottomOf="@+id/exclusiveTxt"
                     app:reverseLayout="true"
                     app:stackFromEnd="true" />
 
@@ -88,9 +88,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginStart="25dp"
+                    android:layout_marginTop="@dimen/_10ssp"
                     android:layout_marginEnd="25dp"
                     android:elevation="25dp"
-                    android:layout_marginTop="@dimen/_10ssp"
                     app:cardCornerRadius="30dp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintCircleRadius="@dimen/_25ssp"
@@ -125,18 +125,15 @@
                 </androidx.cardview.widget.CardView>
 
 
-
-
-
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/bestsellerTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5ssp"
                     android:text="Бестселлер"
                     android:textColor="#D7000000"
                     android:textSize="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_10ssp"
-                    app:layout_constraintStart_toStartOf="@+id/textView3"
+                    app:layout_constraintStart_toStartOf="@+id/exclusiveTxt"
                     app:layout_constraintTop_toBottomOf="@+id/bolero" />
 
                 <TextView
@@ -145,20 +142,23 @@
                     android:text="увидеть все"
                     android:textColor="#63000000"
                     android:textSize="@dimen/_14sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintBottom_toBottomOf="@+id/bestsellerTxt"
                     app:layout_constraintEnd_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toTopOf="@+id/textView4" />
+                    app:layout_constraintTop_toTopOf="@+id/bestsellerTxt" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_bests"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_130sdp"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_19ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    app:layout_constraintTop_toBottomOf="@+id/bestsellerTxt"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:listitem="@layout/item_product" />
 
 

@@ -17,6 +17,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ColorAdapter
 import com.example.foryourself.adapter.SizeAdapter
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.DetaillFragmentBinding
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.LoadingDialog
@@ -27,7 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.ItemColorClickListener {
+class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
+    ColorAdapter.ItemColorClickListener {
     private lateinit var binding: DetaillFragmentBinding
     private val args by navArgs<DetaillFragmentArgs>()
     private val rotateOpen: Animation by lazy {
@@ -54,10 +56,11 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
             R.anim.from_botton_anim
         )
     }
+    private val imageList = ArrayList<SlideModel>() // Create image list
     private lateinit var productId: String
     private var clicked: Boolean = false
     private lateinit var youtubeHTTPS: String
-    var one: Int = 1
+    private var one: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
     private lateinit var colorAdapter: ColorAdapter
     private var sizeList: ArrayList<String> = ArrayList()
@@ -70,7 +73,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
     }
 
     private val viewModel: Detail_viewmodel by viewModels()
-    private lateinit var casche: ResultCache
+    private lateinit var casche: Result
 
 
     override fun onResume() {
@@ -100,19 +103,15 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
             }
             fab2Editor.setOnClickListener {
                 casche = args.product
-                val action =
-                    DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(
-                        casche
-                    )
+                val action = DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(casche)
                 Navigation.findNavController(it).navigate(action)
             }
             fab3DeleteProduct.setOnClickListener {
                 loadingDialogdelete.show()
-                viewModel.deleteOrderBASE(args.product.objectId)
-                viewModel.deleteOrder(args.product.objectId)
-                val action =
-                   DetaillFragmentDirections.fromDetaillFragmentToHomeFragment()
-                Navigation.findNavController(it).navigate(action)
+                viewModel.deleteOrderBASE(args.product.objectId!!)
+                viewModel.deleteOrder(args.product.objectId!!)
+//                val action = DetaillFragmentDirections.fromDetaillFragmentToHomeFragment()
+                Navigation.findNavController(it).navigate(R.id.from_detaillFragment_to_homeFragment)
                 loadingDialogdelete.dismiss()
             }
         }
@@ -148,6 +147,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
         }
 
     }
+
 
     private fun prepareAdapter() {
         binding.recBySize.apply {
@@ -190,12 +190,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
     }
 
     private fun getInfo() {
-        Log.i("werwer", args.toString())
-        viewModel.getOneOrder(args.product.objectId)
+        viewModel.getOneOrder(args.product.objectId!!)
         viewModel.orderLiveData.observe(viewLifecycleOwner) {
             binding.apply {
                 collapsingToolbar.title = it.title
-                val imageList = ArrayList<SlideModel>() // Create image list
 //        imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
                 imageList.add(SlideModel(it.image_first?.url, scaleType = ScaleTypes.FIT))
                 imageList.add(SlideModel(it.image_main?.url, scaleType = ScaleTypes.FIT))
@@ -206,6 +204,9 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
                 txtPrice.setText(it.price)
                 txtDescription.setText(it.description)
                 youtubeHTTPS = it.youtubeTrailer!!
+                prodKategoriya.text = it.category
+                prodSeason.text = it.season
+
 
                 it.firstSize?.let { it1 -> sizeList.add(it1) }
                 it.secondSize?.let { it1 -> sizeList.add(it1) }
@@ -225,7 +226,6 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
 
                 colorAdapter.colortList = colorList
 
-                prodSeason.text = it.season
             }
         }
         viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
@@ -241,6 +241,4 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener, ColorAdapter.
     override fun ItemColorClick(position: CharSequence) {
         toast(position.toString())
     }
-
-
 }

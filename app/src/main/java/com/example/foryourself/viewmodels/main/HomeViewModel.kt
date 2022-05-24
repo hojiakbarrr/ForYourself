@@ -9,6 +9,7 @@ import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,14 +42,31 @@ class HomeViewModel @Inject constructor(
                     dao.addProductsFromService(resultToCascheMapper.map(product))
                 }
             }
-            val resuk = dao.getProductsFromDATABASE()
-            emit(resuk)
+            val resuk = dao.getTipy("Эксклюзив")
+            emit(resuk?.map {
+                cascheToResultMapper.map(it)
+            })
+
+            withContext(context = Dispatchers.Main) {
+                val rr = dao.getTipy("Бестселлер")
+                _orderLiveData.value = rr?.map {
+                    cascheToResultMapper.map(it)
+                }
+            }
+
             _loadingLiveData.postValue(false)
         } else {
-            val resuk = dao.getProductsFromDATABASE()
-            emit(resuk)
+            val resuk = dao.getTipy("Эксклюзив")
+            emit(resuk?.map { cascheToResultMapper.map(it) })
+
+            withContext(context = Dispatchers.Main) {
+                val rr = dao.getTipy("Бестселлер")
+                _orderLiveData.value = rr?.map { cascheToResultMapper.map(it) }
+            }
             _loadingLiveData.postValue(false)
         }
+        Log.d("tt", dao.getProductsFromDATABASE().size.toString())
+
     }
 
 //    fun getOrders() = viewModelScope.launch {

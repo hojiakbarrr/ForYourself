@@ -8,9 +8,11 @@ import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.foryourself.R
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
@@ -64,5 +66,10 @@ fun Context.uploadImage2(uri: Int, imageView: ImageView) {
 fun Fragment.getImage(code:Int) {
     val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     startActivityForResult(intent, code)
+}
+
+fun Fragment.switchToFragment(idFragment: Int,fragment: Fragment) {
+    val manager: FragmentManager = requireActivity().supportFragmentManager
+    manager.beginTransaction().replace(id, fragment).addToBackStack(null).commit()
 }
 

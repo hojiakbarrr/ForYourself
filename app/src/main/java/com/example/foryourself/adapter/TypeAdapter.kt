@@ -11,18 +11,20 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.ItemProductBinding
+import com.example.foryourself.databinding.ItemProductCategBinding
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
+import com.example.foryourself.ui.fragmentsAdd.TypeFragmentDirections
 import com.example.foryourself.ui.fragmentsMain.HomeFragmentDirections
 import com.example.foryourself.utils.Mapper
 import com.thekhaeng.pushdownanim.PushDownAnim
 import javax.inject.Inject
 
-class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
+class TypeAdapter : RecyclerView.Adapter<TypeAdapter.ExclusiveAdapterViewHolder>() {
 
-    var onItemClick: ((Result) -> Unit)? = null
+    var onItemClick_cate: ((Result) -> Unit)? = null
 
-    inner class ExclusiveAdapterViewHolder(val binding: ItemProductBinding) :
+    inner class ExclusiveAdapterViewHolder(val binding: ItemProductCategBinding) :
         RecyclerView.ViewHolder(binding.root)
 
 
@@ -41,7 +43,7 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExclusiveAdapterViewHolder {
         return ExclusiveAdapterViewHolder(
-            ItemProductBinding.inflate(
+            ItemProductCategBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -55,23 +57,28 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
         Glide.with(holder.itemView)
             .load(product.image_main?.url)
             .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
-            .into(holder.binding.productImg)
+            .into(holder.binding.productImgCat)
 
 
-        holder.binding.productName.text = product.title
-        holder.binding.productPrice.text = product.price
+        holder.binding.catName.text = product.title
+        holder.binding.catPrice.text = product.price
+        holder.binding.catCategorya.text = product.category
+        holder.binding.catSeason.text = product.season
 
         PushDownAnim.setPushDownAnimTo(holder.itemView)
             .setScale(PushDownAnim.MODE_SCALE, 0.89f)
             .setOnClickListener { it ->
-//            onItemClick!!.invoke(product)
 
                 try {
-                    val action = HomeFragmentDirections.fromHomeFragmentToDetaillFragment(product)
+                    val action = TypeFragmentDirections.actionTypeFragmentToDetaillFragment(product)
                     Navigation.findNavController(view = it).navigate(action)
                 } catch (e: Exception) {
                 }
             }
+        holder.binding.buyOrder.setOnClickListener {
+            onItemClick_cate!!.invoke(product)
+
+        }
 
     }
 

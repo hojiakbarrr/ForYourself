@@ -20,6 +20,12 @@ interface ProductDao {
     @Query("select * from products_table where objectId ==:ID")
     suspend fun getOneProductDetail(ID: String): ResultCache?
 
+    @Query("select * from products_table where tipy == :Tipy")
+    suspend fun getTipy(Tipy: String): MutableList<ResultCache>?
+
+    @Query("select * from products_table where category == :category")
+    suspend fun getcategory(category: String): MutableList<ResultCache>?
+
 //    @Delete
 //    suspend fun deleteDATABASEPROD(product: ResultCache)
 
@@ -31,15 +37,4 @@ interface ProductDao {
     @Query("DELETE FROM products_table")
     suspend fun clearTable()
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addFavorProducts(product: ResultCache)
-
-    @Delete
-    suspend fun deleteFromFav(product: ResultCache)
-
-    @Query("select * from products_table")
-    fun getFromFav(): LiveData<ResultCache>?
-
-    @Query("select * from products_table where objectId ==:ID")
-    suspend fun getOnegetFromFav(ID: String): ResultCache
 }
