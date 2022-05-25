@@ -23,20 +23,63 @@
             android:orientation="vertical">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_category"
+                android:layout_width="380dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="9dp"
+                android:gravity="center"
+                android:inputType="text"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.727"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryHint="Поиск товара">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/poisk" />
+            </androidx.appcompat.widget.SearchView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_categoriyy"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/search_category"
+                >
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/allItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:layout_below="@+id/search_category"
+                >
+
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bolero"
                     android:layout_width="@dimen/_140sdp"
                     android:layout_height="180dp"
                     android:layout_marginStart="3dp"
-                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="3dp"
                     android:backgroundTint="#F1DAB8"
-                    app:cardCornerRadius="30dp"
                     android:elevation="@dimen/_25ssp"
+                    app:cardCornerRadius="30dp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     app:cardElevation="@dimen/_1ssp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintCircleRadius="@dimen/_25ssp"
@@ -262,8 +305,8 @@
                     android:id="@+id/cardView"
                     android:layout_width="@dimen/_140sdp"
                     android:layout_height="180dp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginStart="3dp"
-                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="3dp"
                     android:backgroundTint="#FBE39A"
                     android:elevation="@dimen/_25ssp"
@@ -442,7 +485,6 @@
 
 
                 </androidx.cardview.widget.CardView>
-
 
 
                 <androidx.constraintlayout.widget.Guideline

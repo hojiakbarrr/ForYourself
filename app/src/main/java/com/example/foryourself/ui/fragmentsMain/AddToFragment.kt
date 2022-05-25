@@ -256,7 +256,7 @@ class AddToFragment : Fragment() {
             viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
                 loadingDialog.dismiss()
 
-                startActivity(Intent(requireActivity(),MainActivity::class.java))
+//                startActivity(Intent(requireActivity(),MainActivity::class.java))
 
                 clearALL()
             }

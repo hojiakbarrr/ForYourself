@@ -1,4 +1,4 @@
-package com.example.foryourself.viewmodels.detail
+package com.example.foryourself
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -8,12 +8,12 @@ import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 
 @HiltViewModel
-class TypeViewModel @Inject constructor(
+class CatViewModel @Inject constructor(
     private val repository: OrderRepository,
     private val dao: ProductDao,
     private val resultToCascheMapper: Mapper<Result, ResultCache>,
@@ -34,7 +34,7 @@ class TypeViewModel @Inject constructor(
     var errorLiveData: LiveData<String> = _errorLiveData
 
 
-    fun allOrders(word: String) =
+    fun allOrderss(word: String) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             _loadingLiveData.postValue(true)
             val searchProducts = mutableListOf<Result>()
@@ -47,17 +47,14 @@ class TypeViewModel @Inject constructor(
                         dao.addProductsFromService(resultToCascheMapper.map(product))
                     }
                 }
-                val resuk = dao.getTipy(word)
+                val resuk = dao.getcategory(word)
                 emit(resuk?.map {
                     cascheToResultMapper.map(it)
                 })
 
-
-
-
                 _loadingLiveData.postValue(false)
             } else {
-                val resuk = dao.getTipy(word)
+                val resuk = dao.getcategory(word)
                 emit(resuk?.map {
                     cascheToResultMapper.map(it)
                 })
@@ -67,10 +64,10 @@ class TypeViewModel @Inject constructor(
             }
         }
 
-    fun searchProduct(searchText: String, type: String) =
+    fun searchProducts(searchText: String, type: String) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
 
-            val resuk = dao.getTipy(type)
+            val resuk = dao.getcategory(type)
 
             val searchProducts = mutableListOf<Result>()
 
@@ -82,6 +79,5 @@ class TypeViewModel @Inject constructor(
 
             emit(searchProducts)
         }
-
 
 }

@@ -22,151 +22,163 @@
         app:textColor="@color/black"
         app:textSize="8sp" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck">
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/eee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15sp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Эксклюзив"
-                    android:textColor="#D7000000"
-                    android:textSize="@dimen/_16sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/exclusiveTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:text="увидеть все"
-                    android:textColor="#63000000"
-                    android:textSize="@dimen/_14sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/eee"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/eee" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rec_exclusive"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_130sdp"
-                    android:layout_marginStart="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_1sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/eee"
-                    app:reverseLayout="true"
-                    app:stackFromEnd="true" />
+                    android:layout_height="match_parent">
 
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/bolero"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="@dimen/_10ssp"
-                    android:layout_marginEnd="25dp"
-                    android:elevation="25dp"
-                    app:cardCornerRadius="30dp"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintCircleRadius="@dimen/_25ssp"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rec_exclusive">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/eee"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginStart="15sp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:text="Эксклюзив"
+                        android:textColor="#D7000000"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.denzcoskun.imageslider.ImageSlider
-                            android:id="@+id/image_slider"
-                            android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/exclusiveTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:text="увидеть все"
+                        android:textColor="#63000000"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/eee"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/eee" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_exclusive"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_130sdp"
+                        android:layout_marginStart="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_1sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eee"
+                        app:reverseLayout="true"
+                        app:stackFromEnd="true" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/bolero"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:layout_marginEnd="25dp"
+                        android:elevation="25dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintCircleRadius="@dimen/_25ssp"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rec_exclusive">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:iss_auto_cycle="true"
-                            app:iss_corner_radius="42"
-                            app:iss_delay="2"
-                            app:iss_error_image="@drawable/error"
-                            app:iss_indicator_align="12"
-                            app:iss_period="1500"
-                            app:iss_selected_dot="@drawable/default_selected_dot"
-                            app:iss_text_align="CENTER"
-                            app:iss_title_background="@drawable/gradient"
-                            app:iss_unselected_dot="@drawable/default_unselected_dot" />
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <com.denzcoskun.imageslider.ImageSlider
+                                android:id="@+id/image_slider"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:iss_auto_cycle="true"
+                                app:iss_corner_radius="42"
+                                app:iss_delay="2"
+                                app:iss_error_image="@drawable/error"
+                                app:iss_indicator_align="12"
+                                app:iss_period="1500"
+                                app:iss_selected_dot="@drawable/default_selected_dot"
+                                app:iss_text_align="CENTER"
+                                app:iss_title_background="@drawable/gradient"
+                                app:iss_unselected_dot="@drawable/default_unselected_dot" />
 
-                </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/dfd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5ssp"
-                    android:text="Бестселлер"
-                    android:textColor="#D7000000"
-                    android:textSize="@dimen/_16sdp"
-                    app:layout_constraintStart_toStartOf="@+id/eee"
-                    app:layout_constraintTop_toBottomOf="@+id/bolero" />
-
-                <TextView
-                    android:id="@+id/bestsellerTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="увидеть все"
-                    android:textColor="#63000000"
-                    android:textSize="@dimen/_14sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/dfd"
-                    app:layout_constraintEnd_toEndOf="@+id/exclusiveTxt"
-                    app:layout_constraintTop_toTopOf="@+id/dfd" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rec_bests"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_130sdp"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_19ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dfd"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:listitem="@layout/item_product" />
+                    </androidx.cardview.widget.CardView>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/dfd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="Бестселлер"
+                        android:textColor="#D7000000"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="@+id/eee"
+                        app:layout_constraintTop_toBottomOf="@+id/bolero" />
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/bestsellerTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="увидеть все"
+                        android:textColor="#63000000"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/dfd"
+                        app:layout_constraintEnd_toEndOf="@+id/exclusiveTxt"
+                        app:layout_constraintTop_toTopOf="@+id/dfd" />
 
-    </androidx.core.widget.NestedScrollView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_bests"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_130sdp"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_19ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dfd"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:listitem="@layout/item_product" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

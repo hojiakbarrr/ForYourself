@@ -1,33 +1,34 @@
-package com.example.foryourself.ui.fragmentsAdd
+package com.example.foryourself
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
-import com.example.foryourself.viewmodels.detail.TypeViewModel
+import com.example.foryourself.databinding.CatFragmentBinding
 import com.example.foryourself.databinding.TypeFragmentBinding
+import com.example.foryourself.ui.fragmentsAdd.TypeFragmentArgs
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 
 @AndroidEntryPoint
-class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
-    private val args by navArgs<TypeFragmentArgs>()
-    private val binding: TypeFragmentBinding by lazy {
-        TypeFragmentBinding.inflate(layoutInflater)
+class CatFragment : Fragment(), SearchView.OnQueryTextListener {
+    private val args by navArgs<CatFragmentArgs>()
+    private val binding: CatFragmentBinding by lazy {
+        CatFragmentBinding.inflate(layoutInflater)
     }
-    private val viewModel: TypeViewModel by viewModels()
+
+    private val viewModel: CatViewModel by viewModels()
     private lateinit var typeAdapter: TypeAdapter
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
@@ -46,34 +47,33 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
         typeAdapter = TypeAdapter()
         exclusiveAdapters()
         onClickItem()
-        binding.tvCategory.text = args.product
+        binding.tvCategoryCat.text = args.product
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
+        viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
             Log.i("Res", it?.size.toString())
             typeAdapter.diffor.submitList(it)
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
-            try { if (status) loadingDialog.show() else loadingDialog.dismiss()
+            try {
+                if (status) loadingDialog.show() else loadingDialog.dismiss()
             } catch (e: Exception) {
             }
         }
-        binding.search.setOnQueryTextListener(this)
+        binding.searchCat.setOnQueryTextListener(this)
 
     }
 
     private fun exclusiveAdapters() {
-        binding.rvCategories.apply {
+        binding.rvCategoriesCat.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            binding.rvCategories.adapter = typeAdapter
+            binding.rvCategoriesCat.adapter = typeAdapter
         }
     }
-
 
     private fun onClickItem() {
         typeAdapter.onItemClick_cate = { t ->
@@ -82,8 +82,8 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(searchText: String?): Boolean {
-        if (searchText != null){
-            viewModel.searchProduct(searchText = searchText,args.product)
+        if (searchText != null) {
+            viewModel.searchProducts(searchText = searchText, args.product)
             viewModel.searchLiveData.observe(viewLifecycleOwner) {
                 typeAdapter.diffor.submitList(it)
             }
@@ -95,11 +95,12 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText != null) {
             val searchText = newText.lowercase()
-            viewModel.searchProduct(searchText = searchText,args.product).observe(viewLifecycleOwner){
-                typeAdapter.diffor.submitList(it)
-            }
+            viewModel.searchProducts(searchText = searchText, args.product)
+                .observe(viewLifecycleOwner) {
+                    typeAdapter.diffor.submitList(it)
+                }
         } else {
-            viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
+            viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
                 typeAdapter.diffor.submitList(it)
             }
         }

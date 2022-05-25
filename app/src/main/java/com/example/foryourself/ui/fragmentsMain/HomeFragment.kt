@@ -1,6 +1,7 @@
 package com.example.foryourself.ui.fragmentsMain
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
@@ -26,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var binding: HomeFragmentBinding
 
     private lateinit var exclusiveAdapter: ExclusiveAdapter
@@ -53,9 +55,13 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.allOrders().observe(viewLifecycleOwner) { exclusiveAdapter.diffor.submitList(it) }
-        viewModel.orderLiveData.observe(viewLifecycleOwner) { bestAdapter.productList = it }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) { message ->toast(message) }
+        viewModel.allOrders().observe(viewLifecycleOwner) { exclusiveAdapter.diffor.submitList(it)
+            binding.swipeToRefresh.isRefreshing = false
+        }
+        viewModel.orderLiveData.observe(viewLifecycleOwner) { bestAdapter.productList = it
+            binding.swipeToRefresh.isRefreshing = false
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
             try {
                 if (status) loadingDialog.show()
@@ -73,15 +79,29 @@ class HomeFragment : Fragment() {
         exclusiveAdapter = ExclusiveAdapter()
         bestAdapter = BestSellerAdapter()
         exclusiveAdapters()
+        swipe()
         return binding.root
+    }
+
+    private fun swipe() {
+        binding.apply {
+            swipeToRefresh.setOnRefreshListener(this@HomeFragment)
+            swipeToRefresh.setColorSchemeColors(
+                Color.RED, Color.BLUE, Color.DKGRAY
+            )
+        }
     }
 
     @SuppressLint("CommitPrefEdits")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.allOrders().observe(viewLifecycleOwner) { exclusiveAdapter.diffor.submitList(it) }
-        viewModel.orderLiveData.observe(viewLifecycleOwner) { bestAdapter.productList = it }
+        viewModel.allOrders().observe(viewLifecycleOwner) { exclusiveAdapter.diffor.submitList(it)
+            binding.swipeToRefresh.isRefreshing = false
+        }
+        viewModel.orderLiveData.observe(viewLifecycleOwner) { bestAdapter.productList = it
+            binding.swipeToRefresh.isRefreshing = false
+        }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
             try {
@@ -124,7 +144,7 @@ class HomeFragment : Fragment() {
 
         }
 
-            onClickItem()
+        onClickItem()
 
 //       Glide.with(requireContext())
 //            .load(R.drawable.info)
@@ -142,6 +162,16 @@ class HomeFragment : Fragment() {
 
     private fun onClickItem() {
         exclusiveAdapter.onItemClick = { t ->
+        }
+    }
+
+    override fun onRefresh() {
+        binding.apply {
+            viewModel.allOrders()
+            swipeToRefresh.isRefreshing = true
+            swipeToRefresh.postDelayed({
+                swipeToRefresh.isRefreshing = false
+            }, 1500)
         }
     }
 

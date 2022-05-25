@@ -69,34 +69,6 @@ class HomeViewModel @Inject constructor(
 
     }
 
-//    fun getOrders() = viewModelScope.launch {
-//        repository.fetchOrders().collectLatest { resourse ->
-//            when (resourse.status) {
-//                Status.SUCCESS -> {
-//                    _orderLiveData.value = resourse.data!!
-//                    _loadingLiveData.value = false
-//
-//                    resourse.data!!.forEach {product ->
-//                        dao.addProductsFromRepository(resultToCacheMapper.map(product))
-//                    }
-//
-//                }
-//                Status.LOADING -> {
-//                    Log.i("Status.LOADING", "Status.LOADING")
-//                    _loadingLiveData.value = true
-//                }
-//                Status.ERROR -> {
-//                    _loadingLiveData.value = false
-//                    _errorLiveData.value = resourse.message!!
-//                }
-//                Status.EMPTY -> {
-//                    _loadingLiveData.value = false
-//
-//                }
-//            }
-//        }
-//    }
-
 
     fun observeOrders(): LiveData<List<Result>> {
         return _orderLiveData

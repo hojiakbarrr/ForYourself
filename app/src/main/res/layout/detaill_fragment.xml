@@ -248,7 +248,7 @@
                 android:id="@+id/view"
                 android:layout_width="@dimen/_290sdp"
                 android:layout_marginTop="@dimen/_11ssp"
-                android:layout_height="@dimen/_5sdp"
+                android:layout_height="@dimen/_1sdp"
                 android:background="@drawable/gradient_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
