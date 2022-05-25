@@ -1,6 +1,5 @@
-package com.example.foryourself
+package com.example.foryourself.ui.fragmentsAdd
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,10 +10,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foryourself.viewmodels.detail.CatViewModel
+import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
 import com.example.foryourself.databinding.CatFragmentBinding
-import com.example.foryourself.databinding.TypeFragmentBinding
-import com.example.foryourself.ui.fragmentsAdd.TypeFragmentArgs
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView

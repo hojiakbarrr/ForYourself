@@ -9,18 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
-import com.example.foryourself.CatFragmentDirections
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.databinding.ItemProductBinding
 import com.example.foryourself.databinding.ItemProductCategBinding
-import com.example.foryourself.db.model.ResultCache
-import com.example.foryourself.repository.OrderRepository
+import com.example.foryourself.ui.fragmentsAdd.CatFragmentDirections
 import com.example.foryourself.ui.fragmentsAdd.TypeFragmentDirections
 import com.example.foryourself.ui.fragmentsMain.CategoryFragmentDirections
-import com.example.foryourself.ui.fragmentsMain.HomeFragmentDirections
-import com.example.foryourself.utils.Mapper
 import com.thekhaeng.pushdownanim.PushDownAnim
-import javax.inject.Inject
 
 class TypeAdapter : RecyclerView.Adapter<TypeAdapter.ExclusiveAdapterViewHolder>() {
 

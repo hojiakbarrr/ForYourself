@@ -3,10 +3,12 @@ package com.example.foryourself.repository
 import android.util.Log
 import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
+import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
 import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.putReklama.PuttReklama
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.Mapper
@@ -43,5 +45,9 @@ class OrderRepository @Inject constructor(
     suspend fun updateOrder(id: String,result: Result_2) : Response<UpdateResponse> = apiService.upDateOrder(objectId = id, post = result)
 
     suspend fun updateinBASE(product: ResultCache) = dao.updateDATABASE(product = product)
+
+    suspend fun getReklama() : Response<Getreklama> = apiService.getReklama()
+
+    suspend fun updateReklama(id: String, reklama: PuttReklama) : Response<UpdateResponse> = apiService.updateReklama(objectId = id, post = reklama)
 
 }

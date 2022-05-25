@@ -2,6 +2,8 @@ package com.example.foryourself.viewmodels.main
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
+import com.example.foryourself.data.retrofitResponse.getReklama.ResultofReklama
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
@@ -67,6 +69,19 @@ class HomeViewModel @Inject constructor(
         }
         Log.d("tt", dao.getProductsFromDATABASE().size.toString())
 
+    }
+
+
+    fun getReklama() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+        _loadingLiveData.postValue(true)
+
+        val response = repository.getReklama()
+        if (response.isSuccessful){
+            emit(response.body()?.resultss)
+            _loadingLiveData.postValue(false)
+        }else{
+            Log.d("tree", response.message())
+        }
     }
 
 

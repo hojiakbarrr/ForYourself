@@ -2,9 +2,11 @@ package com.example.kapriz.api
 
 import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
+import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
 import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.putReklama.PuttReklama
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -25,6 +27,18 @@ interface ApiService {
     suspend fun upDateOrder(
         @Path("objectId") objectId: String,
         @Body post: Result_2
+    ):Response<UpdateResponse>
+
+
+    @GET("/classes/Reklama")
+    suspend fun getReklama(): Response <Getreklama>
+
+//    zghtzuTnVX
+
+    @PUT("/classes/Reklama/{objectId}")
+    suspend fun updateReklama(
+        @Path("objectId") objectId: String,
+        @Body post: PuttReklama
     ):Response<UpdateResponse>
 
 }

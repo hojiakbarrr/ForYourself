@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
+import com.example.foryourself.data.retrofitResponse.getReklama.Reklama1
+import com.example.foryourself.data.retrofitResponse.getReklama.Reklama2
+import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
@@ -36,6 +39,17 @@ fun ParseFile.toImageMain(): ImageMain =
 
 fun ParseFile.toImageThird(): ImageThird =
     ImageThird(name = name, __type = "File", url = url)
+
+
+fun ParseFile.toImageReklama1(): Reklama1 =
+    Reklama1(name = name, __type = "File", url = url)
+
+fun ParseFile.toImageReklama2(): Reklama2 =
+    Reklama2(name = name, __type = "File", url = url)
+
+fun ParseFile.toImageReklama3(): Reklama3 =
+    Reklama3(name = name, __type = "File", url = url)
+
 
 fun Fragment.image(uri: Uri): ByteArray {
     val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)

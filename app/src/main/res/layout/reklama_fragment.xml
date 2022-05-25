@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReklamaFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/get1reklama"
+            android:layout_width="365dp"
+            android:layout_height="58dp"
+
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            android:backgroundTint="@color/teal_200"
+            android:text="Выбрать 1 рекламу"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="@+id/edit_post_desc"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="@+id/edit_post_desc"
+            app:layout_constraintTop_toBottomOf="@+id/post_image" />
+
+
+
+        <ImageView
+            android:id="@+id/put1reklama"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/picture"/>
+
+        <Button
+            android:id="@+id/get2reklama"
+            android:layout_width="365dp"
+            android:layout_height="58dp"
+            android:textColor="@color/black"
+
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            android:backgroundTint="@color/teal_200"
+            android:text="Выбрать 2 рекламу"
+            android:layout_gravity="center"
+
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@+id/edit_post_desc"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="@+id/edit_post_desc"
+            app:layout_constraintTop_toBottomOf="@+id/post_image" />
+
+
+        <ImageView
+            android:id="@+id/put2reklama"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/picture"/>
+
+        <Button
+            android:id="@+id/get3reklama"
+            android:layout_width="365dp"
+            android:layout_height="58dp"
+            android:textColor="@color/black"
+
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            android:backgroundTint="@color/teal_200"
+            android:text="Выбрать 3 рекламу"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@+id/edit_post_desc"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="@+id/edit_post_desc"
+            app:layout_constraintTop_toBottomOf="@+id/post_image" />
+
+        <ImageView
+            android:id="@+id/put3reklama"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/picture"/>
+
+
+        <Button
+            android:id="@+id/putreklamaserver"
+            android:layout_width="365dp"
+            android:layout_height="58dp"
+
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+
+            android:backgroundTint="#D83B3B"
+            android:text="Обновить рекламный щит"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@+id/edit_post_desc"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="@+id/edit_post_desc"
+            app:layout_constraintTop_toBottomOf="@+id/post_image" />
+    </LinearLayout>
+
+
+
+</ScrollView>

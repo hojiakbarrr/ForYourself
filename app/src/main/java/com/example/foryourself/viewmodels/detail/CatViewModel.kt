@@ -1,4 +1,4 @@
-package com.example.foryourself
+package com.example.foryourself.viewmodels.detail
 
 import android.util.Log
 import androidx.lifecycle.*

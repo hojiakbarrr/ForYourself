@@ -13,6 +13,9 @@
         <action
             android:id="@+id/from_addToFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_addToFragment_to_reklamaFragment"
+            app:destination="@id/reklamaFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment2"
@@ -112,7 +115,7 @@
     </fragment>
     <fragment
         android:id="@+id/catFragment"
-        android:name="com.example.foryourself.CatFragment"
+        android:name="com.example.foryourself.ui.fragmentsAdd.CatFragment"
         android:label="cat_fragment"
         tools:layout="@layout/cat_fragment" >
         <argument
@@ -124,5 +127,14 @@
         <action
             android:id="@+id/action_catFragment_to_detaillFragment"
             app:destination="@id/detaillFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reklamaFragment"
+        android:name="com.example.foryourself.ReklamaFragment"
+        android:label="reklama_fragment"
+        tools:layout="@layout/reklama_fragment" >
+        <action
+            android:id="@+id/action_reklamaFragment_to_addToFragment"
+            app:destination="@id/addToFragment" />
     </fragment>
 </navigation>

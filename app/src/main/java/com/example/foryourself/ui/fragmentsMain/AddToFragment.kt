@@ -78,9 +78,18 @@ class AddToFragment : Fragment() {
         return binding.root
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.reklama.setOnClickListener {
+            val action = AddToFragmentDirections.actionAddToFragmentToReklamaFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
         binding.getMainPhoto.setOnClickListener {
             getImage(IMAGE_MAIN_CODE)
         }
@@ -255,9 +264,7 @@ class AddToFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
                 loadingDialog.dismiss()
-
-//                startActivity(Intent(requireActivity(),MainActivity::class.java))
-
+                startActivity(Intent(requireActivity(),MainActivity::class.java))
                 clearALL()
             }
         }
@@ -406,14 +413,12 @@ class AddToFragment : Fragment() {
                 requireContext().uploadImage(data.data!!.toString(), binding.put2Photo)
             }
             if (requestCode == IMAGE_MAIN_CODE) {
-                imageFile_Main =
-                    ParseFile("image.png", image(data.data!!))
+                imageFile_Main = ParseFile("image.png", image(data.data!!))
                 requireContext().uploadImage(data.data!!.toString(), binding.putMainPhoto)
 
             }
             if (requestCode == IMAGE_THIRD_CODE) {
-                imageFile_Third =
-                    ParseFile("image.png", image(data.data!!))
+                imageFile_Third = ParseFile("image.png", image(data.data!!))
                 requireContext().uploadImage(data.data!!.toString(), binding.put3Photo)
 
             }

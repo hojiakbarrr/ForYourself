@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
@@ -55,10 +56,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.allOrders().observe(viewLifecycleOwner) { exclusiveAdapter.diffor.submitList(it)
+        viewModel.allOrders().observe(viewLifecycleOwner) {
+            exclusiveAdapter.diffor.submitList(it)
             binding.swipeToRefresh.isRefreshing = false
         }
-        viewModel.orderLiveData.observe(viewLifecycleOwner) { bestAdapter.productList = it
+        viewModel.orderLiveData.observe(viewLifecycleOwner) {
+            bestAdapter.productList = it
             binding.swipeToRefresh.isRefreshing = false
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
@@ -96,10 +99,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.allOrders().observe(viewLifecycleOwner) { exclusiveAdapter.diffor.submitList(it)
+        viewModel.allOrders().observe(viewLifecycleOwner) {
+            exclusiveAdapter.diffor.submitList(it)
             binding.swipeToRefresh.isRefreshing = false
         }
-        viewModel.orderLiveData.observe(viewLifecycleOwner) { bestAdapter.productList = it
+        viewModel.orderLiveData.observe(viewLifecycleOwner) {
+            bestAdapter.productList = it
             binding.swipeToRefresh.isRefreshing = false
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
@@ -111,9 +116,18 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         }
 
-        imageList.add(SlideModel(R.drawable.reklama3, scaleType = ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.reklama2, scaleType = ScaleTypes.FIT))
-        imageList.add(SlideModel(R.drawable.reklama1, scaleType = ScaleTypes.FIT))
+
+        viewModel.getReklama().observe(viewLifecycleOwner) { it ->
+            it?.forEach {
+                val tt: String = it.reklama1.url
+                val ttt: String = it.reklama2.url
+                val tttt: String = it.reklama3.url
+                imageList.add(SlideModel(tt, scaleType = ScaleTypes.FIT))
+//                imageList.add(SlideModel(ttt, scaleType = ScaleTypes.FIT))
+//                imageList.add(SlideModel(tttt, scaleType = ScaleTypes.FIT))
+                binding.imageSlider.setImageList(imageList)
+            }
+        }
 
         binding.apply {
             imageSlider.setImageList(imageList)
@@ -133,12 +147,14 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //            val manager: FragmentManager = requireActivity().supportFragmentManager
 //            manager.beginTransaction().replace(R.id.homeFragment, ProfileFragment()) .addToBackStack(null).commit()
 
-                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment("Эксклюзив")
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToTypeFragment("Эксклюзив")
                 Navigation.findNavController(it).navigate(action)
             }
 
             bestsellerTxt.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment("Бестселлер")
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToTypeFragment("Бестселлер")
                 Navigation.findNavController(it).navigate(action)
             }
 
@@ -151,6 +167,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 ////            .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
 //            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
 //            .into(binding.imgForAdvertising)
+
 
     }
 
