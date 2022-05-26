@@ -184,8 +184,11 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onRefresh() {
         binding.apply {
-            viewModel.allOrders()
             swipeToRefresh.isRefreshing = true
+            if (swipeToRefresh.isRefreshing){
+                viewModel.allOrdersREFRESH()
+                viewModel.getReklama()
+            }
             swipeToRefresh.postDelayed({
                 swipeToRefresh.isRefreshing = false
             }, 1500)

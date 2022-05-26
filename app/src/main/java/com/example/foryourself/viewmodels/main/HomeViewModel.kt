@@ -72,14 +72,39 @@ class HomeViewModel @Inject constructor(
     }
 
 
+    fun allOrdersREFRESH() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+        _loadingLiveData.postValue(true)
+        dao.clearTable()
+        val response = repository.getOrders()
+        if (response.isSuccessful) {
+            response.body()!!.results?.forEach { product ->
+                dao.addProductsFromService(resultToCascheMapper.map(product))
+            }
+        }
+        val resuk = dao.getTipy("Эксклюзив")
+        emit(resuk?.map {
+            cascheToResultMapper.map(it)
+        })
+
+        withContext(context = Dispatchers.Main) {
+            val rr = dao.getTipy("Бестселлер")
+            _orderLiveData.value = rr?.map {
+                cascheToResultMapper.map(it)
+            }
+        }
+
+        _loadingLiveData.postValue(false)
+
+    }
+
     fun getReklama() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
         _loadingLiveData.postValue(true)
 
         val response = repository.getReklama()
-        if (response.isSuccessful){
+        if (response.isSuccessful) {
             emit(response.body()?.resultss)
             _loadingLiveData.postValue(false)
-        }else{
+        } else {
             Log.d("tree", response.message())
         }
     }
