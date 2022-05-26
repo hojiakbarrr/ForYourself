@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#30BECF"
+    tools:context=".SpashActivity">
+
+
+    <ImageView
+        android:id="@+id/first_splash_img"
+        android:layout_width="101dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        app:srcCompat="@drawable/first_splash_icon" />
+
+    <TextView
+        android:id="@+id/first_splash_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="KARPIZ"
+        android:textColor="#FFFFFF"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/first_splash_img"
+        app:layout_constraintStart_toEndOf="@+id/first_splash_img"
+        app:layout_constraintTop_toTopOf="@+id/first_splash_img"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/first_splash_additionally"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="o n l i n e    b o u t i q u e"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/first_splash_img"
+        app:layout_constraintEnd_toEndOf="@+id/first_splash_txt"
+        app:layout_constraintStart_toStartOf="@+id/first_splash_txt"
+        app:layout_constraintTop_toBottomOf="@+id/first_splash_txt" />
+
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="132dp"
+        android:text="START SELLING"
+        android:textColor="@color/white"
+
+        android:textSize="@dimen/_23sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

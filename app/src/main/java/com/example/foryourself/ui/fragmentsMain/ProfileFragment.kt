@@ -1,6 +1,8 @@
 package com.example.foryourself.ui.fragmentsMain
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +12,11 @@ import androidx.fragment.app.viewModels
 import com.example.foryourself.R
 import com.example.foryourself.databinding.ProfileFragmentBinding
 import com.example.foryourself.utils.toast
+import com.example.foryourself.utils.uploadImage
 import com.example.foryourself.viewmodels.main.ProfileViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -19,8 +25,9 @@ class ProfileFragment : Fragment() {
     private val binding: ProfileFragmentBinding by lazy {
         ProfileFragmentBinding.inflate(layoutInflater)
     }
-
-    private  val viewModel: ProfileViewModel by viewModels()
+    var gso: GoogleSignInOptions? = null
+    var gsc: GoogleSignInClient? = null
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,24 +39,32 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val type = ArrayList<String>() // Create image list
-        val country = arrayOf("Ничего не выбрано","India", "Mumbai", "Faridabad", "Indonesia", "Africa")
-        var aa: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
+        gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
+        val acct = GoogleSignIn.getLastSignedInAccount(requireContext())
 
-        binding.filledExposed.setAdapter(aa)
-
-        binding.filledExposed.setOnItemClickListener { adapterView, view, i, l ->
-            toast(binding.filledExposed.text.toString())
+        if (acct != null) {
+            val personName = acct.displayName
+            val personEmail = acct.email
+            acct.photoUrl
+            Log.d("foto", acct.photoUrl.toString())
+            binding.apply {
+                requireContext().uploadImage(acct.photoUrl.toString(), profileImage)
+                prodileName.text = personName
+                prodileMail.text = personEmail
+                logOut.setOnClickListener {
+                    signOut()
+                }
+            }
         }
 
 
-// imageList.add(SlideModel("String Url" or R.drawable)
-// imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
+    }
 
-//        imageList.add(SlideModel(R.drawable.reklama3, "The animal population decreased by 58 percent in 42 years.", scaleType = ScaleTypes.FIT))
-//        imageList.add(SlideModel(R.drawable.reklama2, "Elephants and tigers may become extinct.",scaleType = ScaleTypes.FIT))
-//        imageList.add(SlideModel(R.drawable.reklama1, scaleType = ScaleTypes.FIT))
-//
-//        binding.imageSlider.setImageList(imageList)
+    private fun signOut() {
+        gsc!!.signOut().addOnCompleteListener {
+            activity?.finish()
+        }
     }
 }

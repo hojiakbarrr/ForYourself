@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var dao : ProductDao
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

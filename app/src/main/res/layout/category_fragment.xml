@@ -65,9 +65,8 @@
                 android:id="@+id/allItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"
                 android:layout_below="@+id/search_category"
-                >
+                android:visibility="visible">
 
 
                 <androidx.cardview.widget.CardView
@@ -75,11 +74,11 @@
                     android:layout_width="@dimen/_140sdp"
                     android:layout_height="180dp"
                     android:layout_marginStart="3dp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginEnd="3dp"
                     android:backgroundTint="#F1DAB8"
                     android:elevation="@dimen/_25ssp"
                     app:cardCornerRadius="30dp"
-                    android:layout_marginTop="@dimen/_2sdp"
                     app:cardElevation="@dimen/_1ssp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintCircleRadius="@dimen/_25ssp"
@@ -305,8 +304,8 @@
                     android:id="@+id/cardView"
                     android:layout_width="@dimen/_140sdp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginStart="3dp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginEnd="3dp"
                     android:backgroundTint="#FBE39A"
                     android:elevation="@dimen/_25ssp"
