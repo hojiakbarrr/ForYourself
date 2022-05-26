@@ -22,6 +22,8 @@ class TypeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _orderLiveData = MutableLiveData<List<Result>>()
+    var orderLiveData : LiveData<List<Result>> = _orderLiveData
+
     private var _searchLiveData = MutableLiveData<List<Result>>()
 
     var searchLiveData: LiveData<List<Result>> = _searchLiveData
@@ -37,34 +39,12 @@ class TypeViewModel @Inject constructor(
     fun allOrders(word: String) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             _loadingLiveData.postValue(true)
-            val searchProducts = mutableListOf<Result>()
 
-            if (dao.getProductsFromDATABASE().isEmpty()) {
-                val response = repository.getOrders()
-                if (response.isSuccessful) {
-                    Log.d("tt", dao.getProductsFromDATABASE().size.toString())
-                    response.body()!!.results?.forEach { product ->
-                        dao.addProductsFromService(resultToCascheMapper.map(product))
-                    }
-                }
-                val resuk = dao.getTipy(word)
+            val resuk = dao.getTipy(word)
                 emit(resuk?.map {
                     cascheToResultMapper.map(it)
                 })
-
-
-
-
-                _loadingLiveData.postValue(false)
-            } else {
-                val resuk = dao.getTipy(word)
-                emit(resuk?.map {
-                    cascheToResultMapper.map(it)
-                })
-
-
-                _loadingLiveData.postValue(false)
-            }
+            _loadingLiveData.postValue(false)
         }
 
     fun searchProduct(searchText: String, type: String) =
@@ -79,8 +59,8 @@ class TypeViewModel @Inject constructor(
                     searchProducts.add(cascheToResultMapper.map(it))
                 }
             }
-
             emit(searchProducts)
+
         }
 
 

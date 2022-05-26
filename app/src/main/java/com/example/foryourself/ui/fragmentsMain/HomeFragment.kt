@@ -123,8 +123,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 val ttt: String = it.reklama2.url
                 val tttt: String = it.reklama3.url
                 imageList.add(SlideModel(tt, scaleType = ScaleTypes.FIT))
-//                imageList.add(SlideModel(ttt, scaleType = ScaleTypes.FIT))
-//                imageList.add(SlideModel(tttt, scaleType = ScaleTypes.FIT))
+                imageList.add(SlideModel(ttt, scaleType = ScaleTypes.FIT))
+                imageList.add(SlideModel(tttt, scaleType = ScaleTypes.FIT))
                 binding.imageSlider.setImageList(imageList)
             }
         }

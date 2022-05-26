@@ -130,7 +130,7 @@
     </fragment>
     <fragment
         android:id="@+id/reklamaFragment"
-        android:name="com.example.foryourself.ReklamaFragment"
+        android:name="com.example.foryourself.ui.fragmentsAdd.ReklamaFragment"
         android:label="reklama_fragment"
         tools:layout="@layout/reklama_fragment" >
         <action

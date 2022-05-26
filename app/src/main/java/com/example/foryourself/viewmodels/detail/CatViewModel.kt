@@ -37,31 +37,15 @@ class CatViewModel @Inject constructor(
     fun allOrderss(word: String) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             _loadingLiveData.postValue(true)
-            val searchProducts = mutableListOf<Result>()
 
-            if (dao.getProductsFromDATABASE().isEmpty()) {
-                val response = repository.getOrders()
-                if (response.isSuccessful) {
-                    Log.d("tt", dao.getProductsFromDATABASE().size.toString())
-                    response.body()!!.results?.forEach { product ->
-                        dao.addProductsFromService(resultToCascheMapper.map(product))
-                    }
-                }
-                val resuk = dao.getcategory(word)
-                emit(resuk?.map {
-                    cascheToResultMapper.map(it)
-                })
-
-                _loadingLiveData.postValue(false)
-            } else {
-                val resuk = dao.getcategory(word)
-                emit(resuk?.map {
-                    cascheToResultMapper.map(it)
-                })
+            _loadingLiveData.postValue(false)
+            val resuk = dao.getcategory(word)
+            emit(resuk?.map {
+                cascheToResultMapper.map(it)
+            })
 
 
-                _loadingLiveData.postValue(false)
-            }
+            _loadingLiveData.postValue(false)
         }
 
     fun searchProducts(searchText: String, type: String) =

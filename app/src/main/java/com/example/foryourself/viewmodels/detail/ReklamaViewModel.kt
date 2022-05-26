@@ -1,9 +1,7 @@
-package com.example.foryourself
+package com.example.foryourself.viewmodels.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.data.retrofitResponse.putReklama.PuttReklama
@@ -47,6 +45,18 @@ class ReklamaViewModel @Inject constructor(
         } else withContext(Dispatchers.Main) {
             _orderDeleteLiveData.value = "Неполучилось обновить товар"
             _loadingLiveData.postValue(false)
+        }
+    }
+
+    fun getReklama() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+        _loadingLiveData.postValue(true)
+
+        val response = repository.getReklama()
+        if (response.isSuccessful){
+            emit(response.body()?.resultss)
+            _loadingLiveData.postValue(false)
+        }else{
+            Log.d("tree", response.message())
         }
     }
 

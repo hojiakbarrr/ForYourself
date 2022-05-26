@@ -57,6 +57,9 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
             Log.i("Res", it?.size.toString())
             typeAdapter.diffor.submitList(it)
         }
+        viewModel.orderLiveData.observe(viewLifecycleOwner){
+            typeAdapter.diffor.submitList(it)
+        }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
             try { if (status) loadingDialog.show() else loadingDialog.dismiss()
