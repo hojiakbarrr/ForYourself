@@ -112,3 +112,29 @@ fun Fragment.dialog() {
         }.setView(dialogLayout).create().show()
     }
 }
+
+fun Fragment.dialogabout() {
+    val builder = AlertDialog.Builder(requireActivity())
+    val inflater = layoutInflater
+    val dialogLayout = inflater.inflate(R.layout.dialog_about, null)
+
+    val rate: TextView = dialogLayout.findViewById(R.id.rate)
+    val razrabat: TextView = dialogLayout.findViewById(R.id.razrabot)
+
+    razrabat.setOnClickListener {
+        val email = Intent(Intent.ACTION_SEND)
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("hojiakbar_1997@mail.ru"))
+        email.putExtra(Intent.EXTRA_SUBJECT, "Обращение пользователя")
+        email.type = "message/rfc822"
+        startActivity(Intent.createChooser(email, "Choose an Email client :"))
+    }
+
+    with(builder) {
+        setPositiveButton("") { dialog, which ->
+
+
+        }.setNegativeButton("") { dialog, which ->
+            dialog.dismiss()
+        }.setView(dialogLayout).create().show()
+    }
+}

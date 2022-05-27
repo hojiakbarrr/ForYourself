@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.example.foryourself.R
 import com.example.foryourself.databinding.ProfileFragmentBinding
 import com.example.foryourself.utils.dialog
+import com.example.foryourself.utils.dialogabout
 import com.example.foryourself.utils.toast
 import com.example.foryourself.utils.uploadImage
 import com.example.foryourself.viewmodels.main.ProfileViewModel
@@ -69,6 +70,9 @@ class ProfileFragment : Fragment() {
 
         binding.btnAddress.setOnClickListener {
             this.dialog()
+        }
+        binding.btnAbout.setOnClickListener {
+            this.dialogabout()
         }
 
     }
