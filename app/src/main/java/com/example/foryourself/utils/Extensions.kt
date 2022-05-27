@@ -101,7 +101,12 @@ fun Fragment.dialog() {
 
     with(builder) {
         setPositiveButton("Да") { dialog, which ->
-            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment2_to_mapsFragment)
+            //            val urir = Uri.parse("geo:40.534185,72.795369")
+            val uri = "google.navigation:q=" + 40.534185 + "," + 72.795369 + "&mode=d"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
+
         }.setNegativeButton("Нет") { dialog, which ->
                 dialog.dismiss()
         }.setView(dialogLayout).create().show()

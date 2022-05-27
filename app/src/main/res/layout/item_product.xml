@@ -9,10 +9,11 @@
     app:cardCornerRadius="20dp"
 
     app:cardElevation="10dp"
-    app:cardBackgroundColor="#31F3ECEC"
+    app:cardBackgroundColor="#31D3D0D0"
     app:cardMaxElevation="@dimen/_6sdp"
     >
-
+    <!--    app:strokeWidth="@dimen/_1sdp"-->
+    <!--    app:strokeColor="@color/primary"-->
     <!--    app:cardBackgroundColor="#77F3ECEC"-->
 
     <LinearLayout

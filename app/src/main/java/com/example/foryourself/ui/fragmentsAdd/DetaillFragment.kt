@@ -1,5 +1,7 @@
 package com.example.foryourself.ui.fragmentsAdd
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -114,8 +116,17 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 Navigation.findNavController(it).navigate(R.id.from_detaillFragment_to_homeFragment)
                 loadingDialogdelete.dismiss()
             }
+            imgYoutube.setOnClickListener {
+                openYouTube()
+
+            }
         }
         return binding.root
+    }
+
+    private fun openYouTube() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=Iq9yQmVOThE"))
+        startActivity(intent)
     }
 
 
