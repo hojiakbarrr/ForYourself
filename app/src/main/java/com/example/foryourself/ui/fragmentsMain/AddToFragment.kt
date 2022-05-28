@@ -151,7 +151,7 @@ class AddToFragment : Fragment() {
                     }
 
                     CoroutineScope(Dispatchers.Main).launch {
-                        delay(7000)
+                        delay(8000)
 
                         if (imageFile_Main != null) {
                             if (imageFile_Second != null) {

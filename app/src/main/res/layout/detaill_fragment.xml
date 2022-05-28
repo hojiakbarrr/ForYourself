@@ -89,7 +89,7 @@
                     android:layout_marginStart="@dimen/_3sdp"
                     android:drawableTint="@color/q_black"
                     android:gravity="center"
-                    android:text="Наличие размеров : "
+                    android:text="Доступные размеры : "
                     android:textColor="@color/q_black"
                     android:textSize="@dimen/_15sdp" />
 
@@ -136,7 +136,7 @@
                     android:layout_marginStart="@dimen/_3sdp"
                     android:drawableTint="@color/q_black"
                     android:gravity="center"
-                    android:text="Наличие цветов : "
+                    android:text="Доступные цвета : "
                     android:textColor="@color/q_black"
                     android:textSize="@dimen/_15sdp" />
 

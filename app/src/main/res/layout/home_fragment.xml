@@ -162,8 +162,6 @@
                         android:layout_height="@dimen/_130sdp"
                         android:layout_marginStart="@dimen/_2sdp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_19ssp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"

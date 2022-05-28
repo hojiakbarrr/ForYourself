@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.foryourself.databinding.ActivitySpashBinding
+import com.example.foryourself.utils.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -32,6 +33,7 @@ class SpashActivity : AppCompatActivity() {
         if (acct != null) {
             navigateToSecondActivity()
         }
+        else toast("Пройдите регистрацию в Google аккаунте")
         binding.start.setOnClickListener {
             signIn()
         }

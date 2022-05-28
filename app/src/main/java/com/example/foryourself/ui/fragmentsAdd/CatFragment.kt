@@ -46,6 +46,8 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         typeAdapter = TypeAdapter()
         exclusiveAdapters()
         onClickItem()
+
+
         binding.tvCategoryCat.text = args.product
         return binding.root
     }
@@ -55,6 +57,8 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
             Log.i("Res", it?.size.toString())
             typeAdapter.diffor.submitList(it)
+
+            
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->

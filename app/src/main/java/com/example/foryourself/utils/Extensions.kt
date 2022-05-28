@@ -24,6 +24,7 @@ import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
 import com.parse.ParseFile
 import java.io.ByteArrayOutputStream
+import java.net.URLEncoder
 
 
 fun Fragment.toast(message: String) {
@@ -137,4 +138,37 @@ fun Fragment.dialogabout() {
             dialog.dismiss()
         }.setView(dialogLayout).create().show()
     }
+}
+
+
+fun Fragment.dialogwhatsapp() {
+
+    try {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+996709888585"+"&text="+"салам"))
+        intent.setPackage("com.whatsapp")
+        startActivity(intent)
+    } catch (e: Exception) {
+        toast("Надо установить What's app")
+    }
+}
+
+fun Fragment.dialogworktime() {
+
+    val builder = AlertDialog.Builder(requireActivity())
+    val inflater = layoutInflater
+    val dialogLayout = inflater.inflate(R.layout.dialog_worktime, null)
+
+
+
+
+    with(builder) {
+        setPositiveButton("") { dialog, which ->
+
+
+        }.setNegativeButton("") { dialog, which ->
+            dialog.dismiss()
+        }.setView(dialogLayout).create().show()
+    }
+
 }
