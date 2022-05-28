@@ -73,10 +73,15 @@ class EditorrFragment : Fragment() {
 
     private var seasonn: String? = null
 
+    private var image_1_boolean: Boolean = false
+    private var image_2_boolean: Boolean = false
+    private var image_3_boolean: Boolean = false
+
 
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), "Товар обновляется подождите!!!")
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -177,34 +182,40 @@ class EditorrFragment : Fragment() {
                 if (imageFile_Main != null) {
                     imageFile_Main!!.saveInBackground(SaveCallback { e ->
                         if (e == null) {
+                            image_1_boolean = true
                             toast("Главное фото загрузилось на сервер")
                         }
                     })
                 } else {
                     Handler(Looper.getMainLooper()).post {
                         toast("Главное фото Осталось без изменений")
+                        image_1_boolean = true
                     }
                 }
                 if (imageFile_Third != null) {
                     imageFile_Third!!.saveInBackground(SaveCallback { e ->
                         if (e == null) {
                             toast("Второе дополнительное фото загрузилось на сервер")
+                            image_2_boolean = true
                         }
                     })
                 } else {
                     Handler(Looper.getMainLooper()).post {
                         toast("Второе фото Осталось без изменений")
+                        image_2_boolean = true
                     }
                 }
                 if (imageFile_Second != null) {
                     imageFile_Second!!.saveInBackground(SaveCallback { e ->
                         if (e == null) {
                             toast("Третие дополнительное фото загрузилось на сервер")
+                            image_3_boolean = true
                         }
                     })
                 } else {
                     Handler(Looper.getMainLooper()).post {
                         toast("Третие фото Осталось без изменений")
+                        image_3_boolean = true
                     }
 
                 }
@@ -216,12 +227,19 @@ class EditorrFragment : Fragment() {
                 CoroutineScope(Dispatchers.Main).launch {
                     loadingDialog.show()
                     delay(8000)
-                    val imageMainFinal = if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
-                    val imageFirstFinal = if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
-                    val imageThirdFinal = if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
-                    loadingDialog.dismiss()
-                    updatePost(imageMainFinal,imageFirstFinal,imageThirdFinal)
-
+                    if (image_1_boolean == true){
+                        val imageMainFinal =
+                            if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
+                        if (image_2_boolean == true){
+                            val imageFirstFinal =
+                                if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
+                            if (image_3_boolean == true){
+                                val imageThirdFinal =
+                                    if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
+                                updatePost(imageMainFinal, imageFirstFinal, imageThirdFinal)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -275,22 +293,11 @@ class EditorrFragment : Fragment() {
             viewModel.orderDeleteLiveData.observe(viewLifecycleOwner) { it ->
                 loadingDialog.dismiss()
                 toast(it)
-                Navigation.findNavController(requireView()).navigate(R.id.from_editorrFragment_to_homeFragment)
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.from_editorrFragment_to_homeFragment)
                 clearALL()
             }
         }
-
-//        lifecycleScope.launch {
-//            withContext(Dispatchers.Main) {
-//                viewModel.orderDeleteLiveData.observe(this@EditorActivity) { it ->
-//                    toast(it)
-//                    val intent = Intent(this@EditorActivity,MainActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-
-
     }
 
 
@@ -304,7 +311,7 @@ class EditorrFragment : Fragment() {
         val country = arrayOf("Лето", "Осень", "Зима", "Весна")
         var cc: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledSeasonEdit .setAdapter(cc)
+        binding.filledSeasonEdit.setAdapter(cc)
         binding.filledSeasonEdit.setOnItemClickListener { adapterView, view, i, l ->
             seasonn = binding.filledSeasonEdit.text.toString()
         }
@@ -329,7 +336,6 @@ class EditorrFragment : Fragment() {
             type = binding.filledTypeEdit.text.toString()
         }
     }
-
 
 
     private fun clearALL() {

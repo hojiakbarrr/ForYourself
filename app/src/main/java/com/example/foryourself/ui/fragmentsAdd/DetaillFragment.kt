@@ -104,9 +104,13 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 clicked = !clicked
             }
             fab2Editor.setOnClickListener {
-                casche = args.product
-                val action = DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(casche)
-                Navigation.findNavController(it).navigate(action)
+                try {
+                    casche = args.product
+                    val action = DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(casche)
+                    Navigation.findNavController(it).navigate(action)
+                } catch (e: Exception) {
+
+                }
             }
             fab3DeleteProduct.setOnClickListener {
                 loadingDialogdelete.show()
