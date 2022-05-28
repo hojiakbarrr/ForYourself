@@ -100,6 +100,7 @@ class AddToFragment : Fragment() {
             getImage(IMAGE_THIRD_CODE)
         }
         binding.putOnServer.setOnClickListener {
+            loadingDialog.show()
 //            lifecycleScope.launch {
 //                withContext(Dispatchers.IO) {
 //
@@ -122,58 +123,92 @@ class AddToFragment : Fragment() {
 
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    if (imageFile_Main != null) {
-                        imageFile_Main!!.saveInBackground(SaveCallback { e ->
-                            if (e == null) {
-                                toast("Главное фото загрузилось на сервер")
-                            }
-                        })
-                    } else {
-                        Log.d("SaveImage", "error")
-                    }
-                    if (imageFile_Third != null) {
-                        imageFile_Third!!.saveInBackground(SaveCallback { e ->
-                            if (e == null) {
-                                toast("Третие дополнительное фото загрузилось на сервер")
-                            }
-                        })
-                    } else {
-                        Log.d("SaveImage", "error")
-                    }
-                    if (imageFile_Second != null) {
-                        imageFile_Second!!.saveInBackground(SaveCallback { e ->
-                            if (e == null) {
-                                toast("Второе дополнительное фото загрузилось на сервер")
-                            }
-                        })
-                    } else {
-                        Log.d("SaveImage", "error")
-                    }
+//                    if (imageFile_Main != null) {
+//                        imageFile_Main!!.saveInBackground(SaveCallback { e ->
+//                            if (e == null) {
+//                                toast("Главное фото загрузилось на сервер")
+//                            }
+//                        })
+//                    } else {
+//                        Log.d("SaveImage", "error")
+//                    }
+//                    if (imageFile_Third != null) {
+//                        imageFile_Third!!.saveInBackground(SaveCallback { e ->
+//                            if (e == null) {
+//                                toast("Третие дополнительное фото загрузилось на сервер")
+//                            }
+//                        })
+//                    } else {
+//                        Log.d("SaveImage", "error")
+//                    }
+//                    if (imageFile_Second != null) {
+//                        imageFile_Second!!.saveInBackground(SaveCallback { e ->
+//                            if (e == null) {
+//                                toast("Второе дополнительное фото загрузилось на сервер")
+//                            }
+//                        })
+//                    } else {
+//                        Log.d("SaveImage", "error")
+//                    }
 
                     CoroutineScope(Dispatchers.Main).launch {
-                        delay(8000)
 
                         if (imageFile_Main != null) {
-                            if (imageFile_Second != null) {
-                                if (imageFile_Third != null) {
-                                    createPost()
-                                    loadingDialog.show()
-                                } else {
-                                    Handler(Looper.getMainLooper()).post {
-                                        toast("Вы не выбрали третие фото")
+                            imageFile_Main!!.saveInBackground(SaveCallback { e ->
+                                if (e == null) {
+                                    toast("Главное фото загрузилось на сервер")
+                                    if (imageFile_Second != null) {
+                                        imageFile_Second!!.saveInBackground(SaveCallback { e ->
+                                            if (e == null) {
+                                                toast("Второе дополнительное фото загрузилось на сервер")
+                                                if (imageFile_Third != null) {
+                                                    imageFile_Third!!.saveInBackground(SaveCallback { e ->
+                                                        if (e == null) {
+                                                            toast("Третие дополнительное фото загрузилось на сервер")
+                                                            createPost()
+                                                            loadingDialog.show()
+                                                        }
+                                                    })
+
+                                                } else {
+                                                    Handler(Looper.getMainLooper()).post {
+                                                        toast("Вы не выбрали третие фото")
+                                                    }
+                                                }
+                                            }
+                                        })
+                                    } else {
+                                        Handler(Looper.getMainLooper()).post {
+                                            toast("Вы не выбрали второе фото")
+                                        }
                                     }
                                 }
-                            } else {
-                                Handler(Looper.getMainLooper()).post {
-                                    toast("Вы не выбрали второе фото")
-                                }
-                            }
+                            })
                         } else {
                             Handler(Looper.getMainLooper()).post {
                                 toast("Вы не выбрали основное фото")
                             }
-                        }
 
+//                            if (imageFile_Second != null) {
+//                                if (imageFile_Third != null) {
+//                                    createPost()
+//                                    loadingDialog.show()
+//                                } else {
+//                                    Handler(Looper.getMainLooper()).post {
+//                                        toast("Вы не выбрали третие фото")
+//                                    }
+//                                }
+//                            } else {
+//                                Handler(Looper.getMainLooper()).post {
+//                                    toast("Вы не выбрали второе фото")
+//                                }
+//                            }
+//                        } else {
+//                            Handler(Looper.getMainLooper()).post {
+//                                toast("Вы не выбрали основное фото")
+//                            }
+
+                        }
                     }
 
 
@@ -259,15 +294,16 @@ class AddToFragment : Fragment() {
             )
         ).observe(viewLifecycleOwner) {
             toast("Товар Успешно был добавлен для продажи")
-        }
-        viewModel.ss()
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
-                loadingDialog.dismiss()
-                startActivity(Intent(requireActivity(),MainActivity::class.java))
-                clearALL()
+            viewModel.ss()
+            loadingDialog.dismiss()
+            lifecycleScope.launch(Dispatchers.Main) {
+                viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    clearALL()
+                }
             }
         }
+
     }
 
     private fun clearALL() {

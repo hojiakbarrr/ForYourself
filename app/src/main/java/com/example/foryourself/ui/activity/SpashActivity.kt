@@ -58,7 +58,7 @@ class SpashActivity : AppCompatActivity() {
                 navigateToSecondActivity()
             } catch (e: ApiException) {
                 Log.d("fail",e.toString())
-                Toast.makeText(applicationContext, "Something went wrong", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "Поврежден ваш Google аккаунт", Toast.LENGTH_SHORT)
                     .show()
             }
         }

@@ -61,11 +61,6 @@
 
     </fragment>
     <fragment
-        android:id="@+id/sendToFragment"
-        android:name="com.example.foryourself.ui.fragmentsMain.SendToFragment"
-        android:label="send_to_fragment"
-        tools:layout="@layout/send_to_fragment" />
-    <fragment
         android:id="@+id/detaillFragment"
         android:name="com.example.foryourself.ui.fragmentsAdd.DetaillFragment"
         android:label="detaill_fragment"
@@ -138,5 +133,10 @@
             android:id="@+id/action_reklamaFragment_to_addToFragment"
             app:destination="@id/addToFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.foryourself.FavoritesFragment"
+        android:label="favorites_fragment"
+        tools:layout="@layout/favorites_fragment" />
 
 </navigation>

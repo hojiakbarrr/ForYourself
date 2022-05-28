@@ -19,9 +19,9 @@
         android:id="@+id/addToFragment"
         />
 
-    <item android:title="Mail"
-        android:icon="@drawable/paper"
-        android:id="@+id/sendToFragment"
+    <item android:title="Favorites"
+        android:icon="@drawable/favourite"
+        android:id="@+id/favoritesFragment"
         />
 
     <item android:title="Profile"

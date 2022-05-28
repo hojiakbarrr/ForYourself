@@ -211,9 +211,11 @@ class EditorrFragment : Fragment() {
 
 
 
+
+
                 CoroutineScope(Dispatchers.Main).launch {
                     loadingDialog.show()
-                    delay(6000)
+                    delay(8000)
                     val imageMainFinal = if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
                     val imageFirstFinal = if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
                     val imageThirdFinal = if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()

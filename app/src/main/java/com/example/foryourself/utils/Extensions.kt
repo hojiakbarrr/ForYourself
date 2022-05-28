@@ -145,7 +145,7 @@ fun Fragment.dialogwhatsapp() {
 
     try {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+996709888585"+"&text="+"салам"))
+        intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+996709888585"+"&text="+"Здравствуйте, хотела уточнить у вас по поводу одежды)"))
         intent.setPackage("com.whatsapp")
         startActivity(intent)
     } catch (e: Exception) {
