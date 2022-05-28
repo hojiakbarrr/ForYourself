@@ -3,8 +3,7 @@ package com.example.foryourself.viewmodels.detail
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
-import com.example.foryourself.data.retrofitResponse.putReklama.PuttReklama
+import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
@@ -34,7 +33,7 @@ class ReklamaViewModel @Inject constructor(
     var orderDeleteLiveData: LiveData<String> = _orderDeleteLiveData
 
 
-    fun updateReklama(id: String, reklama: PuttReklama) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateReklama(id: String, reklama: UpdateReklama) = viewModelScope.launch(Dispatchers.IO) {
         _loadingLiveData.postValue(true)
         val response = repository.updateReklama(id, reklama)
         if (response.isSuccessful) {

@@ -121,8 +121,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 loadingDialogdelete.dismiss()
             }
             imgYoutube.setOnClickListener {
-                openYouTube()
-
+                if (youtubeHTTPS.isNotEmpty())  openYouTube()
+                else toast("Нет видео обзора товара")
             }
         }
         return binding.root

@@ -1,12 +1,14 @@
 package com.example.kapriz.api
 
+import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
 import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
 import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
+import com.example.foryourself.data.retrofitResponse.getUsers.GetUsers
 import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
-import com.example.foryourself.data.retrofitResponse.putReklama.PuttReklama
+import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -38,7 +40,19 @@ interface ApiService {
     @PUT("/classes/Reklama/{objectId}")
     suspend fun updateReklama(
         @Path("objectId") objectId: String,
-        @Body post: PuttReklama
+        @Body post: UpdateReklama
+    ):Response<UpdateResponse>
+
+    @GET("/classes/Users")
+    suspend fun getUsers(): Response <GetUsers>
+
+    @POST("classes/Users")
+    suspend fun createNewUser(@Body user: PutUsers): Response<PostResponseAnswer>
+
+    @PUT("/classes/Users/{objectId}")
+    suspend fun updateReklamaUser(
+        @Path("objectId") objectId: String,
+        @Body user: PutUsers
     ):Response<UpdateResponse>
 
 }

@@ -19,7 +19,7 @@ import com.example.foryourself.viewmodels.detail.ReklamaViewModel
 import com.example.foryourself.data.retrofitResponse.getReklama.Reklama1
 import com.example.foryourself.data.retrofitResponse.getReklama.Reklama2
 import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
-import com.example.foryourself.data.retrofitResponse.putReklama.PuttReklama
+import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
 import com.example.foryourself.databinding.ReklamaFragmentBinding
 import com.example.foryourself.ui.activity.MainActivity
 import com.example.foryourself.utils.*
@@ -252,7 +252,7 @@ class ReklamaFragment : Fragment() {
     ) {
         viewModel.updateReklama(
             "I7GpuYHVhv",
-            PuttReklama(
+            UpdateReklama(
                 reklama1 = imageMainFinal,
                 reklama2 = imageFirstFinal,
                 reklama3 = imageThirdFinal

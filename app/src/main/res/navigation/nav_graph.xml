@@ -135,7 +135,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.foryourself.FavoritesFragment"
+        android:name="com.example.foryourself.ui.fragmentsMain.FavoritesFragment"
         android:label="favorites_fragment"
         tools:layout="@layout/favorites_fragment" />
 

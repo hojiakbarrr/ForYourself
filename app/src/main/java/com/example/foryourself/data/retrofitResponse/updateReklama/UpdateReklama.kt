@@ -1,10 +1,10 @@
-package com.example.foryourself.data.retrofitResponse.putReklama
+package com.example.foryourself.data.retrofitResponse.updateReklama
 
 import com.example.foryourself.data.retrofitResponse.getReklama.Reklama1
 import com.example.foryourself.data.retrofitResponse.getReklama.Reklama2
 import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
 
-data class PuttReklama(
+data class UpdateReklama(
 
     val reklama1: Reklama1? = null,
     val reklama2: Reklama2? = null,

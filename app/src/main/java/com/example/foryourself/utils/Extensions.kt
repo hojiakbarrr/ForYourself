@@ -22,9 +22,14 @@ import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
 import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.db.ProductDao
+import com.example.foryourself.db.model.ResultCache
+import com.example.foryourself.repository.OrderRepository
 import com.parse.ParseFile
 import java.io.ByteArrayOutputStream
 import java.net.URLEncoder
+import javax.inject.Inject
 
 
 fun Fragment.toast(message: String) {
@@ -172,3 +177,12 @@ fun Fragment.dialogworktime() {
     }
 
 }
+
+fun <T> List<T>.lastElements(): List<T> {
+    val list = mutableListOf<T>()
+    for ((counter, i) in (size - 1 downTo 0).withIndex()) {
+        list.add(counter, this[i])
+    }
+    return list
+}
+

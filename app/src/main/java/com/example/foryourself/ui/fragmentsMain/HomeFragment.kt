@@ -22,6 +22,7 @@ import com.example.foryourself.adapter.BestSellerAdapter
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
+import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -57,12 +58,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onStart() {
         super.onStart()
         viewModel.allOrders().observe(viewLifecycleOwner) {
-            exclusiveAdapter.diffor.submitList(it)
-            binding.swipeToRefresh.isRefreshing = false
+            exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
         }
         viewModel.orderLiveData.observe(viewLifecycleOwner) {
-            bestAdapter.productList = it
-            binding.swipeToRefresh.isRefreshing = false
+            bestAdapter.productList = it?.lastElements()?.toMutableList()!!
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
@@ -100,12 +99,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.allOrders().observe(viewLifecycleOwner) {
-            exclusiveAdapter.diffor.submitList(it)
-            binding.swipeToRefresh.isRefreshing = false
+            exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
         }
         viewModel.orderLiveData.observe(viewLifecycleOwner) {
-            bestAdapter.productList = it
-            binding.swipeToRefresh.isRefreshing = false
+            bestAdapter.productList = it?.lastElements()?.toMutableList()!!
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
@@ -185,12 +182,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onRefresh() {
         binding.apply {
             swipeToRefresh.isRefreshing = true
-            if (swipeToRefresh.isRefreshing){
-                viewModel.allOrdersREFRESH()
-                viewModel.getReklama()
-            }
             swipeToRefresh.postDelayed({
                 swipeToRefresh.isRefreshing = false
+                if (swipeToRefresh.isRefreshing){
+                    viewModel.allOrdersREFRESH()
+                    viewModel.getReklama()
+                }
             }, 1500)
         }
     }
