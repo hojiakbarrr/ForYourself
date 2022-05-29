@@ -21,11 +21,9 @@ class TypeViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private var _orderLiveData = MutableLiveData<List<Result>>()
-    var orderLiveData : LiveData<List<Result>> = _orderLiveData
+
 
     private var _searchLiveData = MutableLiveData<List<Result>>()
-
     var searchLiveData: LiveData<List<Result>> = _searchLiveData
 
     private var _loadingLiveData = MutableLiveData<Boolean>()

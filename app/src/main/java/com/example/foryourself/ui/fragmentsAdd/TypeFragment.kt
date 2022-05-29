@@ -48,25 +48,24 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
         exclusiveAdapters()
         onClickItem()
         binding.tvCategory.text = args.product
-        return binding.root
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
             Log.i("Res", it?.size.toString())
-            typeAdapter.diffor.submitList(it)
+            typeAdapter.diffor.submitList(it!!.lastElements().toMutableList())
         }
-        viewModel.orderLiveData.observe(viewLifecycleOwner){
-            typeAdapter.diffor.submitList(it.lastElements().toMutableList())
-        }
+
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
             try { if (status) loadingDialog.show() else loadingDialog.dismiss()
             } catch (e: Exception) {
             }
         }
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.search.setOnQueryTextListener(this)
 
     }

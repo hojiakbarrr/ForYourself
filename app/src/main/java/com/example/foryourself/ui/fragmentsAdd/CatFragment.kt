@@ -48,18 +48,11 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         exclusiveAdapters()
         onClickItem()
 
-
-        binding.tvCategoryCat.text = args.product
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
             Log.i("Res", it?.size.toString())
             typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
 
-            
+
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
@@ -68,6 +61,13 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
             } catch (e: Exception) {
             }
         }
+        binding.tvCategoryCat.text = args.product
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.searchCat.setOnQueryTextListener(this)
 
     }
