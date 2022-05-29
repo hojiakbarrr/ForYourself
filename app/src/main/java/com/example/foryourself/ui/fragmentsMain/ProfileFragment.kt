@@ -38,25 +38,14 @@ class ProfileFragment : Fragment() {
     var gso: GoogleSignInOptions? = null
     var gsc: GoogleSignInClient? = null
     private val viewModel: ProfileViewModel by viewModels()
-    private lateinit var objectID: String
-    private lateinit var accountEmail: String
-    private lateinit var nomer: String
+    private var objectID: String = ""
+    private var accountEmail: String = ""
+    private var nomer: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-            View.VISIBLE
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
@@ -75,9 +64,28 @@ class ProfileFragment : Fragment() {
                     signOut()
                 }
             }
-
-
+            binding.profileBtnEdit.setOnClickListener {
+                profileedit(acct.photoUrl, acct.displayName, acct.email)
+            }
+            viewModel.newUser(
+                objectID,
+                PutUsers(email = acct.email.toString(), name = acct.displayName.toString())
+            ).observe(viewLifecycleOwner) {
+                toast(it)
+            }
         }
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         binding.btnAddress.setOnClickListener {
             this.dialog()
@@ -91,9 +99,7 @@ class ProfileFragment : Fragment() {
         binding.btnWork.setOnClickListener {
             this.dialogworktime()
         }
-        binding.profileBtnEdit.setOnClickListener {
-            profileedit(acct?.photoUrl, acct?.displayName, acct?.email)
-        }
+
         viewModel.getUser(accountEmail).observe(viewLifecycleOwner) {
             objectID = it.objectId
             nomer = it.numberTelephone
@@ -103,18 +109,6 @@ class ProfileFragment : Fragment() {
             toast(it)
         }
 
-        try {
-            viewModel.newUser(
-                objectID,
-                PutUsers(
-                    email = acct!!.email.toString(),
-                    name = acct.displayName.toString()
-                )
-            ).observe(viewLifecycleOwner) {
-                toast(it)
-            }
-        } catch (e: Exception) {
-        }
 
     }
 
