@@ -15,6 +15,7 @@ import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
 import com.example.foryourself.databinding.CatFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
+import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +57,7 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
             Log.i("Res", it?.size.toString())
-            typeAdapter.diffor.submitList(it)
+            typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
 
             
         }
@@ -88,7 +89,7 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         if (searchText != null) {
             viewModel.searchProducts(searchText = searchText, args.product)
             viewModel.searchLiveData.observe(viewLifecycleOwner) {
-                typeAdapter.diffor.submitList(it)
+                typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
             }
 
         }
@@ -100,11 +101,11 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
             val searchText = newText.lowercase()
             viewModel.searchProducts(searchText = searchText, args.product)
                 .observe(viewLifecycleOwner) {
-                    typeAdapter.diffor.submitList(it)
+                    typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
                 }
         } else {
             viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
-                typeAdapter.diffor.submitList(it)
+                typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
             }
         }
         return false

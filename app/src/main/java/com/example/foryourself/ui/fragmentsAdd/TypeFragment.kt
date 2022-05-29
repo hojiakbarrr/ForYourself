@@ -15,6 +15,7 @@ import com.example.foryourself.adapter.TypeAdapter
 import com.example.foryourself.viewmodels.detail.TypeViewModel
 import com.example.foryourself.databinding.TypeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
+import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +59,7 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
             typeAdapter.diffor.submitList(it)
         }
         viewModel.orderLiveData.observe(viewLifecycleOwner){
-            typeAdapter.diffor.submitList(it)
+            typeAdapter.diffor.submitList(it.lastElements().toMutableList())
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
@@ -88,7 +89,7 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
         if (searchText != null){
             viewModel.searchProduct(searchText = searchText,args.product)
             viewModel.searchLiveData.observe(viewLifecycleOwner) {
-                typeAdapter.diffor.submitList(it)
+                typeAdapter.diffor.submitList(it.lastElements().toMutableList())
             }
 
         }
@@ -99,11 +100,11 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
         if (newText != null) {
             val searchText = newText.lowercase()
             viewModel.searchProduct(searchText = searchText,args.product).observe(viewLifecycleOwner){
-                typeAdapter.diffor.submitList(it)
+                typeAdapter.diffor.submitList(it.lastElements().toMutableList())
             }
         } else {
             viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
-                typeAdapter.diffor.submitList(it)
+                typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
             }
         }
         return false

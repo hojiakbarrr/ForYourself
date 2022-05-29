@@ -16,10 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val dao: ProductDao,
     private val repository: OrderRepository,
-    private val resultToCascheMapper: Mapper<Result, ResultCache>,
-    private val cascheToResultMapper: Mapper<ResultCache, Result>
 ) : ViewModel() {
 
     private var _loadingLiveData = MutableLiveData<String>()

@@ -122,18 +122,18 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 imageList.add(SlideModel(tt, scaleType = ScaleTypes.FIT))
                 imageList.add(SlideModel(ttt, scaleType = ScaleTypes.FIT))
                 imageList.add(SlideModel(tttt, scaleType = ScaleTypes.FIT))
-                binding.imageSlider.setImageList(imageList)
+                binding.apply {
+                    imageSlider.setImageList(imageList)
+                    imageSlider.setItemClickListener(object : ItemClickListener {
+                        override fun onItemSelected(position: Int) {
+                            toast(position.toString())
+                        }
+                    })
+                }
             }
         }
 
-        binding.apply {
-            imageSlider.setImageList(imageList)
-            imageSlider.setItemClickListener(object : ItemClickListener {
-                override fun onItemSelected(position: Int) {
-                    toast(position.toString())
-                }
-            })
-        }
+
 
 
 
@@ -184,7 +184,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             swipeToRefresh.isRefreshing = true
             swipeToRefresh.postDelayed({
                 swipeToRefresh.isRefreshing = false
-                if (swipeToRefresh.isRefreshing){
+                if (swipeToRefresh.isRefreshing == false) {
                     viewModel.allOrdersREFRESH()
                     viewModel.getReklama()
                 }
