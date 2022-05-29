@@ -1,17 +1,22 @@
 package com.example.foryourself.ui.fragmentsMain
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.foryourself.R
+import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
 import com.example.foryourself.databinding.ProfileFragmentBinding
 import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.main.ProfileViewModel
@@ -19,17 +24,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.parse.ParseException
+import com.parse.ParseObject
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
+
     private val binding: ProfileFragmentBinding by lazy {
         ProfileFragmentBinding.inflate(layoutInflater)
     }
     var gso: GoogleSignInOptions? = null
     var gsc: GoogleSignInClient? = null
     private val viewModel: ProfileViewModel by viewModels()
+    private lateinit var objectID: String
+    private lateinit var accountEmail: String
+    private lateinit var nomer: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +65,7 @@ class ProfileFragment : Fragment() {
         if (acct != null) {
             val personName = acct.displayName
             val personEmail = acct.email
-            acct.photoUrl
+            accountEmail = acct.email.toString()
             Log.d("foto", acct.photoUrl.toString())
             binding.apply {
                 requireContext().uploadImage(acct.photoUrl.toString(), profileImage)
@@ -64,6 +75,8 @@ class ProfileFragment : Fragment() {
                     signOut()
                 }
             }
+
+
         }
 
         binding.btnAddress.setOnClickListener {
@@ -81,6 +94,27 @@ class ProfileFragment : Fragment() {
         binding.profileBtnEdit.setOnClickListener {
             profileedit(acct?.photoUrl, acct?.displayName, acct?.email)
         }
+        viewModel.getUser(accountEmail).observe(viewLifecycleOwner) {
+            objectID = it.objectId
+            nomer = it.numberTelephone
+
+        }
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+            toast(it)
+        }
+
+        try {
+            viewModel.newUser(
+                objectID,
+                PutUsers(
+                    email = acct!!.email.toString(),
+                    name = acct.displayName.toString()
+                )
+            ).observe(viewLifecycleOwner) {
+                toast(it)
+            }
+        } catch (e: Exception) {
+        }
 
     }
 
@@ -92,20 +126,30 @@ class ProfileFragment : Fragment() {
 
         var name: TextView = dialogLayout.findViewById(R.id.txt_name)
         var mail: TextView = dialogLayout.findViewById(R.id.txt_mail)
-        var edit_number_txt: TextView = dialogLayout.findViewById(R.id.edittxt_number)
-        var edit_number_image: ImageView = dialogLayout.findViewById(R.id.edit_number)
+        var edit_number_txt: EditText = dialogLayout.findViewById(R.id.edittxt_number)
         var avater: ImageView = dialogLayout.findViewById(R.id.rounded_image)
 
         binding.apply {
             name.text = displayName
             mail.text = email
             requireContext().uploadImage(photoUrl.toString(), avater)
+            edit_number_txt.setText(nomer)
         }
-
-
 
         with(builder) {
             setPositiveButton("Сохранить") { dialog, which ->
+
+                viewModel.newUser(
+                    objectID,
+                    PutUsers(
+                        email = mail.text.toString(),
+                        name = name.text.toString(),
+                        numberTelephone = edit_number_txt.text.toString()
+                    )
+                ).observe(viewLifecycleOwner) {
+                    toast(it)
+                }
+                nomer = edit_number_txt.text.toString()
 
 
             }.setNegativeButton("Нет") { dialog, which ->
@@ -114,6 +158,7 @@ class ProfileFragment : Fragment() {
         }
 
     }
+
 
     private fun signOut() {
         gsc!!.signOut().addOnCompleteListener {

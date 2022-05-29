@@ -35,13 +35,16 @@ interface ApiService {
     @GET("/classes/Reklama")
     suspend fun getReklama(): Response <Getreklama>
 
-//    zghtzuTnVX
+//  zghtzuTnVX
 
     @PUT("/classes/Reklama/{objectId}")
     suspend fun updateReklama(
         @Path("objectId") objectId: String,
         @Body post: UpdateReklama
     ):Response<UpdateResponse>
+
+
+
 
     @GET("/classes/Users")
     suspend fun getUsers(): Response <GetUsers>
@@ -50,7 +53,7 @@ interface ApiService {
     suspend fun createNewUser(@Body user: PutUsers): Response<PostResponseAnswer>
 
     @PUT("/classes/Users/{objectId}")
-    suspend fun updateReklamaUser(
+    suspend fun updateUser(
         @Path("objectId") objectId: String,
         @Body user: PutUsers
     ):Response<UpdateResponse>

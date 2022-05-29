@@ -5,8 +5,10 @@ import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteRespon
 import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
+import com.example.foryourself.data.retrofitResponse.getUsers.GetUsers
 import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
 import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
 import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
@@ -47,5 +49,11 @@ class OrderRepository @Inject constructor(
     suspend fun getReklama() : Response<Getreklama> = apiService.getReklama()
 
     suspend fun updateReklama(id: String, reklama: UpdateReklama) : Response<UpdateResponse> = apiService.updateReklama(objectId = id, post = reklama)
+
+    suspend fun postUser(user: PutUsers) : Response<PostResponseAnswer> = apiService.createNewUser(user = user)
+
+    suspend fun getUser(): Response<GetUsers> = apiService.getUsers()
+
+    suspend fun updateUser(id: String,user: PutUsers): Response<UpdateResponse> = apiService.updateUser(objectId = id, user = user)
 
 }
