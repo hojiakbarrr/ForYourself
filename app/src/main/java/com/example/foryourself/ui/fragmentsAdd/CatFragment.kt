@@ -1,22 +1,27 @@
 package com.example.foryourself.ui.fragmentsAdd
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foryourself.viewmodels.detail.CatViewModel
 import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.CatFragmentBinding
+import com.example.foryourself.databinding.DialogFiltrBinding
 import com.example.foryourself.utils.LoadingDialog
+import com.example.foryourself.utils.dialogbutton
 import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
+import com.example.foryourself.viewmodels.detail.CatViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,6 +38,9 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
     }
+    private var list = listOf<Result>()
+    private var check: Boolean = false
+
 
     override fun onResume() {
         super.onResume()
@@ -47,10 +55,24 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         typeAdapter = TypeAdapter()
         exclusiveAdapters()
         onClickItem()
+//        main()
 
         viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
-            Log.i("Res", it?.size.toString())
-            typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
+            list = it?.lastElements()?.toMutableList()!!
+            typeAdapter.diffor.submitList(list)
+
+
+//            val tt = it?.sortedByDescending { it.price!!.toInt() }
+//            tt?.forEach {
+////                println(it.price)
+//                Log.d("posle", it.price!!)
+//            }
+//
+//
+//            it?.forEach {
+////                println(it.price)
+//                Log.d("do", it.price!!)
+//            }
 
 
         }
@@ -65,8 +87,56 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.radio.setOnClickListener {
+//
+//            val builder = AlertDialog.Builder(requireActivity())
+//            val inflater = layoutInflater
+//            val dialogLayout = inflater.inflate(R.layout.dialog_filtr, null)
+//            with(builder) {
+//
+//                setPositiveButton("") { dialog, which ->
+//                }.setNegativeButton("") { dialog, which ->
+//                }.setView(dialogLayout).create().show()
+//            }
+
+            val dialogBinding = DialogFiltrBinding.inflate(layoutInflater)
+            val dialog = AlertDialog.Builder(requireContext())
+                .setView(dialogBinding.root)
+                .setPositiveButton(R.string.action_confirm, null)
+                .create()
+            dialog.setOnShowListener {
+                dialogBinding.apply {
+                    if (check) dorogoy.isChecked = true
+                    else deshevyi.isChecked = true
+
+                    dorogoy.setOnClickListener {
+                        check = true
+                    }
+                    deshevyi.setOnClickListener {
+                        check = false
+                    }
+                }
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+                    dialogBinding.apply {
+                        if (check) typeAdapter.diffor.submitList(list.sortedByDescending { it.price?.toInt() })
+                        else typeAdapter.diffor.submitList(list.sortedBy { it.price?.toInt() })
+
+
+//                            list.sortedByDescending { it.price?.toInt() }
+
+
+                    }
+                    dialog.dismiss()
+                }
+            }
+            dialog.show()
+
+        }
+
+
 
         binding.searchCat.setOnQueryTextListener(this)
 
@@ -94,6 +164,22 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
 
         }
         return false
+    }
+
+    fun bubbleSort(array: IntArray) {
+        var sorted = false
+        var temp: Int
+        while (!sorted) {
+            sorted = true
+            for (i in 0 until array.size - 1) {
+                if (array[i] > array[i + 1]) {
+                    temp = array[i]
+                    array[i] = array[i + 1]
+                    array[i + 1] = temp
+                    sorted = false
+                }
+            }
+        }
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {

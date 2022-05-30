@@ -40,8 +40,10 @@ class CatViewModel @Inject constructor(
 
             _loadingLiveData.postValue(false)
             val resuk = dao.getcategory(word)
+
             emit(resuk?.map {
                 cascheToResultMapper.map(it)
+
             })
 
 

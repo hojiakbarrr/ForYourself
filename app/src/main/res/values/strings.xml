@@ -8,5 +8,6 @@
     <string name="network_error">Нету подключение к интернету.</string>
     <string name="generic_error">Что то пошло не так.</string>
     <string name="service_unavailable">Ошибка Сервера.</string>
+    <string name="action_confirm">Подтвердить</string>
 
 </resources>
