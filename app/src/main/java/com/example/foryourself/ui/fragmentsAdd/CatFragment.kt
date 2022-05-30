@@ -55,7 +55,6 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         typeAdapter = TypeAdapter()
         exclusiveAdapters()
         onClickItem()
-//        main()
 
         viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
             list = it?.lastElements()?.toMutableList()!!
@@ -91,16 +90,6 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.radio.setOnClickListener {
-//
-//            val builder = AlertDialog.Builder(requireActivity())
-//            val inflater = layoutInflater
-//            val dialogLayout = inflater.inflate(R.layout.dialog_filtr, null)
-//            with(builder) {
-//
-//                setPositiveButton("") { dialog, which ->
-//                }.setNegativeButton("") { dialog, which ->
-//                }.setView(dialogLayout).create().show()
-//            }
 
             val dialogBinding = DialogFiltrBinding.inflate(layoutInflater)
             val dialog = AlertDialog.Builder(requireContext())
@@ -123,21 +112,12 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
                     dialogBinding.apply {
                         if (check) typeAdapter.diffor.submitList(list.sortedByDescending { it.price?.toInt() })
                         else typeAdapter.diffor.submitList(list.sortedBy { it.price?.toInt() })
-
-
-//                            list.sortedByDescending { it.price?.toInt() }
-
-
                     }
                     dialog.dismiss()
                 }
             }
             dialog.show()
-
         }
-
-
-
         binding.searchCat.setOnQueryTextListener(this)
 
     }
@@ -166,21 +146,6 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    fun bubbleSort(array: IntArray) {
-        var sorted = false
-        var temp: Int
-        while (!sorted) {
-            sorted = true
-            for (i in 0 until array.size - 1) {
-                if (array[i] > array[i + 1]) {
-                    temp = array[i]
-                    array[i] = array[i + 1]
-                    array[i + 1] = temp
-                    sorted = false
-                }
-            }
-        }
-    }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText != null) {
