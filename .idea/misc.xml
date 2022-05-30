@@ -10,11 +10,16 @@
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/backspace.xml" value="0.113" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/blue_dot.xml" value="0.1" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/bottom_shpe.xml" value="0.113" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/chech_background.xml" value="0.152" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/ic_camera.xml" value="0.113" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/ic_category.xml" value="0.129" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/ic_favorite.xml" value="0.129" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/ic_send.xml" value="0.113" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/radio_normal.xml" value="0.1215" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/radio_selected.xml" value="0.1215" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/radio_selector.xml" value="0.1215" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/shape.xml" value="0.1" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/drawable/text_color.xml" value="0.133" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_detail.xml" value="0.13703703703703704" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_editor.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -26,13 +31,14 @@
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/detaill_fragment.xml" value="0.33" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/dialog.xml" value="0.25" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/dialog_about.xml" value="0.22" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/dialog_filtr.xml" value="0.25" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/dialog_profile.xml" value="0.25" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/dialog_whatsapp.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/dialog_worktime.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/drop_down_item.xml" value="0.1" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/editor_fragment.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/editorr_fragment.xml" value="0.21784420289855072" />
-        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/favorites_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/favorites_fragment.xml" value="0.22" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/fragment_detail_viewmodel.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/fragment_maps.xml" value="0.13880445795339413" />
         <entry key="..\:/Users/TechLine/AndroidStudioProjects/ForYourself/app/src/main/res/layout/home_fragment.xml" value="0.16033755274261605" />

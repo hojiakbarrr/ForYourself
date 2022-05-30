@@ -11,24 +11,24 @@ import com.example.foryourself.viewmodels.main.FavoritesViewModel
 import com.example.foryourself.R
 import com.example.foryourself.databinding.CategoryFragmentBinding
 import com.example.foryourself.databinding.FavoritesFragmentBinding
+import com.example.foryourself.utils.dialogbutton
 import com.example.foryourself.viewmodels.main.CategoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
-    private val binding: FavoritesFragmentBinding by lazy {
-        FavoritesFragmentBinding.inflate(layoutInflater)
-    }
+    private lateinit var binding: FavoritesFragmentBinding
     private val viewModel: FavoritesViewModel by viewModels()
-
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FavoritesFragmentBinding.inflate(inflater, container, false)
+
+
+
         return binding.root
     }
-
-
 }
