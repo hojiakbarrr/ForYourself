@@ -84,6 +84,9 @@
         <action
             android:id="@+id/action_detaillFragment_to_catFragment"
             app:destination="@id/catFragment" />
+        <action
+            android:id="@+id/action_detaillFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/editorrFragment"
@@ -140,7 +143,11 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.foryourself.ui.fragmentsMain.FavoritesFragment"
         android:label="favorites_fragment"
-        tools:layout="@layout/favorites_fragment" />
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_detaillFragment"
+            app:destination="@id/detaillFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/splashFragment"
