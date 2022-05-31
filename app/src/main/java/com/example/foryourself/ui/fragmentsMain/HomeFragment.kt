@@ -23,9 +23,15 @@ import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.lastElements
+import com.example.foryourself.utils.snaketoast
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.main.HomeViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -71,6 +77,26 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             } catch (e: Exception) {
             }
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        var gso: GoogleSignInOptions? = null
+        var gsc: GoogleSignInClient? = null
+        gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+
+        gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
+        val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
+        if (acct == null) {
+            val action = HomeFragmentDirections.actionHomeFragmentToSplashFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        } else{
+            snaketoast("С возвращением",requireView())
+        }
+
+
+
     }
 
     override fun onCreateView(

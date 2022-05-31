@@ -1,9 +1,8 @@
-package com.example.foryourself.ui.fragmentsAdd
+package com.example.foryourself.ui.fragmentsDetails
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,6 @@ import com.example.foryourself.adapter.ColorAdapter
 import com.example.foryourself.adapter.SizeAdapter
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.DetaillFragmentBinding
-import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.detail.Detail_viewmodel

@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment2"
             app:destination="@id/profileFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_splashFragment"
+            app:destination="@id/splashFragment" />
 
 
     </fragment>
@@ -62,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/detaillFragment"
-        android:name="com.example.foryourself.ui.fragmentsAdd.DetaillFragment"
+        android:name="com.example.foryourself.ui.fragmentsDetails.DetaillFragment"
         android:label="detaill_fragment"
         tools:layout="@layout/detaill_fragment" >
         <action
@@ -84,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/editorrFragment"
-        android:name="com.example.foryourself.ui.fragmentsAdd.EditorrFragment"
+        android:name="com.example.foryourself.ui.fragmentsDetails.EditorrFragment"
         android:label="editorr_fragment"
         tools:layout="@layout/editorr_fragment" >
         <argument
@@ -96,7 +99,7 @@
     </fragment>
     <fragment
         android:id="@+id/typeFragment"
-        android:name="com.example.foryourself.ui.fragmentsAdd.TypeFragment"
+        android:name="com.example.foryourself.ui.fragmentsDetails.TypeFragment"
         android:label="type_fragment"
         tools:layout="@layout/type_fragment" >
         <action
@@ -111,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/catFragment"
-        android:name="com.example.foryourself.ui.fragmentsAdd.CatFragment"
+        android:name="com.example.foryourself.ui.fragmentsDetails.CatFragment"
         android:label="cat_fragment"
         tools:layout="@layout/cat_fragment" >
         <argument
@@ -126,7 +129,7 @@
     </fragment>
     <fragment
         android:id="@+id/reklamaFragment"
-        android:name="com.example.foryourself.ui.fragmentsAdd.ReklamaFragment"
+        android:name="com.example.foryourself.ui.fragmentsDetails.ReklamaFragment"
         android:label="reklama_fragment"
         tools:layout="@layout/reklama_fragment" >
         <action
@@ -138,5 +141,15 @@
         android:name="com.example.foryourself.ui.fragmentsMain.FavoritesFragment"
         android:label="favorites_fragment"
         tools:layout="@layout/favorites_fragment" />
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.foryourself.ui.fragmentsDetails.SplashFragment"
+        android:label="splash_fragment"
+        tools:layout="@layout/splash_fragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

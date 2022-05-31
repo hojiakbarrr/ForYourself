@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +27,7 @@ import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
+import com.google.android.material.snackbar.Snackbar
 import com.parse.ParseFile
 import java.io.ByteArrayOutputStream
 import java.net.URLEncoder
@@ -38,6 +40,14 @@ fun Fragment.toast(message: String) {
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun Context.snaketoast(message: String,context: View) {
+    Snackbar.make(context,message, Snackbar.LENGTH_SHORT).show()
+}
+
+fun Fragment.snaketoast(message: String,context: View) {
+    Snackbar.make(context, message, Toast.LENGTH_SHORT).show()
 }
 
 fun ParseFile.toImageFirst(): ImageFirst =

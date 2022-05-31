@@ -49,11 +49,5 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-//        GlobalScope.launch {
-//            dao.clearTable()
-//            Log.d("rtr", dao.getProductsFromDATABASE().toString())
-//        }
-    }
+
 }

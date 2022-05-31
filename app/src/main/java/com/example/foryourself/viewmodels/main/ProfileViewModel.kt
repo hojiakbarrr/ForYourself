@@ -53,7 +53,7 @@ class ProfileViewModel @Inject constructor(
             response.body()!!.results.forEach {
                 if (it.email == id) {
                     emit(it)
-                    _loadingLiveData.postValue("С возвращением ${it.name}")
+//                    _loadingLiveData.postValue("С возвращением ${it.name}")
                 }
             }
         } else Log.d("eret", response.message().toString())

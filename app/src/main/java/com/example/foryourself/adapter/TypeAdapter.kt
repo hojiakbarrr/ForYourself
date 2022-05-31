@@ -11,8 +11,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.ItemProductCategBinding
-import com.example.foryourself.ui.fragmentsAdd.CatFragmentDirections
-import com.example.foryourself.ui.fragmentsAdd.TypeFragmentDirections
+import com.example.foryourself.ui.fragmentsDetails.CatFragmentDirections
+import com.example.foryourself.ui.fragmentsDetails.TypeFragmentDirections
 import com.example.foryourself.ui.fragmentsMain.CategoryFragmentDirections
 import com.thekhaeng.pushdownanim.PushDownAnim
 
