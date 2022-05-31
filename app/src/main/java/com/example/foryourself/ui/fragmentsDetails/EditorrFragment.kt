@@ -131,6 +131,13 @@ class EditorrFragment : Fragment() {
                     prodSizeSixEdit.setText(it.sixthSize)
                     prodSizeSevenEdit.setText(it.seventhSize)
                     prodSizeEightEdit.setText(it.eighthSize)
+                    olor1Edit.setText(it.colors)
+                    olor2Edit.setText(it.colors1)
+                    olor3Edit.setText(it.colors2)
+                    olor4Edit.setText(it.colors3)
+                    filledCategoryEdit.setText(it.category)
+                    filledSeasonEdit.setText(it.season)
+                    filledTypeEdit.setText(it.tipy)
 
                     if (it.image_main != null) {
                         Glide.with(requireContext())
@@ -277,10 +284,10 @@ class EditorrFragment : Fragment() {
                 fourthSize = binding.prodSizeFourEdit.text.toString().trim(),
                 tipy = typpe,
                 season = seasonn,
-                colors = binding.prodOlor1Edit.text.toString().trim(),
-                colors1 = binding.prodOlor2Edit.text.toString().trim(),
-                colors2 = binding.prodOlor3Edit.text.toString().trim(),
-                colors3 = binding.prodOlor4Edit.text.toString().trim(),
+                colors = binding.olor1Edit.text.toString().trim(),
+                colors1 = binding.olor2Edit.text.toString().trim(),
+                colors2 = binding.olor3Edit.text.toString().trim(),
+                colors3 = binding.olor4Edit.text.toString().trim(),
                 category = categorryy
             )
         )
@@ -353,10 +360,10 @@ class EditorrFragment : Fragment() {
             prodSizeSevenEdit.text.clear()
             prodSizeEightEdit.text.clear()
 
-            binding.prodOlor1Edit.text.clear()
-            binding.prodOlor2Edit.text.clear()
-            binding.prodOlor3Edit.text.clear()
-            binding.prodOlor4Edit.text.clear()
+            binding.olor1Edit.text.clear()
+            binding.olor2Edit.text.clear()
+            binding.olor3Edit.text.clear()
+            binding.olor4Edit.text.clear()
             binding.filledTypeEdit.clearListSelection()
             binding.filledCategoryEdit.clearListSelection()
             binding.filledSeasonEdit.clearListSelection()
