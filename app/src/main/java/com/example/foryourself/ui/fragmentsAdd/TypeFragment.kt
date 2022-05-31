@@ -1,10 +1,12 @@
 package com.example.foryourself.ui.fragmentsAdd
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
+import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.databinding.DialogFiltrBinding
 import com.example.foryourself.viewmodels.detail.TypeViewModel
 import com.example.foryourself.databinding.TypeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
@@ -34,6 +38,8 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
     }
 
+    private var list = listOf<Result>()
+    private var check: Boolean = false
     override fun onResume() {
         super.onResume()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
@@ -49,8 +55,8 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
         onClickItem()
         binding.tvCategory.text = args.product
         viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
-            Log.i("Res", it?.size.toString())
-            typeAdapter.diffor.submitList(it!!.lastElements().toMutableList())
+            list = it?.lastElements()?.toMutableList()!!
+            typeAdapter.diffor.submitList(list)
         }
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
@@ -65,7 +71,35 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.filter.setOnClickListener {
 
+            val dialogBinding = DialogFiltrBinding.inflate(layoutInflater)
+            val dialog = AlertDialog.Builder(requireContext())
+                .setView(dialogBinding.root)
+                .setPositiveButton(R.string.action_confirm, null)
+                .create()
+            dialog.setOnShowListener {
+                dialogBinding.apply {
+                    if (check) dorogoy.isChecked = true
+                    else deshevyi.isChecked = true
+
+                    dorogoy.setOnClickListener {
+                        check = true
+                    }
+                    deshevyi.setOnClickListener {
+                        check = false
+                    }
+                }
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+                    dialogBinding.apply {
+                        if (check) typeAdapter.diffor.submitList(list.sortedByDescending { it.price?.toInt() })
+                        else typeAdapter.diffor.submitList(list.sortedBy { it.price?.toInt() })
+                    }
+                    dialog.dismiss()
+                }
+            }
+            dialog.show()
+        }
         binding.search.setOnQueryTextListener(this)
 
     }
@@ -103,7 +137,7 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         } else {
             viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
-                typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
+                typeAdapter.diffor.submitList(list)
             }
         }
         return false

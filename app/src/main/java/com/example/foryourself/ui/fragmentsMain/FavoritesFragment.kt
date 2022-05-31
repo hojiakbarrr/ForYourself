@@ -1,18 +1,13 @@
 package com.example.foryourself.ui.fragmentsMain
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.foryourself.viewmodels.main.FavoritesViewModel
-import com.example.foryourself.R
-import com.example.foryourself.databinding.CategoryFragmentBinding
 import com.example.foryourself.databinding.FavoritesFragmentBinding
-import com.example.foryourself.utils.dialogbutton
-import com.example.foryourself.viewmodels.main.CategoryViewModel
+import com.example.foryourself.viewmodels.main.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

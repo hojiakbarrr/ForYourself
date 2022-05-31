@@ -178,18 +178,6 @@ fun Fragment.dialogworktime() {
 
 }
 
-fun Fragment.dialogbutton() {
-
-    val builder = AlertDialog.Builder(requireActivity())
-    val inflater = layoutInflater
-    val dialogLayout = inflater.inflate(R.layout.dialog_filtr, null)
-    with(builder) {
-        setPositiveButton("") { dialog, which ->
-        }.setNegativeButton("") { dialog, which ->
-        }.setView(dialogLayout).create().show()
-    }
-
-}
 
 fun <T> List<T>.lastElements(): List<T> {
     val list = mutableListOf<T>()

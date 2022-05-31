@@ -2,7 +2,6 @@ package com.example.foryourself.ui.fragmentsAdd
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.databinding.CatFragmentBinding
 import com.example.foryourself.databinding.DialogFiltrBinding
 import com.example.foryourself.utils.LoadingDialog
-import com.example.foryourself.utils.dialogbutton
 import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.detail.CatViewModel
@@ -55,24 +53,11 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
         typeAdapter = TypeAdapter()
         exclusiveAdapters()
         onClickItem()
+        binding.tvCategoryCat.text = args.product
 
         viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
             list = it?.lastElements()?.toMutableList()!!
             typeAdapter.diffor.submitList(list)
-
-
-//            val tt = it?.sortedByDescending { it.price!!.toInt() }
-//            tt?.forEach {
-////                println(it.price)
-//                Log.d("posle", it.price!!)
-//            }
-//
-//
-//            it?.forEach {
-////                println(it.price)
-//                Log.d("do", it.price!!)
-//            }
-
 
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
@@ -82,14 +67,13 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
             } catch (e: Exception) {
             }
         }
-        binding.tvCategoryCat.text = args.product
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.radio.setOnClickListener {
+        binding.filter.setOnClickListener {
 
             val dialogBinding = DialogFiltrBinding.inflate(layoutInflater)
             val dialog = AlertDialog.Builder(requireContext())
@@ -156,7 +140,7 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
         } else {
             viewModel.allOrderss(args.product).observe(viewLifecycleOwner) {
-                typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
+                typeAdapter.diffor.submitList(list)
             }
         }
         return false
