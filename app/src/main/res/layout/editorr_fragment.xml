@@ -184,7 +184,7 @@
             android:textSize="@dimen/_18sdp" />
 
         <EditText
-            android:id="@+id/сolor_1_edit"
+            android:id="@+id/edit_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="355dp"
@@ -198,7 +198,7 @@
             android:textSize="@dimen/_18sdp" />
 
         <EditText
-            android:id="@+id/сolor_2_edit"
+            android:id="@+id/edit_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="355dp"
@@ -212,7 +212,7 @@
             android:textSize="@dimen/_18sdp" />
 
         <EditText
-            android:id="@+id/сolor_3_edit"
+            android:id="@+id/edit_3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="355dp"
@@ -226,7 +226,7 @@
             android:textSize="@dimen/_18sdp" />
 
         <EditText
-            android:id="@+id/сolor_4_edit"
+            android:id="@+id/edit_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="355dp"

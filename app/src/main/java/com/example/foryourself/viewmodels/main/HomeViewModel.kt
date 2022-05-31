@@ -37,6 +37,7 @@ class HomeViewModel @Inject constructor(
     fun allOrders() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
         _loadingLiveData.postValue(true)
 
+
         if (dao.getProductsFromDATABASE().isEmpty()) {
             val response = repository.getOrders()
             if (response.isSuccessful) {

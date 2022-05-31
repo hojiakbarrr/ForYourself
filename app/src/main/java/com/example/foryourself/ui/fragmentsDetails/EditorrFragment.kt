@@ -131,10 +131,10 @@ class EditorrFragment : Fragment() {
                     prodSizeSixEdit.setText(it.sixthSize)
                     prodSizeSevenEdit.setText(it.seventhSize)
                     prodSizeEightEdit.setText(it.eighthSize)
-                    olor1Edit.setText(it.colors)
-                    olor2Edit.setText(it.colors1)
-                    olor3Edit.setText(it.colors2)
-                    olor4Edit.setText(it.colors3)
+                    edit1.setText(it.colors)
+                    edit2.setText(it.colors1)
+                    edit3.setText(it.colors2)
+                    edit4.setText(it.colors3)
                     filledCategoryEdit.setText(it.category)
                     filledSeasonEdit.setText(it.season)
                     filledTypeEdit.setText(it.tipy)
@@ -284,10 +284,10 @@ class EditorrFragment : Fragment() {
                 fourthSize = binding.prodSizeFourEdit.text.toString().trim(),
                 tipy = typpe,
                 season = seasonn,
-                colors = binding.olor1Edit.text.toString().trim(),
-                colors1 = binding.olor2Edit.text.toString().trim(),
-                colors2 = binding.olor3Edit.text.toString().trim(),
-                colors3 = binding.olor4Edit.text.toString().trim(),
+                colors = binding.edit1.text.toString().trim(),
+                colors1 = binding.edit2.text.toString().trim(),
+                colors2 = binding.edit3.text.toString().trim(),
+                colors3 = binding.edit4.text.toString().trim(),
                 category = categorryy
             )
         )
@@ -360,10 +360,10 @@ class EditorrFragment : Fragment() {
             prodSizeSevenEdit.text.clear()
             prodSizeEightEdit.text.clear()
 
-            binding.olor1Edit.text.clear()
-            binding.olor2Edit.text.clear()
-            binding.olor3Edit.text.clear()
-            binding.olor4Edit.text.clear()
+            binding.edit1.text.clear()
+            binding.edit2.text.clear()
+            binding.edit3.text.clear()
+            binding.edit4.text.clear()
             binding.filledTypeEdit.clearListSelection()
             binding.filledCategoryEdit.clearListSelection()
             binding.filledSeasonEdit.clearListSelection()
