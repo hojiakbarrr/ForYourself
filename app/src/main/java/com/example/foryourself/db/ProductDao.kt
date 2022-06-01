@@ -2,6 +2,7 @@ package com.example.foryourself.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.foryourself.data.retrofitResponse.getReklama.ResultofReklama
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.model.ResultCache
 
@@ -36,5 +37,15 @@ interface ProductDao {
 
     @Query("DELETE FROM products_table")
     suspend fun clearTable()
+/////////////////////////////////////////////////////////////////////////////
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addReklama(reklama: ResultofReklama)
+
+
+    @Query("select * from resultofreklama")
+    suspend fun getreklamaFromDATABASE(): MutableList<ResultofReklama>
+
+    @Query("DELETE FROM resultofreklama")
+    suspend fun clearTableReklama()
 }

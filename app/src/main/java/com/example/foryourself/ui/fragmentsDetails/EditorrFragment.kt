@@ -82,6 +82,10 @@ class EditorrFragment : Fragment() {
         LoadingDialog(context = requireContext(), "Товар обновляется подождите!!!")
     }
 
+    private val loadingDialog2: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
+        LoadingDialog(context = requireContext(), "Подождите товар загружается")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -113,9 +117,9 @@ class EditorrFragment : Fragment() {
     }
 
     private fun getInfo() {
-
         viewModel.getOneOrder(args.product.objectId!!)
         viewModel.orderLiveData.observe(viewLifecycleOwner) { it ->
+            loadingDialog2.show()
             binding.apply {
                 try {
                     Log.d("TAssG", it.toString())
@@ -175,11 +179,11 @@ class EditorrFragment : Fragment() {
                     }
 
                     thirdMain = it.image_third!!
-
                 } catch (e: Exception) {
-                    toast(e.message.toString())
+                   snaketoast(e.message.toString(),requireView())
                 }
             }
+            loadingDialog2.dismiss()
         }
     }
 
@@ -227,20 +231,16 @@ class EditorrFragment : Fragment() {
 
                 }
 
-
-
-
-
                 CoroutineScope(Dispatchers.Main).launch {
                     loadingDialog.show()
                     delay(8000)
-                    if (image_1_boolean == true){
+                    if (image_1_boolean == true) {
                         val imageMainFinal =
                             if (imageFile_Main == null) imageMain else imageFile_Main!!.toImageMain()
-                        if (image_2_boolean == true){
+                        if (image_2_boolean == true) {
                             val imageFirstFinal =
                                 if (imageFile_Second == null) firstMain else imageFile_Second!!.toImageFirst()
-                            if (image_3_boolean == true){
+                            if (image_3_boolean == true) {
                                 val imageThirdFinal =
                                     if (imageFile_Third == null) thirdMain else imageFile_Third!!.toImageThird()
                                 updatePost(imageMainFinal, imageFirstFinal, imageThirdFinal)
@@ -299,7 +299,7 @@ class EditorrFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.orderDeleteLiveData.observe(viewLifecycleOwner) { it ->
                 loadingDialog.dismiss()
-                toast(it)
+                snaketoast(it,requireView())
                 Navigation.findNavController(requireView())
                     .navigate(R.id.from_editorrFragment_to_homeFragment)
                 clearALL()
@@ -315,7 +315,7 @@ class EditorrFragment : Fragment() {
     }
 
     private fun season() {
-        val country = arrayOf("Лето", "Осень", "Зима", "Весна")
+        val country = arrayOf("Лето", "Осень", "Зима", "Весна","Осень-Зима","Весна-Лето")
         var cc: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledSeasonEdit.setAdapter(cc)

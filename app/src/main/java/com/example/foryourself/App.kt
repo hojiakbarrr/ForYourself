@@ -32,6 +32,7 @@ class App: Application(){
 
         applicationScope.launch {
             dao.clearTable()
+            dao.clearTableReklama()
         }
 
     }

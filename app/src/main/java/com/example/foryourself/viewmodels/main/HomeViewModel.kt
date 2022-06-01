@@ -68,7 +68,6 @@ class HomeViewModel @Inject constructor(
             }
             _loadingLiveData.postValue(false)
         }
-        Log.d("tt", dao.getProductsFromDATABASE().size.toString())
 
     }
 
@@ -100,13 +99,21 @@ class HomeViewModel @Inject constructor(
 
     fun getReklama() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
         _loadingLiveData.postValue(true)
-
-        val response = repository.getReklama()
-        if (response.isSuccessful) {
-            emit(response.body()?.resultss)
+        if (dao.getreklamaFromDATABASE().isEmpty()){
+            val response = repository.getReklama()
+            if (response.isSuccessful) {
+                response.body()!!.resultss.forEach {
+                    dao.addReklama(it)
+                }
+                emit(dao.getreklamaFromDATABASE())
+                Log.d("ttyuyuy", dao.getreklamaFromDATABASE().size.toString())
+                _loadingLiveData.postValue(false)
+            } else {
+                Log.d("tree", response.message())
+            }
+        }else{
+            emit(dao.getreklamaFromDATABASE())
             _loadingLiveData.postValue(false)
-        } else {
-            Log.d("tree", response.message())
         }
     }
 

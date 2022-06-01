@@ -142,12 +142,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         viewModel.getReklama().observe(viewLifecycleOwner) { it ->
             it?.forEach {
-                val tt: String = it.reklama1.url
-                val ttt: String = it.reklama2.url
-                val tttt: String = it.reklama3.url
-                imageList.add(SlideModel(tt, scaleType = ScaleTypes.FIT))
-                imageList.add(SlideModel(ttt, scaleType = ScaleTypes.FIT))
-                imageList.add(SlideModel(tttt, scaleType = ScaleTypes.FIT))
+//                val tt: String = it.reklama1!!.url
+//                val ttt: String = it.reklama2!!.url
+//                val tttt: String = it.reklama3!!.url
+                imageList.add(SlideModel(it.reklama1!!.url, scaleType = ScaleTypes.FIT))
+                imageList.add(SlideModel(it.reklama2!!.url, scaleType = ScaleTypes.FIT))
+                imageList.add(SlideModel(it.reklama3!!.url, scaleType = ScaleTypes.FIT))
                 binding.apply {
                     imageSlider.setImageList(imageList)
                     imageSlider.setItemClickListener(object : ItemClickListener {

@@ -232,7 +232,7 @@ class AddToFragment : Fragment() {
     }
 
     private fun season() {
-        val country = arrayOf("Лето", "Осень", "Зима", "Весна")
+        val country = arrayOf("Лето", "Осень", "Зима", "Весна","Осень-Зима","Весна-Лето")
         var cc: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
         binding.filledSeason.setAdapter(cc)

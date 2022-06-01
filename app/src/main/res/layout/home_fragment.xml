@@ -122,7 +122,7 @@
                                 app:iss_corner_radius="42"
                                 app:iss_delay="2"
                                 app:iss_error_image="@drawable/error"
-                                app:iss_indicator_align="12"
+                                app:iss_indicator_align="1"
                                 app:iss_period="1500"
                                 app:iss_selected_dot="@drawable/default_selected_dot"
                                 app:iss_text_align="CENTER"

@@ -100,22 +100,22 @@ class ReklamaFragment : Fragment() {
 
                 try {
                     Glide.with(requireContext())
-                        .load(it.reklama1.url)
+                        .load(it.reklama1?.url)
                         .into(binding.put1reklama)
 
-                    reklama1 = it.reklama1
+                    reklama1 = it.reklama1!!
 
                     Glide.with(requireContext())
-                        .load(it.reklama2.url)
+                        .load(it.reklama2?.url)
                         .into(binding.put2reklama)
 
-                    reklama2 = it.reklama2
+                    reklama2 = it.reklama2!!
 
                     Glide.with(requireContext())
-                        .load(it.reklama3.url)
+                        .load(it.reklama3?.url)
                         .into(binding.put3reklama)
 
-                    reklama3 = it.reklama3
+                    reklama3 = it.reklama3!!
                 } catch (e: Exception) {
                     toast(e.message.toString())
                 }
