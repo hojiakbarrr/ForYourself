@@ -18,6 +18,7 @@ import javax.inject.Inject
 class FavoritesViewModel @Inject constructor(
     private val dao: ProductDao,
     private val mapper: Mapper<FavoritesCache, Result>,
+    private val mapper2: Mapper<Result,FavoritesCache>,
     private val repository: OrderRepository,
 
     ) : ViewModel() {
@@ -29,6 +30,10 @@ class FavoritesViewModel @Inject constructor(
         _orderLiveData.value = rr.map {
             mapper.map(it)
         }
+    }
+
+    fun deleteOrder(product : Result)  = viewModelScope.launch  {
+        val rr = dao.deleteFrom(mapper2.map(product))
     }
 
 }

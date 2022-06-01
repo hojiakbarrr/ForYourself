@@ -58,4 +58,13 @@ interface ProductDao {
     @Query("select * from favoritescache")
     suspend fun getFavorites(): MutableList<FavoritesCache>
 
+    @Update
+    suspend fun updateFav(product: FavoritesCache)
+
+    @Delete
+    fun deleteFrom(product: FavoritesCache)
+
+    @Query("DELETE FROM favoritescache")
+    suspend fun clearTableFav()
+
 }

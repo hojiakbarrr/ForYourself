@@ -120,6 +120,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
             }
             fab3AddToFavProduct.setOnClickListener {
                 viewModel.addToFav(args.product)
+                toast("${args.product.title} было добавлено в избранные" )
             }
 
             imgYoutube.setOnClickListener {

@@ -63,12 +63,12 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterV
         holder.binding.textname.text = product.title
         holder.binding.textprice.text = product.price
 
-        PushDownAnim.setPushDownAnimTo(holder.itemView)
-            .setScale(PushDownAnim.MODE_SCALE, 0.89f)
+        holder.itemView
             .setOnClickListener { it ->
 //            onItemClicked!!.invoke(product)
                 try {
-                    val action = FavoritesFragmentDirections.actionFavoritesFragmentToDetaillFragment(product)
+                    val action =
+                        FavoritesFragmentDirections.actionFavoritesFragmentToDetaillFragment(product)
                     Navigation.findNavController(view = it).navigate(action)
                 } catch (e: Exception) {
                 }
