@@ -58,4 +58,8 @@ class OrderRepository @Inject constructor(
     suspend fun updateUser(id: String,user: PutUsers): Response<UpdateResponse> = apiService.updateUser(objectId = id, user = user)
 
     suspend fun addtoFav(product: FavoritesCache) {dao.addFavorites(product = product)}
+
+
+
+
 }

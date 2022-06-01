@@ -16,6 +16,7 @@ import com.example.foryourself.databinding.TypeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.main.FavoritesViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +37,11 @@ class FavoritesFragment : Fragment() {
         preparadapter()
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +52,16 @@ class FavoritesFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getOneOrder()
+        viewModel.orderLiveData.observe(viewLifecycleOwner) {
+            favoritesAdapter.diffor.submitList(it)
+        }
+
+
     }
 
     private fun preparadapter() {
