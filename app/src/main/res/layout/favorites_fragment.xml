@@ -11,8 +11,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_favor"
-        android:layout_margin="5dp"
+        android:layout_marginTop="7dp"
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginEnd="@dimen/_7sdp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
