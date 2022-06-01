@@ -118,6 +118,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 Navigation.findNavController(it).navigate(R.id.from_detaillFragment_to_homeFragment)
                 loadingDialogdelete.dismiss()
             }
+            fab3AddToFavProduct.setOnClickListener {
+                viewModel.addToFav(args.product)
+            }
+
             imgYoutube.setOnClickListener {
                 if (youtubeHTTPS.isNotEmpty())  openYouTube()
                 else toast("Нет видео обзора товара")

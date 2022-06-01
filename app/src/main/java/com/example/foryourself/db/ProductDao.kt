@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.foryourself.data.retrofitResponse.getReklama.ResultofReklama
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 
 @Dao
@@ -48,4 +49,13 @@ interface ProductDao {
 
     @Query("DELETE FROM resultofreklama")
     suspend fun clearTableReklama()
+/////////////////////////////////////////////////////////////////////////////
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addFavorites(product: FavoritesCache)
+
+    @Query("select * from favoritescache")
+    suspend fun getFavorites(): MutableList<FavoritesCache>
+
 }

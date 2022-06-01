@@ -11,6 +11,7 @@ import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
 import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
 import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
 import com.example.foryourself.db.ProductDao
+import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.Mapper
 import com.example.foryourself.utils.Resource
@@ -56,4 +57,5 @@ class OrderRepository @Inject constructor(
 
     suspend fun updateUser(id: String,user: PutUsers): Response<UpdateResponse> = apiService.updateUser(objectId = id, user = user)
 
+    suspend fun addtoFav(product: FavoritesCache) {dao.addFavorites(product = product)}
 }
