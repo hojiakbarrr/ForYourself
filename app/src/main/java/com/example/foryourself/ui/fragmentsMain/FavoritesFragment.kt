@@ -1,7 +1,6 @@
 package com.example.foryourself.ui.fragmentsMain
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +31,8 @@ class FavoritesFragment : Fragment() {
     private val binding: FavoritesFragmentBinding by lazy {
         FavoritesFragmentBinding.inflate(layoutInflater)
     }
+
+
 
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var favoritesAdapter: FavoritesAdapter
@@ -153,6 +154,16 @@ class FavoritesFragment : Fragment() {
 
         builder.setContentView(dialogLayout)
         builder.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val builder = BottomSheetDialog(requireContext())
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.bottomsheet, null)
+        if (builder != null && builder.isShowing()) {
+            builder.cancel()
+        }
     }
 
     private fun preparadapter() {

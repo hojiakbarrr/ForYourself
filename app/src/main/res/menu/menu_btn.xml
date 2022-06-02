@@ -20,7 +20,7 @@
         />
 
     <item android:title="Favorites"
-        android:icon="@drawable/favourite"
+        android:icon="@drawable/cart"
         android:id="@+id/favoritesFragment"
         />
 
