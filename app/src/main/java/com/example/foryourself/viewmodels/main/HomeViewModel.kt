@@ -30,7 +30,6 @@ class HomeViewModel @Inject constructor(
     // TODO: Implement the ViewModel
     private var _orderLiveData = MutableLiveData<List<Result>>()
     var orderLiveData: LiveData<List<Result>> = _orderLiveData
-
     private var _loadingLiveData = MutableLiveData<Boolean>()
     var loadingLiveData: LiveData<Boolean> = _loadingLiveData
 

@@ -80,9 +80,11 @@ class AddToFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        clearALL()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
             View.VISIBLE
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -173,6 +175,7 @@ class AddToFragment : Fragment() {
                                                 } else {
                                                     Handler(Looper.getMainLooper()).post {
                                                         toast("Вы не выбрали третие фото")
+                                                        loadingDialog.dismiss()
                                                     }
                                                 }
                                             }
@@ -181,6 +184,7 @@ class AddToFragment : Fragment() {
                                         Handler(Looper.getMainLooper()).post {
                                             toast("Вы не выбрали второе фото")
                                         }
+                                        loadingDialog.dismiss()
                                     }
                                 }
                             })
@@ -188,6 +192,7 @@ class AddToFragment : Fragment() {
                             Handler(Looper.getMainLooper()).post {
                                 toast("Вы не выбрали основное фото")
                             }
+                            loadingDialog.dismiss()
 
 //                            if (imageFile_Second != null) {
 //                                if (imageFile_Third != null) {
@@ -266,10 +271,13 @@ class AddToFragment : Fragment() {
         var typpe = if (type == "Ничего не выбрано") type2 else type
         var categorryy = if (category == "Ничего не выбрано") category2 else category
 
+        var descrip = if (binding.prodDescrip.text.toString().isEmpty()) "Тест" else binding.prodDescrip.text.toString().trim()
+        var title = if (binding.prodName.text.toString().isEmpty()) "Тест" else binding.prodName.text.toString().trim()
+
 
         viewModel.addToProduct(
             Result_2(
-                description = binding.prodDescrip.text.toString().trim(),
+                description = descrip,
                 eighthSize = binding.prodSizeEight.text.toString().trim(),
                 fifthSize = binding.prodSizeFive.text.toString().trim(),
                 firstSize = binding.prodSizeOne.text.toString().trim(),
@@ -281,7 +289,7 @@ class AddToFragment : Fragment() {
                 seventhSize = binding.prodSizeSeven.text.toString().trim(),
                 sixthSize = binding.prodSizeSix.text.toString().trim(),
                 thirdSize = binding.prodSizeThree.text.toString().trim(),
-                title = binding.prodName.text.toString().trim(),
+                title = title,
                 youtubeTrailer = binding.prodTrailer.text.toString().trim(),
                 fourthSize = binding.prodSizeFour.text.toString().trim(),
                 tipy = typpe,
