@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_10ssp"
                 android:layout_marginEnd="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_3ssp"
                 android:text="Подтвердите свой номер телефона для связи"

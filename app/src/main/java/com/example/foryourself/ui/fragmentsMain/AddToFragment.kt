@@ -58,7 +58,7 @@ class AddToFragment : Fragment() {
     private var selectedBitmap_Second: Bitmap? = null
 
     private var type: String? = null
-    private var type2: String? = null
+    private var type2: String = "Бестселлер"
 
     private var category: String? = null
     private var category2: String? = null

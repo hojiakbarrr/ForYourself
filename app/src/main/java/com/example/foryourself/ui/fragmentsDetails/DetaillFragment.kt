@@ -61,6 +61,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
     private var clicked: Boolean = false
     private lateinit var youtubeHTTPS: String
     private var one: Int = 1
+    private var price: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
     private lateinit var colorAdapter: ColorAdapter
     private var sizeList: ArrayList<String> = ArrayList()
@@ -193,6 +194,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                     one--
                     countTxt.text = one.toString()
                 }
+                txtPrice.text = (price * one).toString()
+
             }
 
             plusBtn.setOnClickListener {
@@ -203,7 +206,9 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                     one++
                     countTxt.text = one.toString()
                 }
+                txtPrice.text = (price * one).toString()
             }
+
         }
     }
 
@@ -218,8 +223,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 imageList.add(SlideModel(it.image_third?.url, scaleType = ScaleTypes.FIT))
 
                 imgProductDetail.setImageList(imageList)
+                price = it.price!!.toInt()
 
-                txtPrice.setText(it.price)
+                txtPrice.text = price.toString()
+
                 txtDescription.setText(it.description)
                 youtubeHTTPS = it.youtubeTrailer!!
                 prodKategoriya.text = it.category
