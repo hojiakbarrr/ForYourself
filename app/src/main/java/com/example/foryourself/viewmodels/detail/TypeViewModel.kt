@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
+import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
@@ -17,9 +18,10 @@ class TypeViewModel @Inject constructor(
     private val repository: OrderRepository,
     private val dao: ProductDao,
     private val resultToCascheMapper: Mapper<Result, ResultCache>,
-    private val cascheToResultMapper: Mapper<ResultCache, Result>
+    private val cascheToResultMapper: Mapper<ResultCache, Result>,
+    private val resultToFavoritCascheMapper: Mapper<Result, FavoritesCache>,
 
-) : ViewModel() {
+    ) : ViewModel() {
 
 
 
@@ -60,6 +62,11 @@ class TypeViewModel @Inject constructor(
             emit(searchProducts)
 
         }
+
+    fun addToFav(product : Result) = viewModelScope.launch {
+        repository.addtoFav(product = resultToFavoritCascheMapper.map(product))
+        Log.d("dfgdfg",dao.getFavorites().toString())
+    }
 
 
 }

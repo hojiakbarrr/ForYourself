@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
+import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -17,9 +19,11 @@ class CatViewModel @Inject constructor(
     private val repository: OrderRepository,
     private val dao: ProductDao,
     private val resultToCascheMapper: Mapper<Result, ResultCache>,
-    private val cascheToResultMapper: Mapper<ResultCache, Result>
+    private val cascheToResultMapper: Mapper<ResultCache, Result>,
+    private val resultToFavoritCascheMapper: Mapper<Result, FavoritesCache>,
 
-) : ViewModel() {
+
+    ) : ViewModel() {
 
     private var _orderLiveData = MutableLiveData<List<Result>>()
     private var _searchLiveData = MutableLiveData<List<Result>>()
@@ -65,5 +69,11 @@ class CatViewModel @Inject constructor(
 
             emit(searchProducts)
         }
+
+    fun addToFav(product : Result) = viewModelScope.launch {
+        repository.addtoFav(product = resultToFavoritCascheMapper.map(product))
+        Log.d("dfgdfg",dao.getFavorites().toString())
+    }
+
 
 }

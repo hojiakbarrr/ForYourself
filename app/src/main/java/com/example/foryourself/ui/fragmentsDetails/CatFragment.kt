@@ -115,7 +115,8 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun onClickItem() {
         typeAdapter.onItemClick_cate = { t ->
-            toast(t.title.toString())
+            viewModel.addToFav(t)
+            toast("${t.title} был(о) добавленов избранные")
         }
     }
 

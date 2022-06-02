@@ -60,7 +60,8 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
-            try { if (status) loadingDialog.show() else loadingDialog.dismiss()
+            try {
+                if (status) loadingDialog.show() else loadingDialog.dismiss()
             } catch (e: Exception) {
             }
         }
@@ -113,13 +114,14 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun onClickItem() {
         typeAdapter.onItemClick_cate = { t ->
-            toast(t.title.toString())
+            viewModel.addToFav(t)
+            toast("${t.title} был(о) добавленов избранные")
         }
     }
 
     override fun onQueryTextSubmit(searchText: String?): Boolean {
-        if (searchText != null){
-            viewModel.searchProduct(searchText = searchText,args.product)
+        if (searchText != null) {
+            viewModel.searchProduct(searchText = searchText, args.product)
             viewModel.searchLiveData.observe(viewLifecycleOwner) {
                 typeAdapter.diffor.submitList(it.lastElements().toMutableList())
             }
@@ -131,9 +133,10 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText != null) {
             val searchText = newText.lowercase()
-            viewModel.searchProduct(searchText = searchText,args.product).observe(viewLifecycleOwner){
-                typeAdapter.diffor.submitList(it.lastElements().toMutableList())
-            }
+            viewModel.searchProduct(searchText = searchText, args.product)
+                .observe(viewLifecycleOwner) {
+                    typeAdapter.diffor.submitList(it.lastElements().toMutableList())
+                }
         } else {
             viewModel.allOrders(args.product).observe(viewLifecycleOwner) {
                 typeAdapter.diffor.submitList(list)
