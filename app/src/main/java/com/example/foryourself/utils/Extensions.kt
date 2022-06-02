@@ -156,6 +156,25 @@ fun Fragment.dialogabout() {
 }
 
 
+fun Fragment.dialogerror(text: String) {
+    val builder = AlertDialog.Builder(requireActivity())
+    val inflater = layoutInflater
+    val dialogLayout = inflater.inflate(R.layout.dialog_message, null)
+
+    val error: TextView = dialogLayout.findViewById(R.id.txt_error)
+    error.setText(text)
+
+    with(builder) {
+        setPositiveButton("") { dialog, which ->
+
+
+        }.setNegativeButton("") { dialog, which ->
+            dialog.dismiss()
+        }.setView(dialogLayout).create().show()
+    }
+}
+
+
 fun Fragment.dialogwhatsapp() {
 
     try {

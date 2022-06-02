@@ -56,12 +56,12 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterV
         val product = diffor.currentList[position]
         Glide.with(holder.itemView)
             .load(product.image_main?.url)
-            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
+            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 50f, 50f))
             .into(holder.binding.imageView2)
 
 
         holder.binding.textname.text = product.title
-        holder.binding.textprice.text = product.price
+        holder.binding.textprice.text = product.price.toString()+"  kgz"
 
         holder.itemView
             .setOnClickListener { it ->

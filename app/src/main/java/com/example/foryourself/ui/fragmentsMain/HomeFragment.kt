@@ -91,10 +91,9 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         if (acct == null) {
             val action = HomeFragmentDirections.actionHomeFragmentToSplashFragment()
             Navigation.findNavController(requireView()).navigate(action)
-        } else{
-            snaketoast("С возвращением",requireView())
+        } else {
+//            snaketoast("С возвращением", requireView())
         }
-
 
 
     }
@@ -142,9 +141,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         viewModel.getReklama().observe(viewLifecycleOwner) { it ->
             it?.forEach {
-//                val tt: String = it.reklama1!!.url
-//                val ttt: String = it.reklama2!!.url
-//                val tttt: String = it.reklama3!!.url
+
                 imageList.add(SlideModel(it.reklama1!!.url, scaleType = ScaleTypes.FIT))
                 imageList.add(SlideModel(it.reklama2!!.url, scaleType = ScaleTypes.FIT))
                 imageList.add(SlideModel(it.reklama3!!.url, scaleType = ScaleTypes.FIT))
@@ -184,6 +181,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         onClickItem()
+        onClickItemBestSeller()
 
 //       Glide.with(requireContext())
 //            .load(R.drawable.info)
@@ -194,6 +192,13 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     }
 
+    private fun onClickItemBestSeller() {
+        bestAdapter.onItemClickBestseller = {
+            viewModel.addToFav(it)
+            toast("${it.title} был(о) добавленов избранные")
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
@@ -202,6 +207,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun onClickItem() {
         exclusiveAdapter.onItemClick = { t ->
+            viewModel.addToFav(t)
+            toast("${t.title} был(о) добавленов избранные")
         }
     }
 

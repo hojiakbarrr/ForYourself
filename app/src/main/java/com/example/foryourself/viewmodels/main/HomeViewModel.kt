@@ -6,11 +6,13 @@ import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.getReklama.ResultofReklama
 import com.example.foryourself.data.retrofitResponse.getResponse.Result
 import com.example.foryourself.db.ProductDao
+import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -19,6 +21,9 @@ class HomeViewModel @Inject constructor(
     private val dao: ProductDao,
     private val repository: OrderRepository,
     private val resultToCascheMapper: Mapper<Result, ResultCache>,
+
+    private val resultToFavoritCascheMapper: Mapper<Result, FavoritesCache>,
+
     private val cascheToResultMapper: Mapper<ResultCache, Result>
 
 ) : ViewModel() {
@@ -33,6 +38,11 @@ class HomeViewModel @Inject constructor(
     private var _errorLiveData = MutableLiveData<String>()
     var errorLiveData: LiveData<String> = _errorLiveData
 
+
+    fun addToFav(product : Result) = viewModelScope.launch {
+        repository.addtoFav(product = resultToFavoritCascheMapper.map(product))
+        Log.d("dfgdfg",dao.getFavorites().toString())
+    }
 
     fun allOrders() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
         _loadingLiveData.postValue(true)

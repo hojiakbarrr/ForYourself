@@ -61,10 +61,13 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
         holder.binding.productName.text = product.title
         holder.binding.productPrice.text = product.price
 
+        holder.binding.addToBuy.setOnClickListener {
+            onItemClick!!.invoke(product)
+        }
+
         PushDownAnim.setPushDownAnimTo(holder.itemView)
             .setScale(PushDownAnim.MODE_SCALE, 0.89f)
             .setOnClickListener { it ->
-//            onItemClick!!.invoke(product)
 
                 try {
                     val action = HomeFragmentDirections.fromHomeFragmentToDetaillFragment(product)

@@ -47,15 +47,15 @@ class BestSellerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val binding = ItemProductBinding.bind(inflater)
         return ViewHolder(binding)
     }
-//
-//    @Inject
-//    lateinit var resultToCascheMapper: Mapper<Result, ResultCache>
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var holder = holder as ViewHolder
         Glide.with(holder.itemView).load(productList[position].image_main?.url)
             .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
             .into(holder.binding.productImg)
+
+        holder.binding.addToBuy.setOnClickListener {
+            onItemClickBestseller?.invoke(productList[position])
+        }
 
         PushDownAnim.setPushDownAnimTo(holder.itemView).setOnClickListener { it ->
             try {
@@ -69,6 +69,8 @@ class BestSellerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount() = productList.size
+
+    var onItemClickBestseller: ((Result) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(listProduct: List<Result>) {
