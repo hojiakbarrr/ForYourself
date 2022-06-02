@@ -56,7 +56,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterV
         val product = diffor.currentList[position]
         Glide.with(holder.itemView)
             .load(product.image_main?.url)
-            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 50f, 50f))
+            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 0f, 0f))
             .into(holder.binding.imageView2)
 
 
