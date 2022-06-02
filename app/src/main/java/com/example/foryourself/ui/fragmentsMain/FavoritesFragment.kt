@@ -96,6 +96,8 @@ class FavoritesFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 viewModel.deleteOrder(favoritesAdapter.diffor.currentList[position])
+                count = (count.toInt() - 1).toString()
+                sum = ((sum.toInt() - favoritesAdapter.diffor.currentList[position].price!!.toInt()).toString())
                 snaketoast(
                     "${favoritesAdapter.diffor.currentList[position].title} ${"было удалено из избранных"}",
                     requireView()
@@ -115,10 +117,12 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.mycartbtn.setOnClickListener {
-            if (count == "0") snaketoast("Список заказов пустой", requireView())
-            else {
-                bottom()
-            }
+                if (count == "0") snaketoast("Список заказов пустой", requireView())
+                else {
+
+                    bottom()
+                }
+
 
         }
 
