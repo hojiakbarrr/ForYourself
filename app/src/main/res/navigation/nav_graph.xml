@@ -9,7 +9,7 @@
         android:id="@+id/addToFragment"
         android:name="com.example.foryourself.ui.fragmentsMain.AddToFragment"
         android:label="add_to_fragment"
-        tools:layout="@layout/add_to_fragment" >
+        tools:layout="@layout/add_to_fragment">
         <action
             android:id="@+id/from_addToFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -21,7 +21,7 @@
         android:id="@+id/categoryFragment2"
         android:name="com.example.foryourself.ui.fragmentsMain.CategoryFragment"
         android:label="category_fragment"
-        tools:layout="@layout/category_fragment" >
+        tools:layout="@layout/category_fragment">
 
         <action
             android:id="@+id/action_categoryFragment2_to_detaillFragment"
@@ -34,7 +34,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.foryourself.ui.fragmentsMain.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/home_fragment">
         <argument
             android:name="product_type"
             app:argType="string" />
@@ -57,7 +57,7 @@
         android:id="@+id/profileFragment2"
         android:name="com.example.foryourself.ui.fragmentsMain.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" >
+        tools:layout="@layout/profile_fragment">
         <action
             android:id="@+id/action_profileFragment2_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -67,7 +67,7 @@
         android:id="@+id/detaillFragment"
         android:name="com.example.foryourself.ui.fragmentsDetails.DetaillFragment"
         android:label="detaill_fragment"
-        tools:layout="@layout/detaill_fragment" >
+        tools:layout="@layout/detaill_fragment">
         <action
             android:id="@+id/from_detaillFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -77,7 +77,7 @@
             app:destination="@id/editorrFragment" />
         <argument
             android:name="product"
-            app:argType="com.example.foryourself.data.retrofitResponse.getResponse.Result" />
+            app:argType="com.example.foryourself.data.retrofitResponse.order.getOrder.Result" />
         <action
             android:id="@+id/action_detaillFragment_to_categoryFragment2"
             app:destination="@id/categoryFragment2" />
@@ -92,10 +92,10 @@
         android:id="@+id/editorrFragment"
         android:name="com.example.foryourself.ui.fragmentsDetails.EditorrFragment"
         android:label="editorr_fragment"
-        tools:layout="@layout/editorr_fragment" >
+        tools:layout="@layout/editorr_fragment">
         <argument
             android:name="product"
-            app:argType="com.example.foryourself.data.retrofitResponse.getResponse.Result" />
+            app:argType="com.example.foryourself.data.retrofitResponse.order.getOrder.Result" />
         <action
             android:id="@+id/from_editorrFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -104,13 +104,13 @@
         android:id="@+id/typeFragment"
         android:name="com.example.foryourself.ui.fragmentsDetails.TypeFragment"
         android:label="type_fragment"
-        tools:layout="@layout/type_fragment" >
+        tools:layout="@layout/type_fragment">
         <action
             android:id="@+id/action_typeFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <argument
             android:name="product"
-            app:argType= "string" />
+            app:argType="string" />
         <action
             android:id="@+id/action_typeFragment_to_detaillFragment"
             app:destination="@id/detaillFragment" />
@@ -119,10 +119,10 @@
         android:id="@+id/catFragment"
         android:name="com.example.foryourself.ui.fragmentsDetails.CatFragment"
         android:label="cat_fragment"
-        tools:layout="@layout/cat_fragment" >
+        tools:layout="@layout/cat_fragment">
         <argument
             android:name="product"
-            app:argType= "string" />
+            app:argType="string" />
         <action
             android:id="@+id/action_catFragment_to_categoryFragment2"
             app:destination="@id/categoryFragment2" />
@@ -134,7 +134,7 @@
         android:id="@+id/reklamaFragment"
         android:name="com.example.foryourself.ui.fragmentsDetails.ReklamaFragment"
         android:label="reklama_fragment"
-        tools:layout="@layout/reklama_fragment" >
+        tools:layout="@layout/reklama_fragment">
         <action
             android:id="@+id/action_reklamaFragment_to_addToFragment"
             app:destination="@id/addToFragment" />
@@ -143,7 +143,7 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.foryourself.ui.fragmentsMain.FavoritesFragment"
         android:label="favorites_fragment"
-        tools:layout="@layout/favorites_fragment" >
+        tools:layout="@layout/favorites_fragment">
         <action
             android:id="@+id/action_favoritesFragment_to_detaillFragment"
             app:destination="@id/detaillFragment" />
@@ -153,7 +153,7 @@
         android:id="@+id/splashFragment"
         android:name="com.example.foryourself.ui.fragmentsDetails.SplashFragment"
         android:label="splash_fragment"
-        tools:layout="@layout/splash_fragment" >
+        tools:layout="@layout/splash_fragment">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

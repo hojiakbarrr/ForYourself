@@ -19,10 +19,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.foryourself.R
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
-import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageFirst
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageMain
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageThird
+import com.example.foryourself.data.retrofitResponse.order.postOrder.Result_2
 import com.example.foryourself.databinding.EditorrFragmentBinding
 import com.example.foryourself.ui.fragmentsMain.AddToFragment
 import com.example.foryourself.utils.*

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.databinding.DialogFiltrBinding
 import com.example.foryourself.viewmodels.detail.TypeViewModel
 import com.example.foryourself.databinding.TypeFragmentBinding
@@ -22,7 +22,6 @@ import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 
 @AndroidEntryPoint

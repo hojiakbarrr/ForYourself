@@ -1,8 +1,8 @@
-package com.example.foryourself.data.retrofitResponse.postResponse
+package com.example.foryourself.data.retrofitResponse.order.postOrder
 
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageFirst
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageMain
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageThird
 
 data class Result_2(
     val description: String? = null,

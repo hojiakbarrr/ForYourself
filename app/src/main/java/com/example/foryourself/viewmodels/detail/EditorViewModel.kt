@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
+import com.example.foryourself.data.retrofitResponse.order.postOrder.Result_2
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository

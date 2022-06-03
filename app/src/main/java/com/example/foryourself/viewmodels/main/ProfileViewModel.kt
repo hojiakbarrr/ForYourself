@@ -2,16 +2,10 @@ package com.example.foryourself.viewmodels.main
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
-import com.example.foryourself.db.ProductDao
-import com.example.foryourself.db.model.ResultCache
+import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.repository.OrderRepository
-import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +21,7 @@ class ProfileViewModel @Inject constructor(
 
     fun newUser(id: String, user: PutUsers) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            var bb : com.example.foryourself.data.retrofitResponse.getUsers.Result? = null
+            var bb : com.example.foryourself.data.retrofitResponse.users.getUsers.Result? = null
 
             val otvet = repository.getUser()
             if (otvet.isSuccessful)

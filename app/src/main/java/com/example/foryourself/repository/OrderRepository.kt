@@ -1,15 +1,17 @@
 package com.example.foryourself.repository
 
 import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
-import com.example.foryourself.data.retrofitResponse.deleteResponse.DeleteResponse
-import com.example.foryourself.data.retrofitResponse.getReklama.Getreklama
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.data.retrofitResponse.getResponse.TestResponse
-import com.example.foryourself.data.retrofitResponse.getUsers.GetUsers
-import com.example.foryourself.data.retrofitResponse.postResponse.PostResponseAnswer
-import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
-import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
-import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
+import com.example.foryourself.data.retrofitResponse.deleteObject.DeleteObject
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Getreklama
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.TestResponse
+import com.example.foryourself.data.retrofitResponse.users.getUsers.GetUsers
+import com.example.foryourself.data.retrofitResponse.order.postOrder.PostResponseAnswer
+import com.example.foryourself.data.retrofitResponse.order.postOrder.Result_2
+import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
+import com.example.foryourself.data.retrofitResponse.reklama.updateReklama.UpdateReklama
+import com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.GetUserOrders
+import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
@@ -32,7 +34,7 @@ class OrderRepository @Inject constructor(
 
     suspend fun postOrders(result: Result_2): Response<PostResponseAnswer> = apiService.createPost(post = result)
 
-    fun fetchOneOrder(id: String) = flow { val result = dao.getOneProductDetail(id)
+    suspend fun fetchOneOrder(id: String) = flow { val result = dao.getOneProductDetail(id)
         if (result != null) {
             try {
                 emit(Resource.success(cascheToResultMapper.map(result)))
@@ -41,7 +43,7 @@ class OrderRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteOrderInServer(id: String): Response<DeleteResponse> = apiService.deleteOrder(objectId = id)
+    suspend fun deleteOrderInServer(id: String): Response<DeleteObject> = apiService.deleteOrder(objectId = id)
 
     suspend fun deleteOrderInBASE(id: String) { dao.deleteDATABASE(id) }
 
@@ -59,7 +61,13 @@ class OrderRepository @Inject constructor(
 
     suspend fun addtoFav(product: FavoritesCache) {dao.addFavorites(product = product)}
 
+    suspend fun getuserOrders(): Response<GetUserOrders> = apiService.getUserOrders()
 
+    suspend fun postuserOrders(userOrders: PostUserOrders): Response<PostResponseAnswer> = apiService.createNewUserOrders(userOrders = userOrders)
+
+    suspend fun updateuserOrders(id: String,userOrders: PostUserOrders) : Response<UpdateResponse> = apiService.upDateUserOrders(objectId = id, userOrders = userOrders)
+
+    suspend fun deleteuserOrders(id: String): Response<DeleteObject> = apiService.deleteUserOrders(objectId = id)
 
 
 }

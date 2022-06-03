@@ -2,9 +2,9 @@ package com.example.foryourself.db
 
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama1
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama2
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama1
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama2
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama3
 import org.json.JSONObject
 
 

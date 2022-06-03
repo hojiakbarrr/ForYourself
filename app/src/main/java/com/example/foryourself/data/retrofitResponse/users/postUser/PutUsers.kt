@@ -1,4 +1,4 @@
-package com.example.foryourself.data.retrofitResponse.postUser
+package com.example.foryourself.data.retrofitResponse.users.postUser
 
 data class PutUsers(
     var email: String? = null  ,

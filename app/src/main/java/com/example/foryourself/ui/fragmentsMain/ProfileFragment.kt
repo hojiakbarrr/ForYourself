@@ -1,8 +1,6 @@
 package com.example.foryourself.ui.fragmentsMain
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,11 +10,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.foryourself.R
-import com.example.foryourself.data.retrofitResponse.postUser.PutUsers
+import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.databinding.ProfileFragmentBinding
 import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.main.ProfileViewModel
@@ -24,8 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.parse.ParseException
-import com.parse.ParseObject
 import dagger.hilt.android.AndroidEntryPoint
 
 

@@ -1,6 +1,5 @@
-package com.example.foryourself.data.retrofitResponse.getReklama
+package com.example.foryourself.data.retrofitResponse.reklama.getReklama
 
-import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 data class Getreklama(

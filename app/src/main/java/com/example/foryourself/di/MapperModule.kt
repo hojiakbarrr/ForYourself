@@ -1,6 +1,6 @@
 package com.example.foryourself.di
 
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.mappers.FavoriteCascheToResultMapper

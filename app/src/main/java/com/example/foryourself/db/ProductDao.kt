@@ -1,9 +1,7 @@
 package com.example.foryourself.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.foryourself.data.retrofitResponse.getReklama.ResultofReklama
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.ResultofReklama
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 

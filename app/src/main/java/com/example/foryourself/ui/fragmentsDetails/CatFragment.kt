@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foryourself.R
 import com.example.foryourself.adapter.TypeAdapter
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.databinding.CatFragmentBinding
 import com.example.foryourself.databinding.DialogFiltrBinding
 import com.example.foryourself.utils.LoadingDialog

@@ -1,4 +1,4 @@
-package com.example.foryourself.data.retrofitResponse.postResponse
+package com.example.foryourself.data.retrofitResponse.order.postOrder
 
 data class PostResponseAnswer(
    val objectId: String,

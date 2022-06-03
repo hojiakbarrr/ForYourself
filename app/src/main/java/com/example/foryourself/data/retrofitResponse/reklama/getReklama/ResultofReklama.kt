@@ -1,10 +1,8 @@
-package com.example.foryourself.data.retrofitResponse.getReklama
+package com.example.foryourself.data.retrofitResponse.reklama.getReklama
 
 import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 
 @Entity

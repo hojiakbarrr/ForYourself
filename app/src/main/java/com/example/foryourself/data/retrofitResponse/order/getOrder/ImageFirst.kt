@@ -1,7 +1,6 @@
-package com.example.foryourself.data.retrofitResponse.getResponse
+package com.example.foryourself.data.retrofitResponse.order.getOrder
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 

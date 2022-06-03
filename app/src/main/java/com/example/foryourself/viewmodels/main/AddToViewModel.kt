@@ -2,8 +2,8 @@ package com.example.foryourself.viewmodels.main
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.data.retrofitResponse.postResponse.Result_2
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
+import com.example.foryourself.data.retrofitResponse.order.postOrder.Result_2
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.repository.OrderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

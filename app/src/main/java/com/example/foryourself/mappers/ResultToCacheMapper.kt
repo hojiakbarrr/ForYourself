@@ -1,6 +1,6 @@
 package com.example.foryourself.mappers
 
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.db.model.ImageFirstCache
 import com.example.foryourself.db.model.ImageMainCache
 import com.example.foryourself.db.model.ImageThirdCache

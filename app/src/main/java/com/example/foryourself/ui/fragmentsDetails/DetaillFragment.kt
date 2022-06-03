@@ -18,7 +18,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.foryourself.R
 import com.example.foryourself.adapter.ColorAdapter
 import com.example.foryourself.adapter.SizeAdapter
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.databinding.DetaillFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast

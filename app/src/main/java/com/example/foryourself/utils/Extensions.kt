@@ -12,26 +12,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama1
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama2
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageFirst
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageMain
-import com.example.foryourself.data.retrofitResponse.getResponse.ImageThird
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
-import com.example.foryourself.db.ProductDao
-import com.example.foryourself.db.model.ResultCache
-import com.example.foryourself.repository.OrderRepository
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama1
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama2
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama3
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageFirst
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageMain
+import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageThird
 import com.google.android.material.snackbar.Snackbar
 import com.parse.ParseFile
 import java.io.ByteArrayOutputStream
-import java.net.URLEncoder
-import javax.inject.Inject
 
 
 fun Fragment.toast(message: String) {

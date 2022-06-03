@@ -2,7 +2,7 @@ package com.example.foryourself.viewmodels.detail
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache

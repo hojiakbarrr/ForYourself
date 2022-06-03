@@ -1,3 +1,0 @@
-package com.example.foryourself.data.retrofitResponse.deleteResponse
-
-class DeleteResponse

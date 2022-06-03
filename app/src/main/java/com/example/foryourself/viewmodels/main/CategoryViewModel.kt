@@ -3,7 +3,7 @@ package com.example.foryourself.viewmodels.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.example.foryourself.data.retrofitResponse.getResponse.Result
+import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.utils.Mapper

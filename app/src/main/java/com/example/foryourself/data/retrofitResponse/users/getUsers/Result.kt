@@ -1,4 +1,4 @@
-package com.example.foryourself.data.retrofitResponse.getUsers
+package com.example.foryourself.data.retrofitResponse.users.getUsers
 
 data class Result(
     val createdAt: String,

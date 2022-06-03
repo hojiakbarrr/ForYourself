@@ -16,10 +16,10 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.foryourself.R
 import com.example.foryourself.viewmodels.detail.ReklamaViewModel
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama1
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama2
-import com.example.foryourself.data.retrofitResponse.getReklama.Reklama3
-import com.example.foryourself.data.retrofitResponse.updateReklama.UpdateReklama
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama1
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama2
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama3
+import com.example.foryourself.data.retrofitResponse.reklama.updateReklama.UpdateReklama
 import com.example.foryourself.databinding.ReklamaFragmentBinding
 import com.example.foryourself.ui.activity.MainActivity
 import com.example.foryourself.utils.*
