@@ -3,6 +3,7 @@ package com.example.foryourself.ui.fragmentsDetails
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,8 @@ import com.example.foryourself.databinding.DetaillFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.detail.Detail_viewmodel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,6 +78,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
 
     private val viewModel: Detail_viewmodel by viewModels()
     private lateinit var casche: Result
+    private lateinit var personName: String
+    private lateinit var personEmail: String
 
 
     override fun onResume() {
@@ -83,11 +88,17 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
             View.GONE
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DetaillFragmentBinding.inflate(layoutInflater, container, false)
+        val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
+        personEmail = acct!!.email.toString()
+        personName = acct.displayName.toString()
+        Log.d("name", personEmail + personName)
+
         loadingDialog.show()
 
         sizeAdapter = SizeAdapter(this)
@@ -105,7 +116,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
             fab2Editor.setOnClickListener {
                 try {
                     casche = args.product
-                    val action = DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(casche)
+                    val action =
+                        DetaillFragmentDirections.fromDetaillFragmentToEditorrFragment(casche)
                     Navigation.findNavController(it).navigate(action)
                 } catch (e: Exception) {
 
@@ -120,12 +132,12 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 loadingDialogdelete.dismiss()
             }
             fab3AddToFavProduct.setOnClickListener {
-                viewModel.addToFav(args.product)
-                toast("${args.product.title} было добавлено в избранные" )
+                viewModel.addToFav(args.product,personName,personEmail, one.toString())
+                toast("${args.product.title} было добавлено в избранные")
             }
 
             imgYoutube.setOnClickListener {
-                if (youtubeHTTPS.isNotEmpty())  openYouTube()
+                if (youtubeHTTPS.isNotEmpty()) openYouTube()
                 else toast("Нет видео обзора товара")
             }
         }
@@ -133,7 +145,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
     }
 
     private fun openYouTube() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=Iq9yQmVOThE"))
+        val intent =
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=Iq9yQmVOThE"))
         startActivity(intent)
     }
 

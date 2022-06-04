@@ -21,11 +21,11 @@ class ProfileViewModel @Inject constructor(
 
     fun newUser(id: String, user: PutUsers) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            var bb : com.example.foryourself.data.retrofitResponse.users.getUsers.Result? = null
+            var bb : com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata? = null
 
             val otvet = repository.getUser()
             if (otvet.isSuccessful)
-                otvet.body()!!.results.forEach { bb = it }
+                otvet.body()!!.rrresults.forEach { bb = it }
 
             if (user.email != bb!!.email) {
                 if (repository.postUser(user).isSuccessful) {
@@ -44,7 +44,7 @@ class ProfileViewModel @Inject constructor(
 
         val response = repository.getUser()
         if (response.isSuccessful) {
-            response.body()!!.results.forEach {
+            response.body()!!.rrresults.forEach {
                 if (it.email == id) {
                     emit(it)
 //                    _loadingLiveData.postValue("С возвращением ${it.name}")

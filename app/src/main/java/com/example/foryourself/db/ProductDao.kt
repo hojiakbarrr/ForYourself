@@ -2,6 +2,7 @@ package com.example.foryourself.db
 
 import androidx.room.*
 import com.example.foryourself.data.retrofitResponse.reklama.getReklama.ResultofReklama
+import com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
 
@@ -64,5 +65,16 @@ interface ProductDao {
 
     @Query("DELETE FROM favoritescache")
     suspend fun clearTableFav()
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addUsers(user: ResultUserdata)
+
+    @Query("select * from resultuserdata")
+    suspend fun getUsers(): MutableList<ResultUserdata>
+
+    @Update
+    suspend fun updatUser(user: ResultUserdata)
 
 }

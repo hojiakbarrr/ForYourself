@@ -3,6 +3,8 @@ package com.example.foryourself.viewmodels.main
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
+import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
+import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
@@ -35,10 +37,13 @@ class HomeViewModel @Inject constructor(
     private var _errorLiveData = MutableLiveData<String>()
     var errorLiveData: LiveData<String> = _errorLiveData
 
+    private var _loadingtoastLiveData = MutableLiveData<String>()
+    var loadingtoastLiveData: LiveData<String> = _loadingtoastLiveData
 
-    fun addToFav(product : Result) = viewModelScope.launch {
+
+    fun addToFav(product: Result) = viewModelScope.launch {
         repository.addtoFav(product = resultToFavoritCascheMapper.map(product))
-        Log.d("dfgdfg",dao.getFavorites().toString())
+        Log.d("dfgdfg", dao.getFavorites().toString())
     }
 
     fun allOrders() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -106,7 +111,7 @@ class HomeViewModel @Inject constructor(
 
     fun getReklama() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
         _loadingLiveData.postValue(true)
-        if (dao.getreklamaFromDATABASE().isEmpty()){
+        if (dao.getreklamaFromDATABASE().isEmpty()) {
             val response = repository.getReklama()
             if (response.isSuccessful) {
                 response.body()!!.resultss.forEach {
@@ -118,15 +123,52 @@ class HomeViewModel @Inject constructor(
             } else {
                 Log.d("tree", response.message())
             }
-        }else{
+        } else {
             emit(dao.getreklamaFromDATABASE())
             _loadingLiveData.postValue(false)
         }
     }
 
+    fun userOrder(googleEmail: String, googlename: String) = viewModelScope.launch {
+        Log.d("namewww", googlename + googleEmail)
+        var bb: com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata? = null
+        var cc: com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.Result? =
+            null
 
-    fun observeOrders(): LiveData<List<Result>> {
-        return _orderLiveData
+
+        val response = repository.getUser()
+        if (response.isSuccessful) {
+            response.body()?.rrresults?.forEach { r ->
+                bb = r
+            }
+
+            if (bb!!.email != googleEmail && bb!!.name != googlename) {
+
+                repository.postuserOrders(
+                    userOrders = PostUserOrders(
+                        email = googleEmail,
+                        name = googlename
+                    )
+                )
+                repository.postUser(
+                    user = PutUsers(
+                        email = googleEmail,
+                        name = googlename
+                    )
+                )
+                _loadingtoastLiveData.postValue("Добро пожаловать${bb!!.name}")
+            }else{
+                _loadingtoastLiveData.postValue("С возвращением${bb!!.name}")
+            }
+
+
+        }
+
+
+        fun observeOrders(): LiveData<List<Result>> {
+            return _orderLiveData
+        }
+
     }
 
 }

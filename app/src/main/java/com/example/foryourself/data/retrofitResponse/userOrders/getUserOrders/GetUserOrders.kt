@@ -1,5 +1,8 @@
 package com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders
 
+import com.google.gson.annotations.SerializedName
+
 data class GetUserOrders(
-    val results: List<Result>
+    @SerializedName("results")
+    val ressults: List<Result>
 )

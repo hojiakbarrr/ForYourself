@@ -119,10 +119,10 @@ class FavoritesFragment : Fragment() {
         binding.mycartbtn.setOnClickListener {
                 if (count == "0") snaketoast("Список заказов пустой", requireView())
                 else {
-
                     bottom()
                 }
-
+        }
+        viewModel.favoritesUserOrders().observe(viewLifecycleOwner){
 
         }
 

@@ -3,17 +3,16 @@ package com.example.foryourself.ui.fragmentsMain
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
@@ -23,15 +22,11 @@ import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.lastElements
-import com.example.foryourself.utils.snaketoast
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -81,22 +76,43 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var gso: GoogleSignInOptions? = null
-        var gsc: GoogleSignInClient? = null
-        gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+//        var gso: GoogleSignInOptions? = null
+//        var gsc: GoogleSignInClient? = null
+//        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+//        gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
+//
 
-        gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
         if (acct == null) {
             val action = HomeFragmentDirections.actionHomeFragmentToSplashFragment()
             Navigation.findNavController(requireView()).navigate(action)
         } else {
+            viewModel.userOrder(acct.email.toString(), acct.displayName.toString())
 //            snaketoast("С возвращением", requireView())
         }
 
+//
+//        val toast = Toast.makeText(
+//            context,
+//            Html.fromHtml("<font color='#FF000000' ><b>" + "info.toString()" + "</i></font>"),
+//            Toast.LENGTH_LONG
+//        )
+//        toast.setGravity(Gravity.TOP, 0, 0)
+//        toast.show()
+
+        val layout = layoutInflater.inflate(R.layout.toast,null)
+//        val error: TextView = layout.findViewById(R.id.toast)
+//        error.textSize = 33F
+
+
+        Toast(requireContext()).apply {
+            duration = Toast.LENGTH_SHORT
+            setGravity(Gravity.CENTER ,0,0)
+            view = layout
+        }.show()
 
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

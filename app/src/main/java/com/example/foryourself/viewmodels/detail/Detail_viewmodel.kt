@@ -3,6 +3,7 @@ package com.example.foryourself.viewmodels.detail
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
+import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.repository.OrderRepository
@@ -27,9 +28,37 @@ class Detail_viewmodel  @Inject constructor(
 
     private var _orderDeleteLiveData = MutableLiveData<String>()
 
-    fun addToFav(product : Result) = viewModelScope.launch {
+    fun addToFav(product : Result, googleEmail: String, googlename: String, amount: String ) = viewModelScope.launch {
         repository.addtoFav(product = resultToCascheMapper.map(product))
-        Log.d("dfgdfg",dao.getFavorites().toString())
+        repository.postuserOrders(userOrders = PostUserOrders(
+            email = googleEmail,
+            name = googlename,
+            status = "favorite",
+            amount = amount,
+            title = product.title,
+            colors1 = product.colors1,
+            colors2 = product.colors2,
+            seventhSize = product.seventhSize,
+            colors3 = product.colors3,
+            image_third = product.image_third,
+            season = product.season,
+            thirdSize = product.thirdSize,
+            price = product.price,
+            image_first = product.image_first,
+            youtubeTrailer = product.youtubeTrailer,
+            colors = product.colors,
+            firstSize = product.firstSize,
+            secondSize = product.secondSize,
+            sixthSize = product.sixthSize,
+            fifthSize = product.fifthSize,
+            eighthSize = product.eighthSize,
+            fourthSize = product.fourthSize,
+            description = product.description,
+            image_main = product.image_main,
+            category = product.category,
+            tipy = product.tipy
+        ))
+
     }
 
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,13 +17,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.foryourself.R
-import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama1
-import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama2
-import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama3
 import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageFirst
 import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageMain
 import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageThird
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama1
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama2
+import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Reklama3
 import com.google.android.material.snackbar.Snackbar
+import com.parse.Parse.getApplicationContext
 import com.parse.ParseFile
 import java.io.ByteArrayOutputStream
 
@@ -207,5 +209,25 @@ fun <T> List<T>.lastElements(): List<T> {
         list.add(counter, this[i])
     }
     return list
+}
+
+fun Fragment.dialogwork() {
+//    val context: Context = getApplicationContext()
+//    val inflater = layoutInflater
+//    val toastView: View = inflater.inflate(R.layout.toast, null)
+//
+//    val toast = Toast(context)
+//    toastView.setView(toast)
+//
+//    // Set layout to toast
+//
+//    // Set layout to toast
+//    toast.setGravity(
+//        Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL,
+//        0, 0
+//    )
+//    toast.duration = Toast.LENGTH_LONG
+//    toast.show()
+
 }
 
