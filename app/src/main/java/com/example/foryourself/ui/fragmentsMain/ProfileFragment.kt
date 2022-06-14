@@ -97,7 +97,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.getUser(accountEmail).observe(viewLifecycleOwner) {
             objectID = it.objectId
-            nomer = it.numberTelephone
+            nomer = it.numberTelephone.toString()
 
         }
         viewModel.loadingLiveData.observe(viewLifecycleOwner) {

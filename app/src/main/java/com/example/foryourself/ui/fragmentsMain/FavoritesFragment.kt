@@ -125,6 +125,7 @@ class FavoritesFragment : Fragment() {
         viewModel.favoritesUserOrders().observe(viewLifecycleOwner){
 
         }
+        viewModel.userOrder("err","wew")
 
 
     }

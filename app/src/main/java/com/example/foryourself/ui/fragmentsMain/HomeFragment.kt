@@ -7,9 +7,11 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,11 +25,15 @@ import com.example.foryourself.databinding.HomeFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.lastElements
 import com.example.foryourself.utils.toast
+import com.example.foryourself.utils.toastUP
 import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -38,6 +44,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var bestAdapter: BestSellerAdapter
     private val viewModel: HomeViewModel by viewModels()
     private val imageList = ArrayList<SlideModel>() // Create image list
+    private lateinit var personName: String
+    private lateinit var personEmail: String
 
 
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
@@ -58,7 +66,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.allOrders().observe(viewLifecycleOwner) {
+        viewModel.getallOrders().observe(viewLifecycleOwner) {
             exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
         }
         viewModel.orderLiveData.observe(viewLifecycleOwner) {
@@ -76,40 +84,18 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        var gso: GoogleSignInOptions? = null
-//        var gsc: GoogleSignInClient? = null
-//        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-//        gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
-//
 
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
         if (acct == null) {
             val action = HomeFragmentDirections.actionHomeFragmentToSplashFragment()
             Navigation.findNavController(requireView()).navigate(action)
         } else {
-            viewModel.userOrder(acct.email.toString(), acct.displayName.toString())
+            personEmail = acct!!.email.toString()
+            personName = acct.displayName.toString()
+            viewModel.getuserOrder(acct.email.toString(), acct.displayName.toString())
 //            snaketoast("С возвращением", requireView())
         }
 
-//
-//        val toast = Toast.makeText(
-//            context,
-//            Html.fromHtml("<font color='#FF000000' ><b>" + "info.toString()" + "</i></font>"),
-//            Toast.LENGTH_LONG
-//        )
-//        toast.setGravity(Gravity.TOP, 0, 0)
-//        toast.show()
-
-        val layout = layoutInflater.inflate(R.layout.toast,null)
-//        val error: TextView = layout.findViewById(R.id.toast)
-//        error.textSize = 33F
-
-
-        Toast(requireContext()).apply {
-            duration = Toast.LENGTH_SHORT
-            setGravity(Gravity.CENTER ,0,0)
-            view = layout
-        }.show()
 
     }
 
@@ -139,19 +125,23 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.allOrders().observe(viewLifecycleOwner) {
+        viewModel.getallOrders().observe(viewLifecycleOwner) {
             exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
         }
         viewModel.orderLiveData.observe(viewLifecycleOwner) {
             bestAdapter.productList = it?.lastElements()?.toMutableList()!!
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toast(message) }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toastUP(message) }
+
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
             try {
                 if (status) loadingDialog.show()
                 else loadingDialog.dismiss()
             } catch (e: Exception) {
             }
+        }
+        viewModel.loadingtoastLiveData.observe(viewLifecycleOwner) {
+            toastUP(it)
         }
 
 
@@ -210,8 +200,14 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun onClickItemBestSeller() {
         bestAdapter.onItemClickBestseller = {
-            viewModel.addToFav(it)
-            toast("${it.title} был(о) добавленов избранные")
+            viewModel.addToFav(it, personName, personEmail).observe(viewLifecycleOwner) { product ->
+                bestAdapter.updateItem(product)
+            }
+            viewModel.favLiveData.observe(viewLifecycleOwner) {
+                toastUP(it)
+            }
+
+
         }
     }
 
@@ -223,8 +219,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun onClickItem() {
         exclusiveAdapter.onItemClick = { t ->
-            viewModel.addToFav(t)
-            toast("${t.title} был(о) добавленов избранные")
+//            viewModel.addToFav22(t, personName, personEmail)
+//            viewModel.favLiveData.observe(viewLifecycleOwner) {
+//                toastUP(it)
+//            }
         }
     }
 

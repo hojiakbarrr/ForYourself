@@ -23,6 +23,7 @@ import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.databinding.DetaillFragmentBinding
 import com.example.foryourself.utils.LoadingDialog
 import com.example.foryourself.utils.toast
+import com.example.foryourself.utils.toastUP
 import com.example.foryourself.viewmodels.detail.Detail_viewmodel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -132,8 +133,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
                 loadingDialogdelete.dismiss()
             }
             fab3AddToFavProduct.setOnClickListener {
-                viewModel.addToFav(args.product,personName,personEmail, one.toString())
-                toast("${args.product.title} было добавлено в избранные")
+                viewModel.addToFav(args.product, personName, personEmail, one.toString())
+                viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
+                    toastUP(it)
+                }
             }
 
             imgYoutube.setOnClickListener {

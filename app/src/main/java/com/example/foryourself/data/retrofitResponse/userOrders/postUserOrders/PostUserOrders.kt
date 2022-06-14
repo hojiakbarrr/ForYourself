@@ -6,9 +6,9 @@ import com.example.foryourself.data.retrofitResponse.order.getOrder.ImageThird
 
 data class PostUserOrders(
     val email: String? = null,
+    val argument: String,
     val name: String? = null,
     val numberTelephone: String? = null,
-    val status: String? = null,
     val amount: String? = null,
     val title: String? = null,
     val colors1: String? = null,

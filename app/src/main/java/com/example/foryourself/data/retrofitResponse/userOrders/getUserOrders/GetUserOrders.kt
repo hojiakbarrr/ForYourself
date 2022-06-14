@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class GetUserOrders(
     @SerializedName("results")
-    val ressults: List<Result>
+    val ressults: List<ResultUsersOrder>
 )

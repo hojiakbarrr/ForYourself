@@ -47,7 +47,8 @@ class FavoriteCascheToResultMapper : Mapper<FavoritesCache, Result>() {
             colors2 = colors2,
             colors3 = colors3,
             tipy = tipy,
-            category = category
+            category = category,
+            isFavorite = isFavorite
         )
     }
 }

@@ -34,6 +34,8 @@ class App: Application(){
             dao.clearTable()
             dao.clearTableReklama()
             dao.clearTableFav()
+            dao.clearTableUser()
+            dao.clearTableUserOrder()
         }
 
     }

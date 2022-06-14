@@ -211,23 +211,16 @@ fun <T> List<T>.lastElements(): List<T> {
     return list
 }
 
-fun Fragment.dialogwork() {
-//    val context: Context = getApplicationContext()
-//    val inflater = layoutInflater
-//    val toastView: View = inflater.inflate(R.layout.toast, null)
-//
-//    val toast = Toast(context)
-//    toastView.setView(toast)
-//
-//    // Set layout to toast
-//
-//    // Set layout to toast
-//    toast.setGravity(
-//        Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL,
-//        0, 0
-//    )
-//    toast.duration = Toast.LENGTH_LONG
-//    toast.show()
+fun Fragment.toastUP(text: String) {
 
+    val layout = layoutInflater.inflate(R.layout.toast,null)
+    val error: TextView = layout.findViewById(R.id.toast)
+    error.text = text
+
+    Toast(requireContext()).apply {
+        duration = Toast.LENGTH_SHORT
+        setGravity(Gravity.CENTER ,0,0)
+        view = layout
+    }.show()
 }
 

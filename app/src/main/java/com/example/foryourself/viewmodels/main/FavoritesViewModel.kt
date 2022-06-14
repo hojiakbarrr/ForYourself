@@ -47,45 +47,17 @@ class FavoritesViewModel @Inject constructor(
     }
 
     fun userOrder(googleEmail: String, googlename: String) = viewModelScope.launch {
-        Log.d("namewww", googlename + googleEmail)
         var bb: com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata? = null
-        var cc: com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.Result? =
+        var cc: com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.ResultUsersOrder? =
             null
 
         val rr = repository.getuserOrders()
         if (rr.isSuccessful){
             rr.body()!!.ressults.forEach {
+                    dao.addUsersOrder(it)
+                Log.d("erer", dao.getUsersOrder().size.toString())
             }
         }
-
-
-        val response = repository.getUser()
-        if (response.isSuccessful) {
-            response.body()?.rrresults?.forEach { r ->
-                bb = r
-            }
-
-            if (bb!!.email != googleEmail && bb!!.name != googlename) {
-
-                repository.postuserOrders(
-                    userOrders = PostUserOrders(
-                        email = googleEmail,
-                        name = googlename
-                    )
-                )
-                repository.postUser(
-                    user = PutUsers(
-                        email = googleEmail,
-                        name = googlename
-                    )
-                )
-            }else{
-
-            }
-
-
-        }
-
 
         fun observeOrders(): LiveData<List<Result>> {
             return _orderLiveData

@@ -43,7 +43,8 @@ data class ResultCache(
     val colors3: String ?,
     @NonNull
     val tipy: String ,
-    val category: String?
+    val category: String?,
+    val isFavorite:Boolean
 
 ) : Parcelable
 

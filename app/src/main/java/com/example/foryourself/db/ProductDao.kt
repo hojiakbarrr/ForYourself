@@ -2,6 +2,7 @@ package com.example.foryourself.db
 
 import androidx.room.*
 import com.example.foryourself.data.retrofitResponse.reklama.getReklama.ResultofReklama
+import com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.ResultUsersOrder
 import com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
@@ -74,7 +75,37 @@ interface ProductDao {
     @Query("select * from resultuserdata")
     suspend fun getUsers(): MutableList<ResultUserdata>
 
+    @Query("select * from resultuserdata where email == :email")
+    suspend fun getMyUserEmail(email: String): MutableList<ResultUserdata>?
+
+    @Query("select * from resultuserdata where name == :name")
+    suspend fun getMyUserName(name: String): MutableList<ResultUserdata>?
+
+    @Query("select * from resultuserdata where objectId == :id")
+    suspend fun getMyUserId(id: String): MutableList<ResultUserdata>?
+
     @Update
     suspend fun updatUser(user: ResultUserdata)
+
+    @Query("DELETE FROM resultuserdata")
+    suspend fun clearTableUser()
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addUsersOrder(userOrders: ResultUsersOrder)
+
+    @Query("select * from resultusersorder")
+    suspend fun getUsersOrder(): MutableList<ResultUsersOrder>
+
+    @Update
+    suspend fun updateUserOrder(userOrders: ResultUsersOrder)
+
+    @Query("DELETE FROM resultusersorder")
+    suspend fun clearTableUserOrder()
+
+    @Delete
+    fun deleteUserOrder(userOrders: ResultUsersOrder)
+
 
 }

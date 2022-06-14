@@ -6,7 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Result(
-
     val createdAt: String?,
     val description: String?,
     val eighthSize: String?,
@@ -32,6 +31,6 @@ data class Result(
     val colors2: String?,
     val colors3: String?,
     val tipy: String?,
-    val category: String?
-
-): Parcelable
+    val category: String?,
+    var isFavorite: Boolean
+) : Parcelable

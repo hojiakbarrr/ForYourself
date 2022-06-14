@@ -1,6 +1,7 @@
 package com.example.foryourself.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -53,13 +54,29 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
             .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
             .into(holder.binding.productImg)
 
+        holder.binding.apply {
+            if (product.isFavorite) {
+                addToBuy.visibility = View.VISIBLE
+                saleee.visibility = View.INVISIBLE
+            } else {
 
-        holder.binding.productName.text = product.title
-        holder.binding.productPrice.text = product.price
+                saleee.visibility = View.VISIBLE
+                addToBuy.visibility = View.INVISIBLE
+            }
+            productName.text = product.title
+            productPrice.text = product.price
 
-        holder.binding.addToBuy.setOnClickListener {
-            onItemClick!!.invoke(product)
+            addToBuy.setOnClickListener {
+                onItemClick!!.invoke(product)
+            }
         }
+
+//        holder.binding.productName.text = product.title
+//        holder.binding.productPrice.text = product.price
+//
+//        holder.binding.addToBuy.setOnClickListener {
+//            onItemClick!!.invoke(product)
+//        }
 
         PushDownAnim.setPushDownAnimTo(holder.itemView)
             .setScale(PushDownAnim.MODE_SCALE, 0.89f)

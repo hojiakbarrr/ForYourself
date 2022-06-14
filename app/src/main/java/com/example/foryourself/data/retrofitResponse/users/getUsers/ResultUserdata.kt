@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ResultUserdata(
-    val createdAt: String,
-    val email: String,
+    val createdAt: String?,
+    val email: String?,
+    val name: String?,
+    val numberTelephone: String?,
     @PrimaryKey
     @NonNull
-    val name: String,
-    val numberTelephone: String,
     val objectId: String,
-    val updatedAt: String
+    val updatedAt: String?
 )

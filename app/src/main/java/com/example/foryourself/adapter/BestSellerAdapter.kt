@@ -1,7 +1,9 @@
 package com.example.foryourself.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +16,9 @@ import com.example.foryourself.databinding.ItemProductBinding
 import com.example.foryourself.ui.fragmentsMain.HomeFragmentDirections
 import com.thekhaeng.pushdownanim.PushDownAnim
 
-class BestSellerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BestSellerAdapter : RecyclerView.Adapter<BestSellerAdapter.ViewHolder>() {
 
-    var productList: List<Result> = emptyList()
+    var productList: MutableList<Result> = mutableListOf()
         set(newValue) {
             field = newValue
             notifyDataSetChanged()
@@ -27,49 +29,67 @@ class BestSellerAdapter  : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Result) = with(binding) {
-            binding.apply {
-                productName.text = product.title
-                productPrice.text = product.price
+//            if (product.isFavorite) addToBuy.visibility = View.GONE
+//             else addToBuy.visibility = View.VISIBLE
+
+            if (product.isFavorite) {
+                addToBuy.visibility = View.GONE
+                saleee.visibility = View.VISIBLE
             }
+            else {
+                saleee.visibility = View.GONE
+                addToBuy.visibility = View.VISIBLE
+            }
+
+
+            Glide.with(itemView).load(productList[position].image_main?.url)
+                .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
+                .into(productImg)
+
+            addToBuy.setOnClickListener {
+                onItemClickBestseller?.invoke(productList[position])
+            }
+
+            PushDownAnim.setPushDownAnimTo(itemView).setOnClickListener { it ->
+                try {
+                    val action =
+                        HomeFragmentDirections.fromHomeFragmentToDetaillFragment((productList[position]))
+                    Navigation.findNavController(it).navigate(action)
+                } catch (e: Exception) {
+                }
+            }
+
+            productName.text = product.title
+            productPrice.text = product.price
+
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BestSellerAdapter.ViewHolder {
         val inflater =
             LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         val binding = ItemProductBinding.bind(inflater)
         return ViewHolder(binding)
     }
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var holder = holder as ViewHolder
-        Glide.with(holder.itemView).load(productList[position].image_main?.url)
-            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
-            .into(holder.binding.productImg)
 
-        holder.binding.addToBuy.setOnClickListener {
-            onItemClickBestseller?.invoke(productList[position])
-        }
-
-        PushDownAnim.setPushDownAnimTo(holder.itemView).setOnClickListener { it ->
-            try {
-                val action = HomeFragmentDirections.fromHomeFragmentToDetaillFragment((productList[position]))
-                Navigation.findNavController(it).navigate(action)
-            } catch (e: Exception) {
-            }
-        }
-
+    override fun onBindViewHolder(holder: BestSellerAdapter.ViewHolder, position: Int) {
         holder.bind(productList[position])
+    }
+
+    fun updateItem(product: Result) {
+        val index = productList.indexOf(product)
+        product.isFavorite = true
+        productList[index] = product
+        notifyItemChanged(index)
     }
 
     override fun getItemCount() = productList.size
 
     var onItemClickBestseller: ((Result) -> Unit)? = null
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(listProduct: List<Result>) {
-        productList = listProduct
-        notifyDataSetChanged()
-    }
 
 }
