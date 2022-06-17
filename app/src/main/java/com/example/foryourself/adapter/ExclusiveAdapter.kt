@@ -1,5 +1,6 @@
 package com.example.foryourself.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,10 @@ import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.databinding.ItemProductBinding
 import com.example.foryourself.ui.fragmentsMain.HomeFragmentDirections
 import com.thekhaeng.pushdownanim.PushDownAnim
+import okhttp3.internal.notify
 
-class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
+class ExclusiveAdapter(val clickListener: IconClickListener) :
+    RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterViewHolder>() {
 
     var onItemClick: ((Result) -> Unit)? = null
 
@@ -39,7 +42,9 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExclusiveAdapterViewHolder {
         return ExclusiveAdapterViewHolder(
             ItemProductBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
     }
@@ -47,8 +52,8 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
 
     override fun onBindViewHolder(holder: ExclusiveAdapterViewHolder, position: Int) {
 
-
         val product = diffor.currentList[position]
+
         Glide.with(holder.itemView)
             .load(product.image_main?.url)
             .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
@@ -56,24 +61,22 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
 
         holder.binding.apply {
             if (product.isFavorite) {
-                addToBuy.visibility = View.VISIBLE
-                saleee.visibility = View.INVISIBLE
-            } else {
-
+                addToBuy.visibility = View.GONE
                 saleee.visibility = View.VISIBLE
-                addToBuy.visibility = View.INVISIBLE
+            } else {
+                saleee.visibility = View.GONE
+                addToBuy.visibility = View.VISIBLE
             }
+
             productName.text = product.title
             productPrice.text = product.price
 
             addToBuy.setOnClickListener {
                 onItemClick!!.invoke(product)
+                clickListener.itemClick(position)
             }
         }
 
-//        holder.binding.productName.text = product.title
-//        holder.binding.productPrice.text = product.price
-//
 //        holder.binding.addToBuy.setOnClickListener {
 //            onItemClick!!.invoke(product)
 //        }
@@ -91,7 +94,22 @@ class ExclusiveAdapter : RecyclerView.Adapter<ExclusiveAdapter.ExclusiveAdapterV
 
     }
 
+
+
+    fun updateItem(product: Result, positionnn: String) {
+        val index = diffor.currentList.indexOf(product)
+        product.isFavorite = true
+        diffor.currentList.add(product)
+        diffor.submitList(diffor.currentList)
+
+        notifyItemChanged(index)
+    }
+
     override fun getItemCount(): Int = diffor.currentList.size
 
+
+    interface IconClickListener {
+        fun itemClick(position: Int)
+    }
 
 }

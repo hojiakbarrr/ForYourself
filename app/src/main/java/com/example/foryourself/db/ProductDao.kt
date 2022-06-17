@@ -95,6 +95,9 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addUsersOrder(userOrders: ResultUsersOrder)
 
+    @Query("select * from resultusersorder where title == :title")
+    suspend fun getUsersOrderTITLE(title: String): MutableList<ResultUserdata>?
+
     @Query("select * from resultusersorder")
     suspend fun getUsersOrder(): MutableList<ResultUsersOrder>
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,7 +64,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
     private val imageList = ArrayList<SlideModel>() // Create image list
     private lateinit var productId: String
     private var clicked: Boolean = false
-    private lateinit var youtubeHTTPS: String
+    private var youtubeHTTPS: String = ""
     private var one: Int = 1
     private var price: Int = 1
     private lateinit var sizeAdapter: SizeAdapter
@@ -79,8 +80,6 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
 
     private val viewModel: Detail_viewmodel by viewModels()
     private lateinit var casche: Result
-    private lateinit var personName: String
-    private lateinit var personEmail: String
 
 
     override fun onResume() {
@@ -96,11 +95,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
     ): View? {
         binding = DetaillFragmentBinding.inflate(layoutInflater, container, false)
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
-        personEmail = acct!!.email.toString()
-        personName = acct.displayName.toString()
-        Log.d("name", personEmail + personName)
 
-        loadingDialog.show()
+
 
         sizeAdapter = SizeAdapter(this)
         colorAdapter = ColorAdapter(this)
@@ -108,6 +104,8 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
         prepareColorAdapter()
         getInfo()
         count()
+
+        viewModel.checkOrder(args.product.title!!)
         binding.apply {
             btnAllFab.setOnClickListener {
                 setAnimation(clicked)
@@ -126,14 +124,13 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
             }
             fab3DeleteProduct.setOnClickListener {
                 loadingDialogdelete.show()
-                viewModel.deleteOrderBASE(args.product.objectId!!)
                 viewModel.deleteOrder(args.product.objectId!!)
 //                val action = DetaillFragmentDirections.fromDetaillFragmentToHomeFragment()
                 Navigation.findNavController(it).navigate(R.id.from_detaillFragment_to_homeFragment)
                 loadingDialogdelete.dismiss()
             }
             fab3AddToFavProduct.setOnClickListener {
-                viewModel.addToFav(args.product, personName, personEmail, one.toString())
+                viewModel.addToFav(args.product, one.toString(), requireActivity())
                 viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
                     toastUP(it)
                 }
@@ -142,6 +139,9 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
             imgYoutube.setOnClickListener {
                 if (youtubeHTTPS.isNotEmpty()) openYouTube()
                 else toast("Нет видео обзора товара")
+            }
+            viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
+                toast(it)
             }
         }
         return binding.root
@@ -155,14 +155,23 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
 
 
     private fun setVisibility(clicked: Boolean) {
-        if (!clicked) {
-            binding.fab2Editor.visibility = View.VISIBLE
-            binding.fab3DeleteProduct.visibility = View.VISIBLE
-            binding.fab3AddToFavProduct.visibility = View.VISIBLE
-        } else {
-            binding.fab2Editor.visibility = View.INVISIBLE
-            binding.fab3DeleteProduct.visibility = View.INVISIBLE
-            binding.fab3AddToFavProduct.visibility = View.VISIBLE
+        binding.apply {
+            viewModel.loadingLiveData.observe(viewLifecycleOwner) { rt ->
+                if (rt == true) fab3AddToFavProduct.visibility = View.GONE
+                else fab3AddToFavProduct.visibility = View.VISIBLE
+
+
+
+                if (!clicked) {
+
+                    fab2Editor.visibility = View.VISIBLE
+                    fab3DeleteProduct.visibility = View.VISIBLE
+                } else {
+
+                    fab2Editor.visibility = View.INVISIBLE
+                    fab3DeleteProduct.visibility = View.INVISIBLE
+                }
+            }
         }
 
     }
@@ -196,7 +205,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
         binding.recByColor.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.recByColor.adapter = colorAdapter
+            adapter = colorAdapter
         }
     }
 
@@ -229,9 +238,13 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
     }
 
     private fun getInfo() {
-        viewModel.getOneOrder(args.product.objectId!!)
-        viewModel.orderLiveData.observe(viewLifecycleOwner) {
-            binding.apply {
+        binding.apply {
+
+            loadingDialog.show()
+
+            viewModel.getOneOrder(args.product.objectId!!)
+            viewModel.orderLiveData.observe(viewLifecycleOwner) {
+
                 collapsingToolbar.title = it.title
 //        imageList.add(SlideModel("String Url" or R.drawable, "title") You can add title
                 imageList.add(SlideModel(it.image_first?.url, scaleType = ScaleTypes.FIT))
@@ -269,11 +282,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
 
             }
         }
-        viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
-            toast(it)
-        }
         loadingDialog.dismiss()
+
     }
+
 
     override fun ItemClick(position: CharSequence) {
         toast(position.toString())

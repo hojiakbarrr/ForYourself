@@ -29,10 +29,8 @@ class BestSellerAdapter : RecyclerView.Adapter<BestSellerAdapter.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Result) = with(binding) {
-//            if (product.isFavorite) addToBuy.visibility = View.GONE
-//             else addToBuy.visibility = View.VISIBLE
 
-            if (product.isFavorite) {
+            if (product.isFavorite == true) {
                 addToBuy.visibility = View.GONE
                 saleee.visibility = View.VISIBLE
             }
@@ -48,6 +46,7 @@ class BestSellerAdapter : RecyclerView.Adapter<BestSellerAdapter.ViewHolder>() {
 
             addToBuy.setOnClickListener {
                 onItemClickBestseller?.invoke(productList[position])
+
             }
 
             PushDownAnim.setPushDownAnimTo(itemView).setOnClickListener { it ->
@@ -90,6 +89,8 @@ class BestSellerAdapter : RecyclerView.Adapter<BestSellerAdapter.ViewHolder>() {
     override fun getItemCount() = productList.size
 
     var onItemClickBestseller: ((Result) -> Unit)? = null
+
+
 
 
 }

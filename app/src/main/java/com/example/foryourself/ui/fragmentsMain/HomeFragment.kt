@@ -3,22 +3,21 @@ package com.example.foryourself.ui.fragmentsMain
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.foryourself.CurrentUser
 import com.example.foryourself.R
+import com.example.foryourself.SharedPreferences
 import com.example.foryourself.adapter.BestSellerAdapter
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
@@ -31,21 +30,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
+    ExclusiveAdapter.IconClickListener {
     private lateinit var binding: HomeFragmentBinding
 
     private lateinit var exclusiveAdapter: ExclusiveAdapter
     private lateinit var bestAdapter: BestSellerAdapter
     private val viewModel: HomeViewModel by viewModels()
-    private val imageList = ArrayList<SlideModel>() // Create image list
+    private val imageList = ArrayList<SlideModel>()
     private lateinit var personName: String
     private lateinit var personEmail: String
+    private lateinit var positionnn: String
 
 
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
@@ -66,7 +64,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getallOrders().observe(viewLifecycleOwner) {
+        viewModel.getallOrders(requireActivity()).observe(viewLifecycleOwner) {
             exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
         }
         viewModel.orderLiveData.observe(viewLifecycleOwner) {
@@ -92,7 +90,23 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         } else {
             personEmail = acct!!.email.toString()
             personName = acct.displayName.toString()
-            viewModel.getuserOrder(acct.email.toString(), acct.displayName.toString())
+            viewModel.getuserOrder(acct.email.toString(), acct.displayName.toString(),requireActivity())
+            SharedPreferences().saveCurrentUser(
+                CurrentUser(
+                    email = acct.email!!,
+                    name = acct.displayName!!,
+                    id = acct.id!!
+                ), requireActivity()
+            )
+
+            val ee = SharedPreferences().getCurrentUser(requireActivity()).email
+            val rr = SharedPreferences().getCurrentUser(requireActivity()).name
+
+            Log.d("Share", ee)
+            Log.d("Sharess", rr)
+
+            println("${SharedPreferences().getCurrentUser(requireActivity())}eeeee")
+            println("${SharedPreferences().getCurrentUser(requireActivity())}eeeee")
 //            snaketoast("С возвращением", requireView())
         }
 
@@ -105,7 +119,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = HomeFragmentBinding.inflate(layoutInflater, container, false)
-        exclusiveAdapter = ExclusiveAdapter()
+        exclusiveAdapter = ExclusiveAdapter(this)
         bestAdapter = BestSellerAdapter()
         exclusiveAdapters()
         swipe()
@@ -125,23 +139,29 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getallOrders().observe(viewLifecycleOwner) {
-            exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
-        }
-        viewModel.orderLiveData.observe(viewLifecycleOwner) {
-            bestAdapter.productList = it?.lastElements()?.toMutableList()!!
-        }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toastUP(message) }
+        val ee = SharedPreferences().getCurrentUser(requireActivity()).id
 
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
-            try {
-                if (status) loadingDialog.show()
-                else loadingDialog.dismiss()
-            } catch (e: Exception) {
+        if (ee != null){
+            viewModel.getallOrders(requireActivity()).observe(viewLifecycleOwner) {
+//            exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
+                bestAdapter.productList = it?.lastElements()?.toMutableList()!!
             }
-        }
-        viewModel.loadingtoastLiveData.observe(viewLifecycleOwner) {
-            toastUP(it)
+            viewModel.orderLiveData.observe(viewLifecycleOwner) {
+                bestAdapter.productList = it?.lastElements()?.toMutableList()!!
+            }
+            viewModel.errorLiveData.observe(viewLifecycleOwner) { message -> toastUP(message) }
+
+            viewModel.loadingLiveData.observe(viewLifecycleOwner) { status ->
+                try {
+                    if (status) loadingDialog.show()
+                    else loadingDialog.dismiss()
+                } catch (e: Exception) {
+                }
+            }
+            viewModel.loadingtoastLiveData.observe(viewLifecycleOwner) {
+                toastUP(it)
+            }
+
         }
 
 
@@ -171,10 +191,9 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //            val bottomNavigation = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
 //            bottomNavigation.selectedItemId = R.id.profileFragment2
 //            val manager: FragmentManager = requireActivity().supportFragmentManager
-//            manager.beginTransaction().replace(R.id.homeFragment, ProfileFragment()) .addToBackStack(null).commit()
+//            manager.beginTransaction().add(R.id.homeFragment, ProfileFragment()) .addToBackStack(null).commit()
 
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToTypeFragment("Эксклюзив")
+                val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment("Эксклюзив")
                 Navigation.findNavController(it).navigate(action)
             }
 
@@ -191,7 +210,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
 //       Glide.with(requireContext())
 //            .load(R.drawable.info)
-////            .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
+////           .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
 //            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
 //            .into(binding.imgForAdvertising)
 
@@ -200,9 +219,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun onClickItemBestSeller() {
         bestAdapter.onItemClickBestseller = {
-            viewModel.addToFav(it, personName, personEmail).observe(viewLifecycleOwner) { product ->
-                bestAdapter.updateItem(product)
-            }
+            viewModel.addToFav(it,  requireActivity())
+                .observe(viewLifecycleOwner) { product ->
+                    bestAdapter.updateItem(product)
+                }
             viewModel.favLiveData.observe(viewLifecycleOwner) {
                 toastUP(it)
             }
@@ -219,10 +239,18 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun onClickItem() {
         exclusiveAdapter.onItemClick = { t ->
-//            viewModel.addToFav22(t, personName, personEmail)
-//            viewModel.favLiveData.observe(viewLifecycleOwner) {
-//                toastUP(it)
-//            }
+            viewModel.addToFav(t, requireActivity())
+                .observe(viewLifecycleOwner) { product ->
+//                exclusiveAdapter.updateItem(product, positionnn)
+                }
+
+            t.isFavorite = true
+            val index = exclusiveAdapter.diffor.currentList.indexOf(t)
+            exclusiveAdapter.notifyItemChanged(index)
+
+            viewModel.favLiveData.observe(viewLifecycleOwner) {
+                toastUP(it)
+            }
         }
     }
 
@@ -231,12 +259,16 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             swipeToRefresh.isRefreshing = true
             swipeToRefresh.postDelayed({
                 swipeToRefresh.isRefreshing = false
-                if (swipeToRefresh.isRefreshing == false) {
-                    viewModel.allOrdersREFRESH()
+                if (!swipeToRefresh.isRefreshing) {
+                    viewModel.allOrdersREFRESH(personName, personEmail, requireActivity())
                     viewModel.getReklama()
                 }
             }, 1500)
         }
+    }
+
+    override fun itemClick(position: Int) {
+        positionnn = position.toString()
     }
 
 }

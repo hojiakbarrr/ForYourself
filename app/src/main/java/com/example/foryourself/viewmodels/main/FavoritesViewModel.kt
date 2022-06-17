@@ -18,48 +18,47 @@ import javax.inject.Inject
 class FavoritesViewModel @Inject constructor(
     private val dao: ProductDao,
     private val mapper: Mapper<FavoritesCache, Result>,
-    private val mapper2: Mapper<Result,FavoritesCache>,
+    private val mapper2: Mapper<Result, FavoritesCache>,
     private val repository: OrderRepository,
 
     ) : ViewModel() {
-    private var _orderLiveData = MutableLiveData<List<Result>>()
-    var orderLiveData: LiveData<List<Result>> = _orderLiveData
+    private var _orderLiveData = MutableLiveData<List<FavoritesCache>>()
+    var orderLiveData: LiveData<List<FavoritesCache>> = _orderLiveData
 
-    fun getOneOrder()  = viewModelScope.launch  {
+    fun getOneOrder() = viewModelScope.launch {
         val rr = dao.getFavorites()
-        _orderLiveData.value = rr.map {
-            mapper.map(it)
-        }
+        _orderLiveData.value = rr
     }
 
-    fun deleteOrder(product : Result)  = viewModelScope.launch  {
-        val rr = dao.deleteFrom(mapper2.map(product))
+    fun deleteOrder(product: FavoritesCache) = viewModelScope.launch {
+        dao.deleteFrom(product)
+        repository.deleteuserOrders(product.objectId)
     }
 
-    fun favoritesUserOrders() = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO){
+    fun favoritesUserOrders() =
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
 
-        var response = repository.getuserOrders()
-        if (response.isSuccessful){
-            response.body()?.let { emit(it.ressults) }
-            Log.d("response", response.body()?.ressults.toString())
-        }
+            var response = repository.getuserOrders()
+            if (response.isSuccessful) {
 
-    }
-
-    fun userOrder(googleEmail: String, googlename: String) = viewModelScope.launch {
-        var bb: com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata? = null
-        var cc: com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.ResultUsersOrder? =
-            null
-
-        val rr = repository.getuserOrders()
-        if (rr.isSuccessful){
-            rr.body()!!.ressults.forEach {
-                    dao.addUsersOrder(it)
-                Log.d("erer", dao.getUsersOrder().size.toString())
+                response.body()!!.ressults.forEach {
+                    if (dao.getUsers()[0].objectId == it.argument) dao.addUsersOrder(it)
+                    emit(dao.getFavorites())
+                }
+                Log.d("response", response.body()?.ressults.toString())
             }
         }
 
-        fun observeOrders(): LiveData<List<Result>> {
+    fun userOrder(googleEmail: String, googlename: String) = viewModelScope.launch {
+
+        val rr = repository.getuserOrders()
+        if (rr.isSuccessful) {
+            rr.body()!!.ressults.forEach {
+                if (dao.getUsers()[0].objectId == it.argument) dao.addUsersOrder(it)
+            }
+        }
+
+        fun observeOrders(): LiveData<List<FavoritesCache>> {
             return _orderLiveData
         }
 

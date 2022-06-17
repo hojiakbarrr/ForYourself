@@ -33,13 +33,11 @@ class FavoritesFragment : Fragment() {
     }
 
 
-
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var favoritesAdapter: FavoritesAdapter
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
     }
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private lateinit var sum: String
     private lateinit var count: String
 
@@ -97,7 +95,8 @@ class FavoritesFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 viewModel.deleteOrder(favoritesAdapter.diffor.currentList[position])
                 count = (count.toInt() - 1).toString()
-                sum = ((sum.toInt() - favoritesAdapter.diffor.currentList[position].price!!.toInt()).toString())
+                sum =
+                    ((sum.toInt() - favoritesAdapter.diffor.currentList[position].price!!.toInt()).toString())
                 snaketoast(
                     "${favoritesAdapter.diffor.currentList[position].title} ${"было удалено из избранных"}",
                     requireView()
@@ -117,15 +116,17 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.mycartbtn.setOnClickListener {
-                if (count == "0") snaketoast("Список заказов пустой", requireView())
-                else {
-                    bottom()
-                }
+            if (count == "0") snaketoast("Список заказов пустой", requireView())
+            else {
+                bottom()
+            }
         }
-        viewModel.favoritesUserOrders().observe(viewLifecycleOwner){
+        viewModel.favoritesUserOrders().observe(viewLifecycleOwner) {
+            favoritesAdapter.diffor.submitList(it)
+            // exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
 
         }
-        viewModel.userOrder("err","wew")
+        viewModel.userOrder("err", "wew")
 
 
     }
@@ -138,17 +139,15 @@ class FavoritesFragment : Fragment() {
 
 
             findViewById<TextView>(R.id.сontacseller).setOnClickListener {
-                val nomer =  findViewById<EditText>(R.id.editnomer).text.toString()
+                val nomer = findViewById<EditText>(R.id.editnomer).text.toString()
 //                println(nomer)
 
-                if (nomer.length < 10){
+                if (nomer.length < 10) {
                     dialogerror("Неправильный номер")
-                }else{
+                } else {
 
                 }
-
             }
-
 
             findViewById<ImageView>(R.id.cancell).setOnClickListener {
                 builder.dismiss()

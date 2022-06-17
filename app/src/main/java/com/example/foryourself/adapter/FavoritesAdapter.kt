@@ -11,22 +11,28 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.databinding.ItemFavoritesBinding
+import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.ui.fragmentsMain.FavoritesFragmentDirections
+import com.example.foryourself.utils.Mapper
+import javax.inject.Inject
 
-class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterViewHolder>() {
+class FavoritesAdapter(
 
-    var onItemClicked: ((Result) -> Unit)? = null
+) : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterViewHolder>() {
+
+    var onItemClicked: ((FavoritesCache) -> Unit)? = null
+
 
     inner class ExclusiveAdapterViewHolder(val binding: ItemFavoritesBinding) :
         RecyclerView.ViewHolder(binding.root)
 
 
-    private val diffUtil = object : DiffUtil.ItemCallback<Result>() {
-        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<FavoritesCache>() {
+        override fun areItemsTheSame(oldItem: FavoritesCache, newItem: FavoritesCache): Boolean {
             return oldItem.objectId == newItem.objectId
         }
 
-        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+        override fun areContentsTheSame(oldItem: FavoritesCache, newItem: FavoritesCache): Boolean {
             return oldItem == newItem
         }
 
@@ -43,6 +49,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterV
     }
 
 
+
     override fun onBindViewHolder(holder: ExclusiveAdapterViewHolder, position: Int) {
 
 
@@ -54,14 +61,19 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ExclusiveAdapterV
 
 
         holder.binding.textname.text = product.title
-        holder.binding.textprice.text = product.price.toString()+"  kgz"
+        holder.binding.textprice.text = product.price.toString() + "  kgz"
+
+
+
+         val mapper2: Mapper<FavoritesCache  ,Result > ? = null
 
         holder.itemView
             .setOnClickListener { it ->
 //            onItemClicked!!.invoke(product)
                 try {
+
                     val action =
-                        FavoritesFragmentDirections.actionFavoritesFragmentToDetaillFragment(product)
+                        FavoritesFragmentDirections.actionFavoritesFragmentToDetaillFragment(mapper2!!.map(product))
                     Navigation.findNavController(view = it).navigate(action)
                 } catch (e: Exception) {
                 }

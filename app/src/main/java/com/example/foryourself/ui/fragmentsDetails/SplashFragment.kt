@@ -2,18 +2,24 @@ package com.example.foryourself.ui.fragmentsDetails
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.foryourself.CurrentUser
 import com.example.foryourself.R
+import com.example.foryourself.SharedPreferences
+import com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata
 import com.example.foryourself.databinding.SplashFragmentBinding
 import com.example.foryourself.utils.toast
 import com.example.foryourself.viewmodels.detail.SplashViewModel
+import com.example.foryourself.viewmodels.main.HomeViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -29,10 +35,15 @@ class SplashFragment : Fragment() {
     private val binding: SplashFragmentBinding by lazy {
         SplashFragmentBinding.inflate(layoutInflater)
     }
-    var gso: GoogleSignInOptions? = null
+    private val gso: GoogleSignInOptions by lazy {
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+            .build()
+    }
     var gsc: GoogleSignInClient? = null
+    private var personName: String? = null
+    private var personEmail: String? = null
 
-    private lateinit var viewModel: SplashViewModel
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,20 +52,29 @@ class SplashFragment : Fragment() {
         val view = inflater.inflate(R.layout.splash_fragment, container, false)
 
 
-        gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-
         gsc = GoogleSignIn.getClient(requireActivity(), gso!!)
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
         if (acct != null) {
-            navigateToSecondFragment()
+            personName = acct.displayName
+            personEmail = acct.email
+            viewModel.getallOrders(requireActivity()).observe(viewLifecycleOwner) {}
+            if (acct.displayName != null && acct.email != null){
+                viewModel.getuserOrder(acct.email!!, acct.displayName!!,requireActivity())
+                SharedPreferences().saveCurrentUser(user = CurrentUser(email = acct.email!!, name = acct.displayName!!, id = acct.id!!),requireActivity())
+                navigateToSecondFragment()
+            }
         } else toast("Пройдите регистрацию в Google аккаунте")
+
+
         view.findViewById<TextView>(R.id.start).setOnClickListener {
             signIn()
         }
 
+
+
         return view
     }
+
 
     private fun signIn() {
         val signInIntent: Intent = gsc!!.signInIntent
@@ -63,18 +83,19 @@ class SplashFragment : Fragment() {
 
     private fun navigateToSecondFragment() {
         try {
-            val action =SplashFragmentDirections.actionSplashFragmentToHomeFragment("")
+            val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment("")
             Navigation.findNavController(requireView()).navigate(action)
         } catch (e: Exception) {
-            activity?.finishAffinity()
+            requireActivity().finishAffinity()
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SplashViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getallOrders(requireActivity()).observe(viewLifecycleOwner) {}
+        if (personName != null && personEmail != null){ viewModel.getuserOrder(personEmail!!, personName!!,requireActivity()) }
     }
+
 
     override fun onResume() {
         super.onResume()
