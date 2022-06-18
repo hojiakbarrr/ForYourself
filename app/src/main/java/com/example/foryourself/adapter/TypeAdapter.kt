@@ -1,6 +1,7 @@
 package com.example.foryourself.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -50,16 +51,31 @@ class TypeAdapter : RecyclerView.Adapter<TypeAdapter.ExclusiveAdapterViewHolder>
 
 
         val product = diffor.currentList[position]
-        Glide.with(holder.itemView)
-            .load(product.image_main?.url)
-            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 50f, 50f))
-            .into(holder.binding.productImgCat)
+
+        holder.binding.apply {
+
+            if (product.isFavorite == true) {
+                buyOrder.visibility = View.GONE
+                notbuy.visibility = View.VISIBLE
+            } else {
+                buyOrder.visibility = View.VISIBLE
+                notbuy.visibility = View.GONE
+            }
+
+            Glide.with(holder.itemView)
+                .load(product.image_main?.url)
+                .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 50f, 50f))
+                .into(productImgCat)
 
 
-        holder.binding.catName.text = product.title
-        holder.binding.catPrice.text = product.price
-        holder.binding.catCategorya.text = product.category
-        holder.binding.catSeason.text = product.season
+            catName.text = product.title
+            catPrice.text = product.price
+            catCategorya.text = product.category
+            catSeason.text = product.season
+        }
+
+
+
 
         PushDownAnim.setPushDownAnimTo(holder.itemView)
             .setScale(PushDownAnim.MODE_SCALE, 0.89f)
@@ -77,7 +93,8 @@ class TypeAdapter : RecyclerView.Adapter<TypeAdapter.ExclusiveAdapterViewHolder>
                 }
 
                 try {
-                    val action = CategoryFragmentDirections.actionCategoryFragment2ToDetaillFragment(product)
+                    val action =
+                        CategoryFragmentDirections.actionCategoryFragment2ToDetaillFragment(product)
                     Navigation.findNavController(view = it).navigate(action)
                 } catch (e: Exception) {
                 }

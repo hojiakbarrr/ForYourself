@@ -157,17 +157,17 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
     private fun setVisibility(clicked: Boolean) {
         binding.apply {
             viewModel.loadingLiveData.observe(viewLifecycleOwner) { rt ->
-                if (rt == true) fab3AddToFavProduct.visibility = View.GONE
-                else fab3AddToFavProduct.visibility = View.VISIBLE
+//                if (rt == true) fab3AddToFavProduct.visibility = View.GONE
+//                else fab3AddToFavProduct.visibility = View.VISIBLE
 
 
 
                 if (!clicked) {
-
+                    if (args.product.isFavorite)fab3AddToFavProduct.visibility = View.VISIBLE
                     fab2Editor.visibility = View.VISIBLE
                     fab3DeleteProduct.visibility = View.VISIBLE
                 } else {
-
+                    if (!args.product.isFavorite)fab3AddToFavProduct.visibility = View.GONE
                     fab2Editor.visibility = View.INVISIBLE
                     fab3DeleteProduct.visibility = View.INVISIBLE
                 }

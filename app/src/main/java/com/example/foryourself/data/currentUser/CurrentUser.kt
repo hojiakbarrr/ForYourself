@@ -1,4 +1,4 @@
-package com.example.foryourself
+package com.example.foryourself.data.currentUser
 
 data class CurrentUser(
     val email: String,

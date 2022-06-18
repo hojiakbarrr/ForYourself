@@ -16,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foryourself.R
 import com.example.foryourself.adapter.FavoritesAdapter
 import com.example.foryourself.databinding.FavoritesFragmentBinding
-import com.example.foryourself.utils.LoadingDialog
-import com.example.foryourself.utils.dialogerror
-import com.example.foryourself.utils.snaketoast
-import com.example.foryourself.utils.toast
+import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.main.FavoritesViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -31,8 +28,6 @@ class FavoritesFragment : Fragment() {
     private val binding: FavoritesFragmentBinding by lazy {
         FavoritesFragmentBinding.inflate(layoutInflater)
     }
-
-
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var favoritesAdapter: FavoritesAdapter
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
@@ -40,7 +35,6 @@ class FavoritesFragment : Fragment() {
     }
     private lateinit var sum: String
     private lateinit var count: String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +48,6 @@ class FavoritesFragment : Fragment() {
             View.VISIBLE
     }
 
-    fun testArray() {
-        val myArray = intArrayOf(3, 5, 7, 12)
-        var sum = 0
-        for (i in myArray.indices) {
-            sum = sum + myArray[i]
-        }
-        println(sum)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,17 +55,6 @@ class FavoritesFragment : Fragment() {
 
         onClickItem()
 
-
-        viewModel.getOneOrder()
-        viewModel.orderLiveData.observe(viewLifecycleOwner) {
-            favoritesAdapter.diffor.submitList(it)
-            count = it.size.toString()
-            var sumee = 0
-            for (r in it) {
-                sumee += r.price!!.toInt()
-            }
-            sum = sumee.toString()
-        }
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
@@ -102,12 +76,9 @@ class FavoritesFragment : Fragment() {
                     requireView()
                 )
             }
-
         }
 
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.recFavor)
-
-
 
         return binding.root
 
@@ -121,12 +92,15 @@ class FavoritesFragment : Fragment() {
                 bottom()
             }
         }
-        viewModel.favoritesUserOrders().observe(viewLifecycleOwner) {
+        viewModel.favoritesUserOrders(requireActivity()).observe(viewLifecycleOwner) {
             favoritesAdapter.diffor.submitList(it)
-            // exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
-
+            count = it.size.toString()
+            var sumee = 0
+            for (r in it) {
+                sumee += r.price!!.toInt()
+            }
+            sum = sumee.toString()
         }
-        viewModel.userOrder("err", "wew")
 
 
     }
@@ -173,7 +147,7 @@ class FavoritesFragment : Fragment() {
     private fun preparadapter() {
         binding.recFavor.apply {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            binding.recFavor.adapter = favoritesAdapter
+            adapter = favoritesAdapter
         }
     }
 

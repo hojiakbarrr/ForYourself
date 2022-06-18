@@ -33,9 +33,10 @@ class ProfileFragment : Fragment() {
     var gso: GoogleSignInOptions? = null
     var gsc: GoogleSignInClient? = null
     private val viewModel: ProfileViewModel by viewModels()
-    private var objectID: String = ""
-    private var accountEmail: String = ""
-    private var nomer: String = ""
+    private lateinit var objectID: String
+    private lateinit var accountEmail: String
+    private lateinit var nomer: String
+    private lateinit var personName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,26 +48,19 @@ class ProfileFragment : Fragment() {
         val acct = GoogleSignIn.getLastSignedInAccount(requireContext())
 
         if (acct != null) {
-            val personName = acct.displayName
-            val personEmail = acct.email
+            personName = acct.displayName!!
             accountEmail = acct.email.toString()
             Log.d("foto", acct.photoUrl.toString())
             binding.apply {
                 requireContext().uploadImage(acct.photoUrl.toString(), profileImage)
                 prodileName.text = personName
-                prodileMail.text = personEmail
+                prodileMail.text = accountEmail
                 logOut.setOnClickListener {
                     signOut()
                 }
-            }
-            binding.profileBtnEdit.setOnClickListener {
-                profileedit(acct.photoUrl, acct.displayName, acct.email)
-            }
-            viewModel.newUser(
-                objectID,
-                PutUsers(email = acct.email.toString(), name = acct.displayName.toString())
-            ).observe(viewLifecycleOwner) {
-                toast(it)
+                profileBtnEdit.setOnClickListener {
+                    profileedit(acct.photoUrl, acct.displayName, acct.email)
+                }
             }
         }
         return binding.root
@@ -82,26 +76,19 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.btnAddress.setOnClickListener {
-            this.dialog()
-        }
-        binding.btnAbout.setOnClickListener {
-            this.dialogabout()
-        }
-        binding.btnWhatsapp.setOnClickListener {
-            this.dialogwhatsapp()
-        }
-        binding.btnWork.setOnClickListener {
-            this.dialogworktime()
-        }
-
-        viewModel.getUser(accountEmail).observe(viewLifecycleOwner) {
-            objectID = it.objectId
-            nomer = it.numberTelephone.toString()
-
-        }
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
-            toast(it)
+        binding. apply {
+            btnAddress.setOnClickListener {
+                dialog()
+            }
+            btnAbout.setOnClickListener {
+               dialogabout()
+            }
+            btnWhatsapp.setOnClickListener {
+                dialogwhatsapp()
+            }
+            btnWork.setOnClickListener {
+                dialogworktime()
+            }
         }
 
 
@@ -128,16 +115,8 @@ class ProfileFragment : Fragment() {
         with(builder) {
             setPositiveButton("Сохранить") { dialog, which ->
 
-                viewModel.newUser(
-                    objectID,
-                    PutUsers(
-                        email = mail.text.toString(),
-                        name = name.text.toString(),
-                        numberTelephone = edit_number_txt.text.toString()
-                    )
-                ).observe(viewLifecycleOwner) {
-                    toast(it)
-                }
+
+
                 nomer = edit_number_txt.text.toString()
 
 

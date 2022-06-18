@@ -38,7 +38,6 @@ class AddToFragment : Fragment() {
     private val binding: AddToFragmentBinding by lazy {
         AddToFragmentBinding.inflate(layoutInflater)
     }
-
     private val viewModel: AddToViewModel by viewModels()
 
     private lateinit var imageMain: ImageMain
@@ -50,11 +49,13 @@ class AddToFragment : Fragment() {
     private var imageFile_Third: ParseFile? = null
 
     private var imageUri_First: Uri? = null
-    private var selectedBitmap_MAIN: Bitmap? = null
     private var imageUri_Third: Uri? = null
-    private var selectedBitmap_Third: Bitmap? = null
     private var imageUri_Second: Uri? = null
+
+    private var selectedBitmap_MAIN: Bitmap? = null
+    private var selectedBitmap_Third: Bitmap? = null
     private var selectedBitmap_Second: Bitmap? = null
+
 
     private var type: String? = null
     private var type2: String = "Бестселлер"
@@ -87,19 +88,24 @@ class AddToFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.reklama.setOnClickListener {
-            val action = AddToFragmentDirections.actionAddToFragmentToReklamaFragment()
-            Navigation.findNavController(it).navigate(action)
+
+        binding.apply {
+            reklama.setOnClickListener {
+                val action = AddToFragmentDirections.actionAddToFragmentToReklamaFragment()
+                Navigation.findNavController(it).navigate(action)
+            }
+            getMainPhoto.setOnClickListener {
+                getImage(IMAGE_MAIN_CODE)
+            }
+            get2Photo.setOnClickListener {
+                getImage(IMAGE_FIRST_CODE)
+            }
+            get3Photo.setOnClickListener {
+                getImage(IMAGE_THIRD_CODE)
+            }
         }
-        binding.getMainPhoto.setOnClickListener {
-            getImage(IMAGE_MAIN_CODE)
-        }
-        binding.get2Photo.setOnClickListener {
-            getImage(IMAGE_FIRST_CODE)
-        }
-        binding.get3Photo.setOnClickListener {
-            getImage(IMAGE_THIRD_CODE)
-        }
+
+
         binding.putOnServer.setOnClickListener {
             loadingDialog.show()
 //            lifecycleScope.launch {
@@ -236,12 +242,14 @@ class AddToFragment : Fragment() {
     }
 
     private fun season() {
-        val country = arrayOf("Лето", "Осень", "Зима", "Весна","Осень-Зима","Весна-Лето")
+        val country = arrayOf("Лето", "Осень", "Зима", "Весна", "Осень-Зима", "Весна-Лето")
         var cc: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledSeason.setAdapter(cc)
-        binding.filledSeason.setOnItemClickListener { adapterView, view, i, l ->
-            season = binding.filledSeason.text.toString()
+        binding.filledSeason.apply {
+            setAdapter(cc)
+            setOnItemClickListener { adapterView, view, i, l ->
+                season = text.toString()
+            }
         }
     }
 
@@ -249,9 +257,11 @@ class AddToFragment : Fragment() {
         val country = arrayOf("Ничего не выбрано", "Юбки", "Кофты", "Платья")
         var bb: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledCategory.setAdapter(bb)
-        binding.filledCategory.setOnItemClickListener { adapterView, view, i, l ->
-            category = binding.filledCategory.text.toString()
+        binding.filledCategory.apply {
+            setAdapter(bb)
+            setOnItemClickListener { adapterView, view, i, l ->
+                category = text.toString()
+            }
         }
     }
 
@@ -259,57 +269,62 @@ class AddToFragment : Fragment() {
         val country = arrayOf("Ничего не выбрано", "Бестселлер", "Эксклюзив")
         var aa: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledType.setAdapter(aa)
-        binding.filledType.setOnItemClickListener { adapterView, view, i, l ->
-            type = binding.filledType.text.toString()
+        binding.filledType.apply {
+            setAdapter(aa)
+            setOnItemClickListener { adapterView, view, i, l ->
+                type = binding.filledType.text.toString()
+            }
         }
     }
 
     private fun createPost() {
 
-        var typpe = if (type == "Ничего не выбрано") type2 else type
-        var categorryy = if (category == "Ничего не выбрано") category2 else category
+        binding.apply {
+            var typpe = if (type == "Ничего не выбрано") type2 else type
+            var categorryy = if (category == "Ничего не выбрано") category2 else category
 
-        var descrip = if (binding.prodDescrip.text.toString().isEmpty()) "Тест" else binding.prodDescrip.text.toString().trim()
-        var title = if (binding.prodName.text.toString().isEmpty()) "Тест" else binding.prodName.text.toString().trim()
+            var descrip = if (prodDescrip.text.toString().isEmpty()) "Тест" else prodDescrip.text.toString().trim()
+            var title = if (prodName.text.toString().isEmpty()) "Тест" else prodName.text.toString().trim()
 
 
-        viewModel.addToProduct(
-            Result_2(
-                description = descrip,
-                eighthSize = binding.prodSizeEight.text.toString().trim(),
-                fifthSize = binding.prodSizeFive.text.toString().trim(),
-                firstSize = binding.prodSizeOne.text.toString().trim(),
-                image_first = imageFile_Second?.toImageFirst(),
-                image_main = imageFile_Main?.toImageMain(),
-                image_third = imageFile_Third?.toImageThird(),
-                price = binding.prodPrice.text.toString().trim(),
-                secondSize = binding.prodSizeTwo.text.toString().trim(),
-                seventhSize = binding.prodSizeSeven.text.toString().trim(),
-                sixthSize = binding.prodSizeSix.text.toString().trim(),
-                thirdSize = binding.prodSizeThree.text.toString().trim(),
-                title = title,
-                youtubeTrailer = binding.prodTrailer.text.toString().trim(),
-                fourthSize = binding.prodSizeFour.text.toString().trim(),
-                tipy = typpe,
-                season = season,
-                colors = binding.prodOlor1.text.toString().trim(),
-                colors1 = binding.prodOlor2.text.toString().trim(),
-                colors2 = binding.prodOlor3.text.toString().trim(),
-                colors3 = binding.prodOlor4.text.toString().trim(),
-                category = categorryy
-            )
-        ).observe(viewLifecycleOwner) {
-            toast("Товар Успешно был добавлен для продажи")
-            viewModel.ss()
-            loadingDialog.dismiss()
-            lifecycleScope.launch(Dispatchers.Main) {
-                viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
-                    clearALL()
+            viewModel.addToProduct(
+                Result_2(
+                    description = descrip,
+                    eighthSize = prodSizeEight.text.toString().trim(),
+                    fifthSize = prodSizeFive.text.toString().trim(),
+                    firstSize = prodSizeOne.text.toString().trim(),
+                    image_first = imageFile_Second?.toImageFirst(),
+                    image_main = imageFile_Main?.toImageMain(),
+                    image_third = imageFile_Third?.toImageThird(),
+                    price = prodPrice.text.toString().trim(),
+                    secondSize = prodSizeTwo.text.toString().trim(),
+                    seventhSize = prodSizeSeven.text.toString().trim(),
+                    sixthSize = prodSizeSix.text.toString().trim(),
+                    thirdSize = prodSizeThree.text.toString().trim(),
+                    title = title,
+                    youtubeTrailer = prodTrailer.text.toString().trim(),
+                    fourthSize = prodSizeFour.text.toString().trim(),
+                    tipy = typpe,
+                    season = season,
+                    colors = prodOlor1.text.toString().trim(),
+                    colors1 = prodOlor2.text.toString().trim(),
+                    colors2 = prodOlor3.text.toString().trim(),
+                    colors3 = prodOlor4.text.toString().trim(),
+                    category = categorryy
+                )
+            ).observe(viewLifecycleOwner) {
+                toast("Товар Успешно был добавлен для продажи")
+                viewModel.ss()
+                loadingDialog.dismiss()
+                lifecycleScope.launch(Dispatchers.Main) {
+                    viewModel.loadingLiveData.observe(viewLifecycleOwner) { it ->
+                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        clearALL()
+                    }
                 }
             }
         }
+
 
     }
 

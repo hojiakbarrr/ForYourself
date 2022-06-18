@@ -106,14 +106,14 @@ class TypeFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun exclusiveAdapters() {
         binding.rvCategories.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            binding.rvCategories.adapter = typeAdapter
+            adapter = typeAdapter
         }
     }
 
 
     private fun onClickItem() {
         typeAdapter.onItemClick_cate = { t ->
-            viewModel.addToFav(t)
+            viewModel.addToFav(t,requireActivity())
             toast("${t.title} был(о) добавленов избранные")
         }
     }

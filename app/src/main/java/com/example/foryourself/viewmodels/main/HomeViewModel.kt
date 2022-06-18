@@ -3,7 +3,7 @@ package com.example.foryourself.viewmodels.main
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.foryourself.SharedPreferences
+import com.example.foryourself.utils.SharedPreferences
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
 import com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata
@@ -16,7 +16,6 @@ import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -36,7 +35,6 @@ class HomeViewModel @Inject constructor(
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     var loadingLiveData: LiveData<Boolean> = _loadingLiveData
-
 
     private var _errorLiveData = MutableLiveData<String>()
     var errorLiveData: LiveData<String> = _errorLiveData
@@ -112,11 +110,6 @@ class HomeViewModel @Inject constructor(
                             luybimye.body()?.ressults?.forEach { favorit ->
                                 val argument = ee.id + toooovary.objectId
                                 if (favorit.argument == argument) toooovary.isFavorite = true
-                                repository.addtoFav(
-                                    product = resultToFavoritCascheMapper.map(
-                                        toooovary
-                                    )
-                                )
                                 dao.addProductsFromService(resultToCascheMapper.map(toooovary))
                             }
                         }
@@ -175,8 +168,7 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-
-    fun allOrdersREFRESH(googleEmail: String, googlename: String, context: Context) =
+    fun allOrdersREFRESH(googleEmail: String, googlename: String, id: String, context: Context) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             _loadingLiveData.postValue(true)
             dao.clearTable()
@@ -187,7 +179,7 @@ class HomeViewModel @Inject constructor(
 
             getallOrders(context)
             getReklama()
-            getuserOrder(googleEmail, googlename, context)
+            getuserOrder(googleEmail, googlename, id, context)
 
             emit(false)
             _loadingLiveData.postValue(false)
@@ -214,7 +206,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getuserOrder(googleEmail: String, googlename: String, context: Context) =
+    fun getuserOrder(googleEmail: String, googlename: String, id: String, context: Context) =
         viewModelScope.launch {
             var bb: com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata? =
                 null
@@ -226,9 +218,9 @@ class HomeViewModel @Inject constructor(
             if (response.isSuccessful) {
                 response.body()?.rrresults?.forEach { r ->
                     bb = r
-                    if (r.email == ee.email && r.name == ee.name) {
+                    if (r.idgoogle == ee.id) {
                         dao.addUsers(r)
-                    } else if (r.email != ee.email && r.name != ee.name) {
+                    } else if (r.idgoogle != ee.id) {
                         repository.postUser(user = PutUsers(email = googleEmail, name = googlename))
                         dao.addUsers(
                             ResultUserdata(
@@ -237,10 +229,11 @@ class HomeViewModel @Inject constructor(
                                 objectId = "",
                                 createdAt = "",
                                 numberTelephone = "",
-                                updatedAt = ""
+                                updatedAt = "",
+                                idgoogle = ee.id
                             )
                         )
-                        //                    _loadingtoastLiveData.postValue("С возвращением${bb!!.name}")
+                        //    _loadingtoastLiveData.postValue("С возвращением${bb!!.name}")
                     }
                 }
             }

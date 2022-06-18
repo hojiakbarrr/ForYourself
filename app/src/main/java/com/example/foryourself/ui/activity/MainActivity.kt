@@ -2,16 +2,13 @@ package com.example.foryourself.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.foryourself.R
-import com.example.foryourself.SharedPreferences
-import com.example.foryourself.databinding.ActivityMainBinding
+import com.example.foryourself.utils.SharedPreferences
 import com.example.foryourself.db.ProductDao
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 import javax.inject.Inject
 
 

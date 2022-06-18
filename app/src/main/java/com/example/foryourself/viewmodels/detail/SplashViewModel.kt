@@ -3,7 +3,7 @@ package com.example.foryourself.viewmodels.detail
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.foryourself.SharedPreferences
+import com.example.foryourself.utils.SharedPreferences
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata
 import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
@@ -15,7 +15,6 @@ import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -113,36 +112,31 @@ class SplashViewModel @Inject constructor(
     }
 
 
-    fun getuserOrder(googleEmail: String, googlename: String, context: Context) =
+    fun getuserOrder(googleEmail: String, googlename: String,id : String, context: Context) =
         viewModelScope.launch {
             var bb: com.example.foryourself.data.retrofitResponse.users.getUsers.ResultUserdata? =
                 null
 
             val ee = SharedPreferences().getCurrentUser(context)
 
-
-            val response = repository.getUser()
-            if (response.isSuccessful) {
-                response.body()?.rrresults?.forEach { r ->
-                    bb = r
-                    if (r.email == ee.email && r.name == ee.name) {
-                        dao.addUsers(r)
-                    } else {
-                        val rr = repository.postUser(
-                            user = PutUsers(
-                                email = googleEmail,
-                                name = googlename
-                            )
-                        )
-                        if (rr.isSuccessful) {
+            if(dao.getUsers().isNullOrEmpty()){
+                val response = repository.getUser()
+                if (response.isSuccessful) {
+                    response.body()?.rrresults?.forEach { r ->
+                        bb = r
+                        if (r.idgoogle == ee.id) {
+                            dao.addUsers(r)
+                        } else if (r.idgoogle != ee.id) {
+                            repository.postUser(user = PutUsers(email = googleEmail, name = googlename))
                             dao.addUsers(
                                 ResultUserdata(
                                     email = googleEmail,
                                     name = googlename,
-                                    objectId = rr.body()!!.objectId,
-                                    createdAt = rr.body()!!.createdAt,
+                                    objectId = "",
+                                    createdAt = "",
                                     numberTelephone = "",
-                                    updatedAt = ""
+                                    updatedAt = "",
+                                    idgoogle = id
                                 )
                             )
                             //                    _loadingtoastLiveData.postValue("С возвращением${bb!!.name}")
@@ -150,6 +144,7 @@ class SplashViewModel @Inject constructor(
                     }
                 }
             }
+
         }
 
 

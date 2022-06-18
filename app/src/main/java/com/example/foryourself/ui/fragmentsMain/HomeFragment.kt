@@ -15,9 +15,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.foryourself.CurrentUser
+import com.example.foryourself.data.currentUser.CurrentUser
 import com.example.foryourself.R
-import com.example.foryourself.SharedPreferences
+import com.example.foryourself.utils.SharedPreferences
 import com.example.foryourself.adapter.BestSellerAdapter
 import com.example.foryourself.adapter.ExclusiveAdapter
 import com.example.foryourself.databinding.HomeFragmentBinding
@@ -43,9 +43,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private val imageList = ArrayList<SlideModel>()
     private lateinit var personName: String
     private lateinit var personEmail: String
+    private lateinit var idgoogle: String
     private lateinit var positionnn: String
-
-
     private val loadingDialog: LoadingDialog by lazy(LazyThreadSafetyMode.NONE) {
         LoadingDialog(context = requireContext(), getString(R.string.loading_please_wait))
     }
@@ -53,11 +52,11 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private fun exclusiveAdapters() {
         binding.recExclusive.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            binding.recExclusive.adapter = exclusiveAdapter
+            adapter = exclusiveAdapter
         }
         binding.recBests.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            binding.recBests.adapter = bestAdapter
+            adapter = bestAdapter
         }
     }
 
@@ -88,9 +87,13 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             val action = HomeFragmentDirections.actionHomeFragmentToSplashFragment()
             Navigation.findNavController(requireView()).navigate(action)
         } else {
-            personEmail = acct!!.email.toString()
+            personEmail = acct.email.toString()
             personName = acct.displayName.toString()
-            viewModel.getuserOrder(acct.email.toString(), acct.displayName.toString(),requireActivity())
+            idgoogle = acct.id.toString()
+            viewModel.getuserOrder(
+                acct.email.toString(), acct.displayName.toString(),
+                acct.id.toString(), requireActivity()
+            )
             SharedPreferences().saveCurrentUser(
                 CurrentUser(
                     email = acct.email!!,
@@ -107,10 +110,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
             println("${SharedPreferences().getCurrentUser(requireActivity())}eeeee")
             println("${SharedPreferences().getCurrentUser(requireActivity())}eeeee")
-//            snaketoast("С возвращением", requireView())
         }
-
-
     }
 
 
@@ -139,9 +139,9 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ee = SharedPreferences().getCurrentUser(requireActivity()).id
+        val ee = SharedPreferences().getCurrentUser(requireActivity())
 
-        if (ee != null){
+        if (ee.id != "" ) {
             viewModel.getallOrders(requireActivity()).observe(viewLifecycleOwner) {
 //            exclusiveAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
                 bestAdapter.productList = it?.lastElements()?.toMutableList()!!
@@ -188,11 +188,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
         binding.apply {
             exclusiveTxt.setOnClickListener {
-//            val bottomNavigation = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//            bottomNavigation.selectedItemId = R.id.profileFragment2
-//            val manager: FragmentManager = requireActivity().supportFragmentManager
-//            manager.beginTransaction().add(R.id.homeFragment, ProfileFragment()) .addToBackStack(null).commit()
-
                 val action = HomeFragmentDirections.actionHomeFragmentToTypeFragment("Эксклюзив")
                 Navigation.findNavController(it).navigate(action)
             }
@@ -208,26 +203,20 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         onClickItem()
         onClickItemBestSeller()
 
-//       Glide.with(requireContext())
-//            .load(R.drawable.info)
-////           .transform(CenterCrop(), GranularRoundedCorners(20f, 60f, 20f, 20f))
-//            .apply(RequestOptions.bitmapTransform(RoundedCorners(94)))
-//            .into(binding.imgForAdvertising)
+
 
 
     }
 
     private fun onClickItemBestSeller() {
         bestAdapter.onItemClickBestseller = {
-            viewModel.addToFav(it,  requireActivity())
+            viewModel.addToFav(it, requireActivity())
                 .observe(viewLifecycleOwner) { product ->
                     bestAdapter.updateItem(product)
                 }
             viewModel.favLiveData.observe(viewLifecycleOwner) {
                 toastUP(it)
             }
-
-
         }
     }
 
@@ -260,7 +249,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             swipeToRefresh.postDelayed({
                 swipeToRefresh.isRefreshing = false
                 if (!swipeToRefresh.isRefreshing) {
-                    viewModel.allOrdersREFRESH(personName, personEmail, requireActivity())
+                    viewModel.allOrdersREFRESH(personName, personEmail, idgoogle, requireActivity())
                     viewModel.getReklama()
                 }
             }, 1500)

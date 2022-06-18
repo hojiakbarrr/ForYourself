@@ -43,7 +43,7 @@ class CategoryFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun exclusiveAdapters() {
         binding.recCategoriyy.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            binding.recCategoriyy.adapter = typeAdapter
+            adapter = typeAdapter
         }
     }
 
@@ -82,7 +82,7 @@ class CategoryFragment : Fragment(), SearchView.OnQueryTextListener {
                 .observe(viewLifecycleOwner) {
                     typeAdapter.diffor.submitList(it)
                 }
-        } else  {
+        } else {
             binding.apply {
                 recCategoriyy.visibility = View.GONE
                 allItem.visibility = View.VISIBLE

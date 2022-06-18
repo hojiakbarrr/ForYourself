@@ -1,68 +1,71 @@
 package com.example.foryourself.viewmodels.main
 
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.*
+import com.example.foryourself.utils.SharedPreferences
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
-import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
-import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
+import com.example.foryourself.db.model.ResultCache
 import com.example.foryourself.repository.OrderRepository
 import com.example.foryourself.utils.Mapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val dao: ProductDao,
-    private val mapper: Mapper<FavoritesCache, Result>,
-    private val mapper2: Mapper<Result, FavoritesCache>,
+    private val resultToCascheMapper: Mapper<Result, ResultCache>,
+    private val resultToFavoritCascheMapper: Mapper<Result, FavoritesCache>,
+
+
     private val repository: OrderRepository,
 
     ) : ViewModel() {
     private var _orderLiveData = MutableLiveData<List<FavoritesCache>>()
     var orderLiveData: LiveData<List<FavoritesCache>> = _orderLiveData
 
-    fun getOneOrder() = viewModelScope.launch {
-        val rr = dao.getFavorites()
-        _orderLiveData.value = rr
-    }
 
     fun deleteOrder(product: FavoritesCache) = viewModelScope.launch {
-        dao.deleteFrom(product)
-        repository.deleteuserOrders(product.objectId)
+        val rr = repository.deleteuserOrders(product.objectId)
+        if (rr.isSuccessful) {
+            dao.deleteFrom(product)
+        }
     }
 
-    fun favoritesUserOrders() =
+    fun favoritesUserOrders(context: Context) =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
 
-            var response = repository.getuserOrders()
-            if (response.isSuccessful) {
+            val ee = SharedPreferences().getCurrentUser(context)
 
-                response.body()!!.ressults.forEach {
-                    if (dao.getUsers()[0].objectId == it.argument) dao.addUsersOrder(it)
-                    emit(dao.getFavorites())
+            val tovary = repository.getOrders()
+            val luybimye = withContext(Dispatchers.IO) { repository.getuserOrders() }
+
+            if (dao.getFavorites().isNullOrEmpty()){
+                if (luybimye.isSuccessful) {
+                    tovary.body()?.results?.forEach { toooovary ->
+                        luybimye.body()?.ressults?.forEach { favorit ->
+                            val argument = ee.id + toooovary.objectId
+                            if (favorit.argument == argument) {
+                                toooovary.isFavorite = true
+                                repository.addtoFav(
+                                    product = resultToFavoritCascheMapper.map(
+                                        toooovary
+                                    )
+                                )
+                            }
+                        }
+                    }
                 }
-                Log.d("response", response.body()?.ressults.toString())
+                emit(dao.getFavorites())
+            }else{
+                emit(dao.getFavorites())
             }
+
         }
-
-    fun userOrder(googleEmail: String, googlename: String) = viewModelScope.launch {
-
-        val rr = repository.getuserOrders()
-        if (rr.isSuccessful) {
-            rr.body()!!.ressults.forEach {
-                if (dao.getUsers()[0].objectId == it.argument) dao.addUsersOrder(it)
-            }
-        }
-
-        fun observeOrders(): LiveData<List<FavoritesCache>> {
-            return _orderLiveData
-        }
-
-    }
-
-
 }
+
+

@@ -54,12 +54,14 @@ class ExclusiveAdapter(val clickListener: IconClickListener) :
 
         val product = diffor.currentList[position]
 
-        Glide.with(holder.itemView)
-            .load(product.image_main?.url)
-            .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
-            .into(holder.binding.productImg)
 
         holder.binding.apply {
+
+            Glide.with(holder.itemView)
+                .load(product.image_main?.url)
+                .transform(CenterCrop(), GranularRoundedCorners(50f, 50f, 30f, 30f))
+                .into(productImg)
+
             if (product.isFavorite) {
                 addToBuy.visibility = View.GONE
                 saleee.visibility = View.VISIBLE
@@ -76,6 +78,8 @@ class ExclusiveAdapter(val clickListener: IconClickListener) :
                 clickListener.itemClick(position)
             }
         }
+
+
 
 //        holder.binding.addToBuy.setOnClickListener {
 //            onItemClick!!.invoke(product)

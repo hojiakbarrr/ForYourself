@@ -458,7 +458,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_fav"
-                android:visibility="gone"
                 app:tint="#FF0000"
 
                 />

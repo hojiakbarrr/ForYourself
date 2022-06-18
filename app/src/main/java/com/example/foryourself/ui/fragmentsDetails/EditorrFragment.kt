@@ -180,7 +180,7 @@ class EditorrFragment : Fragment() {
 
                     thirdMain = it.image_third!!
                 } catch (e: Exception) {
-                   snaketoast(e.message.toString(),requireView())
+                    snaketoast(e.message.toString(), requireView())
                 }
             }
             loadingDialog2.dismiss()
@@ -262,35 +262,39 @@ class EditorrFragment : Fragment() {
         var typpe = if (type == "Ничего не выбрано") type2 else type
         var categorryy = if (category == "Ничего не выбрано") category2 else category
 
+        binding.apply {
 
-
-        viewModel.updateOrder(
-            args.product.objectId!!,
-            Result_2(
-                description = binding.prodDescripEdit.text.toString().trim(),
-                eighthSize = binding.prodSizeEightEdit.text.toString().trim(),
-                fifthSize = binding.prodSizeFiveEdit.text.toString().trim(),
-                firstSize = binding.prodSizeOneEdit.text.toString().trim(),
-                image_first = imageFirstFinal,
-                image_main = imageMainFinal,
-                image_third = imageThirdFinal,
-                price = binding.prodPriceEdit.text.toString().trim(),
-                secondSize = binding.prodSizeTwoEdit.text.toString().trim(),
-                seventhSize = binding.prodSizeSevenEdit.text.toString().trim(),
-                sixthSize = binding.prodSizeSixEdit.text.toString().trim(),
-                thirdSize = binding.prodSizeThreeEdit.text.toString().trim(),
-                title = binding.prodNameEdit.text.toString().trim(),
-                youtubeTrailer = binding.prodTrailerEdit.text.toString().trim(),
-                fourthSize = binding.prodSizeFourEdit.text.toString().trim(),
-                tipy = typpe,
-                season = seasonn,
-                colors = binding.edit1.text.toString().trim(),
-                colors1 = binding.edit2.text.toString().trim(),
-                colors2 = binding.edit3.text.toString().trim(),
-                colors3 = binding.edit4.text.toString().trim(),
-                category = categorryy
+            viewModel.updateOrder(
+                args.product.objectId!!,
+                Result_2(
+                    description = prodDescripEdit.text.toString().trim(),
+                    eighthSize = prodSizeEightEdit.text.toString().trim(),
+                    fifthSize = prodSizeFiveEdit.text.toString().trim(),
+                    firstSize = prodSizeOneEdit.text.toString().trim(),
+                    image_first = imageFirstFinal,
+                    image_main = imageMainFinal,
+                    image_third = imageThirdFinal,
+                    price = prodPriceEdit.text.toString().trim(),
+                    secondSize = prodSizeTwoEdit.text.toString().trim(),
+                    seventhSize = prodSizeSevenEdit.text.toString().trim(),
+                    sixthSize = prodSizeSixEdit.text.toString().trim(),
+                    thirdSize = prodSizeThreeEdit.text.toString().trim(),
+                    title = prodNameEdit.text.toString().trim(),
+                    youtubeTrailer = prodTrailerEdit.text.toString().trim(),
+                    fourthSize = prodSizeFourEdit.text.toString().trim(),
+                    tipy = typpe,
+                    season = seasonn,
+                    colors = edit1.text.toString().trim(),
+                    colors1 = edit2.text.toString().trim(),
+                    colors2 = edit3.text.toString().trim(),
+                    colors3 = edit4.text.toString().trim(),
+                    category = categorryy
+                )
             )
-        )
+
+        }
+
+
 
 
 
@@ -299,7 +303,7 @@ class EditorrFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.orderDeleteLiveData.observe(viewLifecycleOwner) { it ->
                 loadingDialog.dismiss()
-                snaketoast(it,requireView())
+                snaketoast(it, requireView())
                 Navigation.findNavController(requireView())
                     .navigate(R.id.from_editorrFragment_to_homeFragment)
                 clearALL()
@@ -315,12 +319,14 @@ class EditorrFragment : Fragment() {
     }
 
     private fun season() {
-        val country = arrayOf("Лето", "Осень", "Зима", "Весна","Осень-Зима","Весна-Лето")
+        val country = arrayOf("Лето", "Осень", "Зима", "Весна", "Осень-Зима", "Весна-Лето")
         var cc: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledSeasonEdit.setAdapter(cc)
-        binding.filledSeasonEdit.setOnItemClickListener { adapterView, view, i, l ->
-            seasonn = binding.filledSeasonEdit.text.toString()
+        binding.filledSeasonEdit.apply {
+            setAdapter(cc)
+            setOnItemClickListener { adapterView, view, i, l ->
+                seasonn = text.toString()
+            }
         }
     }
 
@@ -328,19 +334,29 @@ class EditorrFragment : Fragment() {
         val country = arrayOf("Ничего не выбрано", "Юбки", "Кофты", "Платья")
         var bb: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledCategoryEdit.setAdapter(bb)
-        binding.filledCategoryEdit.setOnItemClickListener { adapterView, view, i, l ->
-            category = binding.filledCategoryEdit.text.toString()
+
+        binding.filledCategoryEdit.apply {
+            setAdapter(bb)
+            setOnItemClickListener { adapterView, view, i, l ->
+                category = text.toString()
+            }
         }
+//        binding.filledCategoryEdit.setAdapter(bb)
+//        binding.filledCategoryEdit.setOnItemClickListener { adapterView, view, i, l ->
+//            category = binding.filledCategoryEdit.text.toString()
+//        }
     }
 
     private fun typeProduct() {
         val country = arrayOf("Ничего не выбрано", "<Бестселлер>", "Эксклюзив")
         var aa: ArrayAdapter<*> =
             ArrayAdapter<Any?>(requireContext(), R.layout.drop_down_item, country)
-        binding.filledTypeEdit.setAdapter(aa)
-        binding.filledTypeEdit.setOnItemClickListener { adapterView, view, i, l ->
-            type = binding.filledTypeEdit.text.toString()
+
+        binding.filledTypeEdit.apply {
+            setAdapter(aa)
+            setOnItemClickListener { adapterView, view, i, l ->
+                type = text.toString()
+            }
         }
     }
 

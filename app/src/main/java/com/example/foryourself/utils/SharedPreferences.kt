@@ -1,7 +1,8 @@
-package com.example.foryourself
+package com.example.foryourself.utils
 
 import android.app.Activity
 import android.content.Context
+import com.example.foryourself.data.currentUser.CurrentUser
 import com.google.gson.Gson
 
 class SharedPreferences {

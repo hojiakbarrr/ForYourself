@@ -13,5 +13,6 @@ data class ResultUserdata(
     @PrimaryKey
     @NonNull
     val objectId: String,
-    val updatedAt: String?
+    val updatedAt: String?,
+    val idgoogle: String?
 )

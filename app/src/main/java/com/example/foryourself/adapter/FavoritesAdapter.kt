@@ -49,7 +49,6 @@ class FavoritesAdapter(
     }
 
 
-
     override fun onBindViewHolder(holder: ExclusiveAdapterViewHolder, position: Int) {
 
 
@@ -64,21 +63,17 @@ class FavoritesAdapter(
         holder.binding.textprice.text = product.price.toString() + "  kgz"
 
 
-
-         val mapper2: Mapper<FavoritesCache  ,Result > ? = null
+        val mapper2: Mapper<FavoritesCache, Result>? = null
 
         holder.itemView
             .setOnClickListener { it ->
 //            onItemClicked!!.invoke(product)
                 try {
-
-                    val action =
-                        FavoritesFragmentDirections.actionFavoritesFragmentToDetaillFragment(mapper2!!.map(product))
+                    val action = FavoritesFragmentDirections.actionFavoritesFragmentToDetaillFragment(mapper2!!.map(product))
                     Navigation.findNavController(view = it).navigate(action)
                 } catch (e: Exception) {
                 }
             }
-
     }
 
     override fun getItemCount(): Int = diffor.currentList.size

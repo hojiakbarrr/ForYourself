@@ -168,4 +168,24 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_gravity="end|center"
+        android:layout_width="43dp"
+        android:layout_height="43dp">
+
+        <ImageView
+            android:id="@+id/notbuy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/saleee"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+    </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>

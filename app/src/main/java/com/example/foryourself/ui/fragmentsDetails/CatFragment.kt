@@ -67,6 +67,8 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
             } catch (e: Exception) {
             }
         }
+        viewModel.favLiveData.observe(viewLifecycleOwner) {
+        }
         return binding.root
     }
 
@@ -109,13 +111,13 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun exclusiveAdapters() {
         binding.rvCategoriesCat.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            binding.rvCategoriesCat.adapter = typeAdapter
+            adapter = typeAdapter
         }
     }
 
     private fun onClickItem() {
         typeAdapter.onItemClick_cate = { t ->
-            viewModel.addToFav(t)
+            viewModel.addToFav(t, requireActivity())
             toast("${t.title} был(о) добавленов избранные")
         }
     }
@@ -126,7 +128,6 @@ class CatFragment : Fragment(), SearchView.OnQueryTextListener {
             viewModel.searchLiveData.observe(viewLifecycleOwner) {
                 typeAdapter.diffor.submitList(it?.lastElements()?.toMutableList())
             }
-
         }
         return false
     }
