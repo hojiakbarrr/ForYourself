@@ -3,10 +3,7 @@ package com.example.foryourself.di
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
-import com.example.foryourself.mappers.FavoriteCascheToResultMapper
-import com.example.foryourself.mappers.FavoritesToCacheMapper
-import com.example.foryourself.mappers.ResultCascheToResultMapper
-import com.example.foryourself.mappers.ResultToCacheMapper
+import com.example.foryourself.mappers.*
 import com.example.foryourself.utils.Mapper
 import dagger.Module
 import dagger.Provides
@@ -31,4 +28,9 @@ object MapperModule {
 
     @Provides
     fun provideResultToFavoritesCacheMapper() : Mapper<Result, FavoritesCache> = FavoritesToCacheMapper()
+
+    @Provides
+    fun provideResultCacheToFavoritesCacheMapper() : Mapper< FavoritesCache , ResultCache> = FavoriteCascheToResultCasheMapper()
+
+
 }

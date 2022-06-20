@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -61,10 +62,12 @@ class SplashFragment : Fragment() {
                 SharedPreferences().saveCurrentUser(user = CurrentUser(email = acct.email!!, name = acct.displayName!!, id = acct.id!!),requireActivity())
                 navigateToSecondFragment()
             }
-        } else toast("Пройдите регистрацию в Google аккаунте")
+        } else {
+//            toast("Пройдите регистрацию в Google аккаунте")
+        }
 
 
-        view.findViewById<TextView>(R.id.start).setOnClickListener {
+        view.findViewById<ImageView>(R.id.start).setOnClickListener {
             signIn()
         }
 
@@ -108,7 +111,7 @@ class SplashFragment : Fragment() {
                 task.getResult(ApiException::class.java)
                 navigateToSecondFragment()
             } catch (e: ApiException) {
-                Toast.makeText(requireContext(), "Поврежден ваш Google аккаунт", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Ваш Google аккаунт поврежден", Toast.LENGTH_SHORT)
                     .show()
             }
         }

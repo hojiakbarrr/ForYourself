@@ -75,7 +75,7 @@ class OrderRepository @Inject constructor(
 
     suspend fun postAdminUserOrder(postAdmin: PostAdmin): Response<PostResponseAnswer> = apiService.createAdminRow(postAdmin = postAdmin)
 
-    suspend fun updateuserOrders(id: String,postAdmin: PostAdmin) : Response<UpdateResponse> = apiService.updateAdmin(objectId = id, postAdmin = postAdmin)
+    suspend fun updateAdminUser(id: String,postAdmin: PostAdmin) : Response<UpdateResponse> = apiService.updateAdmin(objectId = id, postAdmin = postAdmin)
 
     suspend fun deleteadminRow(id: String): Response<DeleteObject> = apiService.deleteAdmin(objectId = id)
 

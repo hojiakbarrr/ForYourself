@@ -205,8 +205,7 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
 
     private fun prepareColorAdapter() {
         binding.recByColor.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = colorAdapter
         }
     }

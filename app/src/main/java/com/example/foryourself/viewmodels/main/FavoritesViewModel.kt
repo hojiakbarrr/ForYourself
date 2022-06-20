@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.foryourself.utils.SharedPreferences
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostAdmin
+import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
 import com.example.foryourself.db.model.ResultCache
@@ -21,6 +22,7 @@ class FavoritesViewModel @Inject constructor(
     private val dao: ProductDao,
     private val resultToCascheMapper: Mapper<Result, ResultCache>,
     private val resultToFavoritCascheMapper: Mapper<Result, FavoritesCache>,
+    private val mapper: Mapper<FavoritesCache, ResultCache >,
 
 
     private val repository: OrderRepository,
@@ -33,21 +35,25 @@ class FavoritesViewModel @Inject constructor(
     fun deleteOrder(product: FavoritesCache) = viewModelScope.launch {
         val rr = repository.deleteuserOrders(product.objectId)
         if (rr.isSuccessful) {
-            dao.deleteFrom(product)
+            product.isFavorite = false
+            dao.updateDATABASE(mapper.map(product))
+            dao.deleteFromFav(product)
         }
     }
 
     fun postAdminRow(name: String?, numberTelephone: String?) = viewModelScope.launch {
         val ff = dao.getFavorites()
-        ff.forEach { favorit->
-            val rr = repository.postAdminUserOrder(PostAdmin(
-                foradmin = "admin",
-                telephone = numberTelephone,
-                title = favorit.title,
-                userorderid = favorit.objectId,
-                userordername = name
-            ))
-            if (rr.isSuccessful){
+        ff.forEach { favorit ->
+            val rr = repository.postAdminUserOrder(
+                PostAdmin(
+                    foradmin = "admin",
+                    telephone = numberTelephone,
+                    title = favorit.title,
+                    userorderid = favorit.objectId,
+                    userordername = name
+                )
+            )
+            if (rr.isSuccessful) {
 
             }
         }

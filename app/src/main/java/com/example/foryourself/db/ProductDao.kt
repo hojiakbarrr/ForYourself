@@ -62,7 +62,7 @@ interface ProductDao {
     suspend fun updateFav(product: FavoritesCache)
 
     @Delete
-    fun deleteFrom(product: FavoritesCache)
+    fun deleteFromFav(product: FavoritesCache)
 
     @Query("DELETE FROM favoritescache")
     suspend fun clearTableFav()
