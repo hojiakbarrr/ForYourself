@@ -83,10 +83,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         super.onActivityCreated(savedInstanceState)
 
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
+
         if (acct == null) {
             val action = HomeFragmentDirections.actionHomeFragmentToSplashFragment()
             Navigation.findNavController(requireView()).navigate(action)
         } else {
+
             personEmail = acct.email.toString()
             personName = acct.displayName.toString()
             idgoogle = acct.id.toString()

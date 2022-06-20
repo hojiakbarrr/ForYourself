@@ -34,3 +34,15 @@ data class PostUserOrders(
     val tipy: String? = null,
 
     )
+
+data class PostAdmin(
+
+    val foradmin: String? = null,
+    val telephone: String? = null,
+    val title: String? = null,
+    val userorderid: String? = null,
+    val userordername: String? = null,
+
+    )
+
+

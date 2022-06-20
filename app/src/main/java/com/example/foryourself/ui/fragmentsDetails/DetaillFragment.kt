@@ -137,8 +137,10 @@ class DetaillFragment : Fragment(), SizeAdapter.ItemClickListener,
             }
 
             imgYoutube.setOnClickListener {
-                if (youtubeHTTPS.isNotEmpty()) openYouTube()
-                else toast("Нет видео обзора товара")
+//                if (youtubeHTTPS.isNotEmpty()) openYouTube()
+//                else toast("Нет видео обзора товара")
+
+                openYouTube()
             }
             viewModel.observeDeleteOrder().observe(viewLifecycleOwner) {
                 toast(it)

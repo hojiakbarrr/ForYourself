@@ -35,6 +35,8 @@ class FavoritesFragment : Fragment() {
     }
     private lateinit var sum: String
     private lateinit var count: String
+    private lateinit var name: String
+    private lateinit var telephone: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +96,7 @@ class FavoritesFragment : Fragment() {
         }
         viewModel.favoritesUserOrders(requireActivity()).observe(viewLifecycleOwner) {
             favoritesAdapter.diffor.submitList(it)
+
             count = it.size.toString()
             var sumee = 0
             for (r in it) {
@@ -119,7 +122,7 @@ class FavoritesFragment : Fragment() {
                 if (nomer.length < 10) {
                     dialogerror("Неправильный номер")
                 } else {
-
+//                    viewModel.postAdminRow()
                 }
             }
 

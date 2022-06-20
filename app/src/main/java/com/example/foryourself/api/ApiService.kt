@@ -3,6 +3,7 @@ package com.example.kapriz.api
 import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteObject.DeleteObject
+import com.example.foryourself.data.retrofitResponse.getadmin.GetAdmin
 import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.order.getOrder.TestResponse
 import com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.GetUserOrders
@@ -11,6 +12,7 @@ import com.example.foryourself.data.retrofitResponse.order.postOrder.PostRespons
 import com.example.foryourself.data.retrofitResponse.order.postOrder.Result_2
 import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
 import com.example.foryourself.data.retrofitResponse.reklama.updateReklama.UpdateReklama
+import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostAdmin
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -78,5 +80,27 @@ interface ApiService {
         @Path("objectId") objectId: String,
         @Body userOrders: PostUserOrders
     ):Response<UpdateResponse>
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+    @GET("/classes/Admin")
+    suspend fun getAdmin(): Response <GetAdmin>
+
+    @POST("classes/Admin")
+    suspend fun createAdminRow(@Body postAdmin: PostAdmin): Response<PostResponseAnswer>
+
+    @PUT("/classes/Admin/{objectId}")
+    suspend fun updateAdmin(
+        @Path("objectId") objectId: String,
+        @Body postAdmin: PostAdmin
+    ):Response<UpdateResponse>
+
+    @DELETE("/classes/Admin/{objectId}")
+    suspend fun deleteAdmin(
+        @Path("objectId") objectId: String,
+    ):Response<DeleteObject>
+
+
 
 }

@@ -283,7 +283,7 @@
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:src="@drawable/locshop">
+                        android:src="@drawable/gps">
 
                     </ImageView>
 

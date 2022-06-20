@@ -2,6 +2,7 @@ package com.example.foryourself.repository
 
 import com.example.foryourself.data.retrofitResponse.updateResponse.UpdateResponse
 import com.example.foryourself.data.retrofitResponse.deleteObject.DeleteObject
+import com.example.foryourself.data.retrofitResponse.getadmin.GetAdmin
 import com.example.foryourself.data.retrofitResponse.reklama.getReklama.Getreklama
 import com.example.foryourself.data.retrofitResponse.order.getOrder.Result
 import com.example.foryourself.data.retrofitResponse.order.getOrder.TestResponse
@@ -11,6 +12,7 @@ import com.example.foryourself.data.retrofitResponse.order.postOrder.Result_2
 import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.data.retrofitResponse.reklama.updateReklama.UpdateReklama
 import com.example.foryourself.data.retrofitResponse.userOrders.getUserOrders.GetUserOrders
+import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostAdmin
 import com.example.foryourself.data.retrofitResponse.userOrders.postUserOrders.PostUserOrders
 import com.example.foryourself.db.ProductDao
 import com.example.foryourself.db.model.FavoritesCache
@@ -68,6 +70,15 @@ class OrderRepository @Inject constructor(
     suspend fun updateuserOrders(id: String,userOrders: PostUserOrders) : Response<UpdateResponse> = apiService.upDateUserOrders(objectId = id, userOrders = userOrders)
 
     suspend fun deleteuserOrders(id: String): Response<DeleteObject> = apiService.deleteUserOrders(objectId = id)
+
+    suspend fun getAdmin(): Response<GetAdmin> = apiService.getAdmin()
+
+    suspend fun postAdminUserOrder(postAdmin: PostAdmin): Response<PostResponseAnswer> = apiService.createAdminRow(postAdmin = postAdmin)
+
+    suspend fun updateuserOrders(id: String,postAdmin: PostAdmin) : Response<UpdateResponse> = apiService.updateAdmin(objectId = id, postAdmin = postAdmin)
+
+    suspend fun deleteadminRow(id: String): Response<DeleteObject> = apiService.deleteAdmin(objectId = id)
+
 
 
 }

@@ -55,13 +55,14 @@
                         android:id="@+id/eee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15sp"
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="12dp"
                         android:text="Эксклюзив"
                         android:textColor="#D7000000"
                         android:textSize="@dimen/_16sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/rec_exclusive"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.716" />
 
                     <TextView
                         android:id="@+id/exclusiveTxt"
@@ -81,31 +82,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_130sdp"
                         android:layout_marginStart="@dimen/_1sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_1sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/bolero"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/eee"
                         app:reverseLayout="true"
                         app:stackFromEnd="true" />
-
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/bolero"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginStart="25dp"
-                        android:layout_marginTop="@dimen/_10ssp"
                         android:layout_marginEnd="25dp"
                         android:elevation="25dp"
                         app:cardCornerRadius="30dp"
                         app:cardUseCompatPadding="true"
-                        app:layout_constraintCircleRadius="@dimen/_25ssp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline4"
 
+                        app:layout_constraintCircleRadius="@dimen/_25ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rec_exclusive">
+                        app:layout_constraintTop_toTopOf="@+id/guideline4">
 
 
                         <LinearLayout
@@ -137,7 +137,7 @@
                         android:id="@+id/dfd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
                         android:text="Бестселлер"
                         android:textColor="#D7000000"
                         android:textSize="@dimen/_16sdp"
@@ -159,8 +159,10 @@
                         android:id="@+id/rec_bests"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_130sdp"
-                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_1sdp"
+                        android:layout_marginStart="@dimen/_1sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -168,6 +170,20 @@
                         app:layout_constraintVertical_bias="0.0"
                         tools:listitem="@layout/item_product" />
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.5" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

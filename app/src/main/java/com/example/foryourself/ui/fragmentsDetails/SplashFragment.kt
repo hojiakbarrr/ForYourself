@@ -90,8 +90,7 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getallOrders(requireActivity()).observe(viewLifecycleOwner) {}
-        if (personName != null && personEmail != null){ viewModel.getuserOrder(personEmail!!, personName!!, idgoogle,requireActivity()) }
+
     }
 
 
