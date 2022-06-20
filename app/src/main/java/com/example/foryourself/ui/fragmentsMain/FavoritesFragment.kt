@@ -77,6 +77,7 @@ class FavoritesFragment : Fragment() {
                     "${favoritesAdapter.diffor.currentList[position].title} ${"было удалено из избранных"}",
                     requireView()
                 )
+//                favoritesAdapter.notifyItemRemoved(position)
             }
         }
 

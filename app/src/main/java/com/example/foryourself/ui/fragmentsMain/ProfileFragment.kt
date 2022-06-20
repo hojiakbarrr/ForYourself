@@ -11,10 +11,15 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.foryourself.R
 import com.example.foryourself.data.retrofitResponse.users.postUser.PutUsers
 import com.example.foryourself.databinding.ProfileFragmentBinding
+import com.example.foryourself.ui.fragmentsDetails.DetaillFragmentDirections
+import com.example.foryourself.ui.fragmentsDetails.SplashFragment
 import com.example.foryourself.utils.*
 import com.example.foryourself.viewmodels.main.ProfileViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -35,7 +40,7 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
     private lateinit var objectID: String
     private lateinit var accountEmail: String
-    private lateinit var nomer: String
+    private var nomer: String = ""
     private lateinit var personName: String
 
     override fun onCreateView(
@@ -76,12 +81,12 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding. apply {
+        binding.apply {
             btnAddress.setOnClickListener {
                 dialog()
             }
             btnAbout.setOnClickListener {
-               dialogabout()
+                dialogabout()
             }
             btnWhatsapp.setOnClickListener {
                 dialogwhatsapp()
@@ -116,7 +121,6 @@ class ProfileFragment : Fragment() {
             setPositiveButton("Сохранить") { dialog, which ->
 
 
-
                 nomer = edit_number_txt.text.toString()
 
 
@@ -131,6 +135,11 @@ class ProfileFragment : Fragment() {
     private fun signOut() {
         gsc!!.signOut().addOnCompleteListener {
             activity?.finish()
+//            val actionss = ProfileFragmentDirections.fromProfileFragment2ToSplashFragment()
+//            Navigation.findNavController(requireView()).navigate(actionss)
+//
+//            val manager: FragmentManager = requireActivity().supportFragmentManager
+//            manager.beginTransaction().add(R.id.profileFragment2, SplashFragment()).addToBackStack(null).commit()
         }
     }
 }
