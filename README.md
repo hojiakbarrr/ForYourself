@@ -4,29 +4,15 @@ application for online sales. Basic functions include registration, personal acc
 Round assortment with catalogue. Mobile point of sale. The application is a showcase and an online cash register in one.
 Catalog search. It is convenient when you can easily and quickly find the right product in the application, there is a full-text search.
 ## Splash and Login Screens
-<img src="meta/android/screenshots/Скриншот 20-06-2022 22.39.31.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.00.png" width=160>
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.12.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.43.12.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.22.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.43.22.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.40.36.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.40.36.png)
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.39.31.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.00.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.12.png" width=160>
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.22.png" width=160><img src="meta/android/screenshots/Скриншот 20-06-2022 22.40.36.png" width=160>
 ## Main and Details Screens
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.38.19.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.38.19.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.38.28.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.38.28.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.38.04.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.38.04.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.49.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.37.49.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.38.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.37.38.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.25.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.37.25.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.02.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.37.02.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.10.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.37.10.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.36.49.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.36.49.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.36.27.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.36.27.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.36.09.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.36.09.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.35.48.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.35.48.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.35.35.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.35.35.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.35.18.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.35.18.png
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.34.44.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.34.44.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.34.18.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.34.18.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.33.50.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.33.50.png)
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.39.08.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.39.08.png)
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.38.19.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.38.28.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.38.04.png" width=160>
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.49.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.38.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.25.png" width=160>
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.02.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.37.10.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.36.49.png" width=160>
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.36.27.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.36.09.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.35.48.png" width=160>
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.35.35.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.35.18.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.34.44.png" width=160>
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.34.18.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.33.50.png" width=160> <img src="meta/android/screenshots/Скриншот 20-06-2022 22.39.08.png" width=160>
 
 ## Libraries
 ### Android Jetpack
