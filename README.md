@@ -5,7 +5,7 @@ Round assortment with catalogue. Mobile point of sale. The application is a show
 Catalog search. It is convenient when you can easily and quickly find the right product in the application, there is a full-text search.
 ## Splash and Login Screens
 <img src="meta/android/screenshots/Скриншот 20-06-2022 22.39.31.png" width=160>
-[<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.00.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.43.00.png)
+<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.00.png" width=160>
 [<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.12.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.43.12.png)
 [<img src="meta/android/screenshots/Скриншот 20-06-2022 22.43.22.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.43.22.png)
 [<img src="meta/android/screenshots/Скриншот 20-06-2022 22.40.36.png" width=160>](meta/android/screenshots/Скриншот 20-06-2022 22.40.36.png)
