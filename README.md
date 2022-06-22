@@ -1,6 +1,6 @@
 # ForYourself
 # A program written entirely in Kotlin using the principles of Clean Architecture according to the MVVM pattern.
-application for online sales. Basic functions include registration, personal account, search and product catalog applications.
+Application for online sales. Basic functions include registration, personal account, search and product catalog applications.
 Round assortment with catalogue. Mobile point of sale. The application is a showcase and an online cash register in one.
 Catalog search. It is convenient when you can easily and quickly find the right product in the application, there is a full-text search.
 ## Splash and Login Screens
